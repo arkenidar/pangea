@@ -1,0 +1,24 @@
+if word_definition==nil or word_index>1 and (
+words[word_index-1]==tr("string") or 
+words[word_index-1]==tr("define_word") or 
+words[word_index-1]==tr("set") or 
+words[word_index-1]==tr("increment")
+) then return 1 end
+
+
+string
+define_word
+set
+increment
+
+get??
+execute_words_file
+
+
+-> migrare a : "parola"
+stringa
+definisci_parola
+prendi
+metti
+incrementa
+esegui_file_parole
