@@ -1,8 +1,8 @@
 -- pang: polish notation language
 -- pang: linguaggio a notazione polacca
 
-local pang_version="028" -- versione
-local language="italian" -- lingua -- nil
+local pang_version="029-prerelease" -- versione
+local language=nil --"italian" -- lingua -- nil
 local translate_italian={
   ["pang version: "]="pang versione: ",
   ["exit"]="esci",
@@ -94,9 +94,19 @@ end
 function while_function(arguments)
   while evaluate_word(arguments[1]) do
     local result=evaluate_word(arguments[2])
-    if result=="break" then break end
+    
+    -- https://www.lua.org/pil/8.4.html
+    local status,err=pcall(function()
+      return result._reserved end)
+    
+    if status and result._reserved=="break_loop" then break end
   end
 end
+
+-- break
+word_definitions[tr("break")]={0,function()
+  return {_reserved="break_loop"}
+end}
 
 -- not <boolean>
 function not_function(arguments)
@@ -111,7 +121,7 @@ function equal_function(arguments)
 end
 
 --local variables={}
-local call_stack={{}}
+call_stack={{}}
 
 -- get <variable name>
 function get_function(arguments)
@@ -156,6 +166,29 @@ word_definitions[tr("variable_get")]={2,variable_get_function}
 
 --
 word_definitions["namespace"]={0,function() return call_stack[#call_stack] end }
+---------------------------------------
+---- Labels and "Go-To"s
+
+-- label <label_identifier>
+function label_function(arguments)
+  local label_identifier=evaluate_word(arguments[1])
+  local word_index=arguments[0]
+  local next_word_index=word_index+phrase_length(word_index)
+  local namespace=call_stack[#call_stack]
+  local variable_name=label_identifier
+  local variable_value=next_word_index
+  namespace[variable_name]=variable_value
+end
+word_definitions[tr("label")]={1,label_function}
+
+-- goto <label_identifier>
+function goto_function(arguments)
+  local namespace=call_stack[#call_stack]
+  local label_identifier=evaluate_word(arguments[1])
+  return namespace[label_identifier]
+end
+word_definitions[tr("goto")]={1,goto_function}
+
 ---------------------------------------
 -- string <word as string>
 function string_function(arguments)
@@ -245,14 +278,29 @@ function evaluate_word(word_index)
     local do_word_index=word_index+1
     local evaluated
     while words[do_word_index]~=tr("end") and words[do_word_index]~=nil do
+      
+      local current_word=words[do_word_index] -- current word index
+      --[[
+      if current_word==tr("goto") then
+        do_word_index=evaluate_word(do_word_index)
+      else
+      --]]
+      
+      -- more usual condition
       evaluated=evaluate_word(do_word_index)
       local current_phrase_length=phrase_length(do_word_index)
       do_word_index=do_word_index+current_phrase_length
+      if tr("goto")==current_word then
+        do_word_index=evaluated
+      end
+      --end
+      
     end
     return evaluated
   end
   if nil==word_definition then print(tr("word:")..word..tr(" definition not found")) return end
   local arguments={}, arity, argument_word_index
+  arguments[0]=word_index -- word_index as argument
   arity=word_definition[1]
   argument_word_index=word_index+1
   for argument_index=1,arity do

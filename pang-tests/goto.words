@@ -1,0 +1,11 @@
+
+: "! : pang-tests/goto.words"
+
+print : starting
+
+label : label_name
+
+print : action1
+print : action2
+
+goto : label_name
