@@ -1,10 +1,13 @@
 -- pang: polish notation language
 -- pang: linguaggio a notazione polacca
 
-local pang_version="029-prerelease" -- versione
-local language=nil --"italian" -- lingua -- nil
-local translate_italian={
+pang_version="029-prerelease" -- versione
+language=nil --"italian" -- lingua -- nil
+translate_italian={
+  -- for printing messages to the user
   ["pang version: "]="pang versione: ",
+  
+  -- translations for defined words
   ["exit"]="esci",
   ["print"]="stampa",
   ["define_word"]="definisci_parola",
@@ -35,6 +38,7 @@ local translate_italian={
   
   ["dont"]="non_fare",
   
+  -- for printing messages to the user
   ["word:"]="parola:",
   [" definition not found"]=" definizione non trovata",
   
@@ -51,9 +55,11 @@ function tr(string) -- translate / traduci
 end
 print(tr("pang version: ")..pang_version)
 
-local words={}
+words={} -- program as words array
 
-local word_definitions={}
+----> Definitions
+
+word_definitions={} -- definitions of words, of behaviors of sub-programs
 
 -- print <printable>
 function print_function(arguments)
@@ -120,6 +126,9 @@ function equal_function(arguments)
   return first==second
 end
 
+---------------------------------------
+----> Variables set and get
+
 --local variables={}
 call_stack={{}}
 
@@ -167,14 +176,17 @@ word_definitions[tr("variable_get")]={2,variable_get_function}
 --
 word_definitions["namespace"]={0,function() return call_stack[#call_stack] end }
 ---------------------------------------
----- Labels and "Go-To"s
+----> Labels and "Go-To"s
+
+labels={} -- global not call-stack based
 
 -- label <label_identifier>
 function label_function(arguments)
   local label_identifier=evaluate_word(arguments[1])
-  local word_index=arguments[0]
+  local word_index=arguments[0] -- first word of the phrase
+  -- word index after
   local next_word_index=word_index+phrase_length(word_index)
-  local namespace=call_stack[#call_stack]
+  local namespace=labels --call_stack[#call_stack]
   local variable_name=label_identifier
   local variable_value=next_word_index
   namespace[variable_name]=variable_value
@@ -183,7 +195,7 @@ word_definitions[tr("label")]={1,label_function}
 
 -- goto <label_identifier>
 function goto_function(arguments)
-  local namespace=call_stack[#call_stack]
+  local namespace=labels --call_stack[#call_stack]
   local label_identifier=evaluate_word(arguments[1])
   return namespace[label_identifier]
 end
@@ -237,6 +249,8 @@ function list_word_definitions_function(arguments)
   io.write("\n")
 end
 word_definitions["?"]={0,list_word_definitions_function}
+
+-------------> end of words' definitions
 
 function phrase_length(word_index)
   local word=words[word_index]
@@ -311,6 +325,7 @@ function evaluate_word(word_index)
   return returned_value
 end
 
+-- from PolishNotation program to "words" array
 function program_words(pn_program)
   local quoted=""
   local opened=false
@@ -333,6 +348,7 @@ function program_words(pn_program)
   end
 end
 
+-- execute PolishNotation program
 function execute_program(pn_program)
 
   pn_program=tr("do").." "..pn_program.." "..tr("end")
