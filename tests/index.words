@@ -1,3 +1,5 @@
+#!/usr/bin/env pangea
+
 print : " Starting all TESTs! "
 
 print : " FizzBuzz TEST "
