@@ -1,0 +1,9 @@
+print : " Starting all TESTs! "
+
+print : " FizzBuzz TEST "
+! : fizzbuzz.words
+
+print : " Factorial TEST "
+! : factorial.words
+
+print : " END of TESTs "
