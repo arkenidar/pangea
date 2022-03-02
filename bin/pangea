@@ -1,0 +1,11 @@
+#!/usr/bin/env sh
+
+# "pangea" interpreter and REPL
+
+current=pang-028.lua # latest.lua (see diff of both)
+# SETUP: needs rlwrap and lua installed
+rlwrap lua ~/bin/pangea/$current $@
+
+# SETUP HOWTO:
+# mkdir ~/bin ; cd ~/bin && git clone https://github.com/arkenidar/pangea
+# export PATH=$PATH:~/bin/pangea/bin
