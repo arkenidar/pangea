@@ -2,7 +2,8 @@
 
 # "pangea" interpreter and REPL
 
-current=pang-028.lua # latest.lua (see diff of both)
+### current=pang-028.lua # latest.lua (see diff of both)
+current=src/pangea1/main.lua
 # SETUP: needs rlwrap and lua installed
 rlwrap lua ~/bin/pangea/$current $@
 
