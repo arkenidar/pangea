@@ -3,7 +3,8 @@
 
 ###DIR=/home/dario/Dropbox/main/code/lua/pangea/
 DIR=$(dirname $0)/
-RUNNER=latest.lua
+##RUNNER=latest.lua
+RUNNER=src/pangea1/main.lua
 #echo $DIR
 rlwrap lua $DIR$RUNNER $@
 
