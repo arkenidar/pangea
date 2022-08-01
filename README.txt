@@ -1,7 +1,7 @@
 LuaPN: Lua-based Polish Notation Language. codenamed: pang
 
 This source code is MIT licensed.
-
+..........................................................
 run with "lua script.lua" or run with "rlwrap lua script.lua"
 
 alias pang="rlwrap lua latest.lua"
@@ -9,8 +9,12 @@ alias pang="rlwrap lua latest.lua"
 pang fizzbuzz.words # run, don't enter repl
 pang factorial.words - # run, then enter repl
 pang - # enter repl , no file to run
+..........................................................
+sudo nano /bin/pangea # put this content
+/home/dario/Dropbox/main/code/lua/pangea/pang-cli.sh $@ # adjust file path
 
-
+sudo chmod +x /bin/pangea # make it executable
+..........................................................
 missing:
 break inside while
 tables
