@@ -1,3 +1,5 @@
+#!/usr/bin/env pangea
+
 set : i 1
 while not greater get : i 20 do
   

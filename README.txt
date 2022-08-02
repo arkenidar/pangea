@@ -14,6 +14,9 @@ sudo nano /bin/pangea # put this content
 /home/dario/Dropbox/main/code/lua/pangea/pang-cli.sh $@ # adjust file path
 
 sudo chmod +x /bin/pangea # make it executable
+
+same for "/bin/pangea-italian"
+/home/dario/Dropbox/main/code/lua/pangea/pang-cli.sh italian $@
 ..........................................................
 missing:
 break inside while

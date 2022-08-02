@@ -3,6 +3,12 @@
 
 local pang_version="028 (PanGea:1.0.1)" -- versione
 local language=nil --"italian" -- lingua -- nil
+
+if arg[1]=="italian" then
+  language="italian"
+  table.remove(arg, 1)
+end
+
 local translate_italian={
   ["pang version: "]="pang versione: ",
   ["exit"]="esci",
