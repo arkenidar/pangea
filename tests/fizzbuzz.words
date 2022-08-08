@@ -1,15 +1,18 @@
 #!/usr/bin/env pangea
 
+define_word : multiple 2
+equal 0 modulus argument 1 argument 2
+
 set : i 1
 while not greater get : i 20 do
 
-if equal 0 modulus get : i 15
+if multiple get : i 15
 print : FizzBuzz
 
-if equal 0 modulus get : i 3
+if multiple get : i 3
 print : Fizz
 
-if equal 0 modulus get : i 5
+if multiple get : i 5
 print : Buzz
 
 print get : i
