@@ -85,3 +85,68 @@ Buzz
 bye
 arkenidar@hp255g8:~/pangea$ 
 ```
+
+# composite files ( external references )
+```
+arkenidar@hp255g8:~/pangea$ cd tests/
+arkenidar@hp255g8:~/pangea/tests$ cd ~/pangea/tests/ && ls
+factorial.words  fattoriale.parole  fizzbuzz.parole  fizzbuzz.words  index.words  indice-esempi.parole  pangea.cmd  pangea-italian.cmd
+arkenidar@hp255g8:~/pangea/tests$ rlwrap lua ~/pangea/src/pangea1/main.lua index.words 
+pang version: 028 (PanGea:1.0.1)
+? for help
+Starting all TESTs!
+FizzBuzz TEST
+1
+2
+Fizz
+4
+Buzz
+Fizz
+7
+8
+Fizz
+Buzz
+11
+Fizz
+13
+14
+FizzBuzz
+16
+17
+Fizz
+19
+Buzz
+Factorial TEST
+6
+END of TESTs
+bye
+arkenidar@hp255g8:~/pangea/tests$ rlwrap lua ~/pangea/src/pangea1/main.lua italian indice-esempi.parole 
+pang versione: 028 (PanGea:1.0.1)
+? for help
+fattoriale di 4 (4!) gioco matematico
+24
+24
+Fizz-Buzz gioco matematico
+1
+2
+Fizz ... multiplo di 3
+4
+Buzz ... multiplo di 5
+Fizz ... multiplo di 3
+7
+8
+Fizz ... multiplo di 3
+Buzz ... multiplo di 5
+11
+Fizz ... multiplo di 3
+13
+14
+FizzBuzz ... multiplo di 15
+16
+17
+Fizz ... multiplo di 3
+19
+Buzz ... multiplo di 5
+bye
+arkenidar@hp255g8:~/pangea/tests$ 
+```
