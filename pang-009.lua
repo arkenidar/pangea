@@ -118,7 +118,8 @@ function evaluate_word(word_index)
     return evaluated
   end
   if nil==word_definition then print("word:"..word.." definition not found") return end
-  local arguments={}, arity, argument_word_index
+  local arguments={}
+  local arity, argument_word_index
   arity=word_definition[1]
   argument_word_index=word_index+1
   for argument_index=1,arity do

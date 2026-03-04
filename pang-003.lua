@@ -65,7 +65,8 @@ function evaluate_word(word_index)
     end
     return
   end
-  local arguments={}, arity, argument_word_index
+  local arguments={}
+  local arity, argument_word_index
   arity=word_definition[1]
   argument_word_index=word_index+1
   for argument_index=1,arity do
