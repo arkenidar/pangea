@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Polish Notation - Pangea Documentation</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <header>
+        <h1>🌍 Pangea / Pang</h1>
+        <p>Understanding Polish (Prefix) Notation</p>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="polish-notation.html">Polish Notation</a></li>
+            <li><a href="evaluation.html">Evaluation Mechanism</a></li>
+            <li><a href="examples.html">Examples</a></li>
+            <li><a href="reference.html">Language Reference</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <h2>What is Polish Notation?</h2>
+
+        <p>Polish notation, invented by Polish logician Jan Łukasiewicz in 1924, is a mathematical notation where
+            operators precede their operands. In computer science, this is called <strong>prefix notation</strong>.</p>
+
+        <h2>Comparison: Infix vs Prefix</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Infix (Standard)</th>
+                    <th>Prefix (Polish)</th>
+                    <th>Result</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>5 + 6</code></td>
+                    <td><code>+ 5 6</code></td>
+                    <td>11</td>
+                </tr>
+                <tr>
+                    <td><code>3 * 4</code></td>
+                    <td><code>* 3 4</code></td>
+                    <td>12</td>
+                </tr>
+                <tr>
+                    <td><code>(2 + 3) * 4</code></td>
+                    <td><code>* + 2 3 4</code></td>
+                    <td>20</td>
+                </tr>
+                <tr>
+                    <td><code>2 + 3 * 4</code></td>
+                    <td><code>+ 2 * 3 4</code></td>
+                    <td>14</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>Key Advantages</h2>
+
+        <div class="info-box">
+            <h3>1. No Parentheses Needed</h3>
+            <p>The structure is unambiguous without grouping symbols.</p>
+
+            <h4>Infix:</h4>
+            <code>((5 + 6) * (7 - 2))</code>
+
+            <h4>Prefix:</h4>
+            <code>* + 5 6 - 7 2</code>
+        </div>
+
+        <div class="info-box">
+            <h3>2. No Operator Precedence Rules</h3>
+            <p>You don't need to remember that multiplication comes before addition.</p>
+        </div>
+
+        <div class="info-box">
+            <h3>3. Easy to Parse</h3>
+            <p>Left-to-right evaluation with simple recursive descent.</p>
+        </div>
+
+        <h2>Reading Polish Notation</h2>
+
+        <p>The key is understanding <strong>arity</strong> - how many arguments each operator takes:</p>
+
+        <div class="example-box">
+            <h4>Expression: <code>+ 5 6</code></h4>
+
+            <div style="display: flex; align-items: center; gap: 1rem; margin: 1rem 0;">
+                <span class="token operator">+</span>
+                <span>←</span>
+                <span>Operator (arity: 2)</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 1rem; margin: 1rem 0;">
+                <span class="token number">5</span>
+                <span>←</span>
+                <span>First argument</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 1rem; margin: 1rem 0;">
+                <span class="token number">6</span>
+                <span>←</span>
+                <span>Second argument</span>
+            </div>
+
+            <p><strong>Result:</strong> 11</p>
+        </div>
+
+        <h2>Complex Example Walkthrough</h2>
+
+        <p>Let's evaluate: <code>multiply add 2 3 subtract 10 5</code></p>
+
+        <div class="animation-container">
+            <h3>Step-by-Step Evaluation</h3>
+
+            <div class="eval-step">
+                <h4>Initial State</h4>
+                <div style="margin: 1rem 0;">
+                    <span class="token operator">multiply</span>
+                    <span class="token operator">add</span>
+                    <span class="token number">2</span>
+                    <span class="token number">3</span>
+                    <span class="token operator">subtract</span>
+                    <span class="token number">10</span>
+                    <span class="token number">5</span>
+                </div>
+                <p><code>multiply</code> needs 2 arguments, so we evaluate the next two expressions.</p>
+            </div>
+
+            <div class="eval-step">
+                <h4>Step 1: Evaluate first argument (add 2 3)</h4>
+                <div style="margin: 1rem 0;">
+                    <span class="token operator">multiply</span>
+                    <span style="padding: 1rem; background: #fff3cd; border-radius: 4px;">
+                        <span class="token operator">add</span>
+                        <span class="token number">2</span>
+                        <span class="token number">3</span>
+                    </span>
+                    <span class="token operator">subtract</span>
+                    <span class="token number">10</span>
+                    <span class="token number">5</span>
+                </div>
+                <p><code>add 2 3</code> → <strong>5</strong></p>
+            </div>
+
+            <div class="eval-step">
+                <h4>Step 2: Evaluate second argument (subtract 10 5)</h4>
+                <div style="margin: 1rem 0;">
+                    <span class="token operator">multiply</span>
+                    <span class="token number" style="background: #27ae60;">5</span>
+                    <span style="padding: 1rem; background: #fff3cd; border-radius: 4px;">
+                        <span class="token operator">subtract</span>
+                        <span class="token number">10</span>
+                        <span class="token number">5</span>
+                    </span>
+                </div>
+                <p><code>subtract 10 5</code> → <strong>5</strong></p>
+            </div>
+
+            <div class="eval-step">
+                <h4>Step 3: Final multiplication</h4>
+                <div style="margin: 1rem 0;">
+                    <span class="token operator">multiply</span>
+                    <span class="token number" style="background: #27ae60;">5</span>
+                    <span class="token number" style="background: #27ae60;">5</span>
+                </div>
+                <p><code>multiply 5 5</code> → <strong>25</strong></p>
+            </div>
+
+            <div
+                style="text-align: center; background: #27ae60; color: white; padding: 1.5rem; border-radius: 8px; font-size: 1.5rem; margin-top: 2rem;">
+                <strong>Final Result: 25</strong>
+            </div>
+        </div>
+
+        <h2>Parse Tree Visualization</h2>
+
+        <p>Polish notation creates a natural tree structure:</p>
+
+        <div class="diagram">
+            <svg width="500" height="300" viewBox="0 0 500 300">
+                <!-- Root: multiply -->
+                <circle cx="250" cy="50" r="30" fill="#e74c3c" />
+                <text x="250" y="58" text-anchor="middle" fill="white" font-size="14" font-weight="bold">×</text>
+
+                <!-- Left branch: add -->
+                <line x1="250" y1="80" x2="150" y2="140" stroke="#2c3e50" stroke-width="2" />
+                <circle cx="150" cy="150" r="30" fill="#e74c3c" />
+                <text x="150" y="158" text-anchor="middle" fill="white" font-size="14" font-weight="bold">+</text>
+
+                <!-- Right branch: subtract -->
+                <line x1="250" y1="80" x2="350" y2="140" stroke="#2c3e50" stroke-width="2" />
+                <circle cx="350" cy="150" r="30" fill="#e74c3c" />
+                <text x="350" y="158" text-anchor="middle" fill="white" font-size="14" font-weight="bold">−</text>
+
+                <!-- Add children: 2, 3 -->
+                <line x1="150" y1="180" x2="100" y2="230" stroke="#2c3e50" stroke-width="2" />
+                <circle cx="100" cy="240" r="25" fill="#27ae60" />
+                <text x="100" y="248" text-anchor="middle" fill="white" font-size="14" font-weight="bold">2</text>
+
+                <line x1="150" y1="180" x2="200" y2="230" stroke="#2c3e50" stroke-width="2" />
+                <circle cx="200" cy="240" r="25" fill="#27ae60" />
+                <text x="200" y="248" text-anchor="middle" fill="white" font-size="14" font-weight="bold">3</text>
+
+                <!-- Subtract children: 10, 5 -->
+                <line x1="350" y1="180" x2="300" y2="230" stroke="#2c3e50" stroke-width="2" />
+                <circle cx="300" cy="240" r="25" fill="#27ae60" />
+                <text x="300" y="248" text-anchor="middle" fill="white" font-size="14" font-weight="bold">10</text>
+
+                <line x1="350" y1="180" x2="400" y2="230" stroke="#2c3e50" stroke-width="2" />
+                <circle cx="400" cy="240" r="25" fill="#27ae60" />
+                <text x="400" y="248" text-anchor="middle" fill="white" font-size="14" font-weight="bold">5</text>
+            </svg>
+            <p><strong>Expression:</strong> <code>multiply add 2 3 subtract 10 5</code></p>
+        </div>
+
+        <h2>Polish Notation in Pangea</h2>
+
+        <p>Pangea extends basic Polish notation with named operations:</p>
+
+        <pre><code>// Instead of: + 5 6
+add 5 6
+
+// Instead of: * + 2 3 - 10 5
+multiply add 2 3 subtract 10 5
+
+// With variables and control flow
+set x 10
+if greater x 5
+    print " x is large "
+    print " x is small "</code></pre>
+
+        <h2>Why Use Polish Notation?</h2>
+
+        <div class="example-box">
+            <h3>✓ Consistency</h3>
+            <p>Every expression follows the same pattern: <code>operation arg1 arg2 ... argN</code></p>
+
+            <h3>✓ Extensibility</h3>
+            <p>Easy to add new operations without worrying about precedence.</p>
+
+            <h3>✓ Simplicity</h3>
+            <p>No need for complex parsing rules or ambiguity resolution.</p>
+
+            <h3>✓ Natural for Functional Programming</h3>
+            <p>Functions as first-class operators fit naturally.</p>
+        </div>
+
+        <div class="warning-box">
+            <h3>⚠ Trade-off: Readability</h3>
+            <p>While unambiguous and consistent, Polish notation can be less intuitive for humans accustomed to
+                mathematical infix notation. However, with practice, it becomes natural.</p>
+        </div>
+
+        <h2>Practice Examples</h2>
+
+        <p>Try to evaluate these in your head:</p>
+
+        <div class="interactive-demo">
+            <h4>1. <code>add multiply 2 3 4</code></h4>
+            <details>
+                <summary>Show answer</summary>
+                <p><code>multiply 2 3</code> = 6<br>
+                    <code>add 6 4</code> = <strong>10</strong>
+                </p>
+            </details>
+
+            <h4>2. <code>multiply add 1 2 add 3 4</code></h4>
+            <details>
+                <summary>Show answer</summary>
+                <p><code>add 1 2</code> = 3<br>
+                    <code>add 3 4</code> = 7<br>
+                    <code>multiply 3 7</code> = <strong>21</strong>
+                </p>
+            </details>
+
+            <h4>3. <code>subtract multiply 5 5 multiply 3 3</code></h4>
+            <details>
+                <summary>Show answer</summary>
+                <p><code>multiply 5 5</code> = 25<br>
+                    <code>multiply 3 3</code> = 9<br>
+                    <code>subtract 25 9</code> = <strong>16</strong>
+                </p>
+            </details>
+        </div>
+
+        <div class="info-box">
+            <h3>🎓 Next Step</h3>
+            <p>Now that you understand Polish notation, learn how Pangea <a href="evaluation.html"
+                    style="color: var(--secondary-color);"><strong>evaluates expressions</strong></a> using recursive
+                descent and phrase length calculation.</p>
+        </div>
+    </main>
+
+    <footer>
+        <p>Pangea/Pang &copy; 2026 | MIT License</p>
+    </footer>
+</body>
+
+</html>

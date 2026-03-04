@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pangea/Pang - Polish Notation Language Documentation</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <header>
+        <h1>🌍 Pangea / Pang</h1>
+        <p>A Prefix (Polish) Notation Language Interpreter in Lua</p>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="polish-notation.html">Polish Notation</a></li>
+            <li><a href="evaluation.html">Evaluation Mechanism</a></li>
+            <li><a href="examples.html">Examples</a></li>
+            <li><a href="reference.html">Language Reference</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <h2>Welcome to Pangea Documentation</h2>
+
+        <p>Pangea (also known as Pang) is a <strong>prefix notation</strong> (Polish notation) programming language
+            implemented as an interpreter in Lua. It features a unique evaluation mechanism based on recursive descent
+            and supports bilingual keywords (English and Italian).</p>
+
+        <div class="info-box">
+            <h3>Quick Facts</h3>
+            <ul>
+                <li><strong>Version:</strong> 028 (PanGea:1.0.1)</li>
+                <li><strong>Implementation:</strong> Lua interpreter</li>
+                <li><strong>Notation:</strong> Prefix (Polish)</li>
+                <li><strong>Languages:</strong> English and Italian keywords</li>
+                <li><strong>License:</strong> MIT</li>
+            </ul>
+        </div>
+
+        <h2>What is Polish Notation?</h2>
+
+        <p>In Polish (prefix) notation, operators come <strong>before</strong> their operands:</p>
+
+        <div class="example-box">
+            <h4>Standard Infix:</h4>
+            <code>5 + 6</code> → Result: 11
+
+            <h4>Polish Prefix (Pangea):</h4>
+            <code>add 5 6</code> → Result: 11
+        </div>
+
+        <p>This notation eliminates the need for parentheses and operator precedence rules. Everything is evaluated
+            left-to-right based on each operator's <strong>arity</strong> (number of arguments).</p>
+
+        <h2>Key Features</h2>
+
+        <h3>🔤 Bilingual Support</h3>
+        <p>Write programs in English or Italian:</p>
+
+        <pre><code>// English
+print add 5 6
+
+// Italian
+stampa somma 5 6</code></pre>
+
+        <h3>🔧 Core Capabilities</h3>
+        <ul>
+            <li><strong>Arithmetic:</strong> add, multiply, modulus</li>
+            <li><strong>Logic:</strong> if, while, equal, greater, not</li>
+            <li><strong>Variables:</strong> set/get with lexical scoping</li>
+            <li><strong>Functions:</strong> define_word for user-defined words</li>
+            <li><strong>Strings:</strong> Multi-word quoted strings</li>
+            <li><strong>File includes:</strong> Modular program composition</li>
+        </ul>
+
+        <h3>🎯 How It Works</h3>
+
+        <p>The interpreter operates in three main phases:</p>
+
+        <div class="diagram">
+            <svg width="600" height="200" viewBox="0 0 600 200">
+                <!-- Tokenization -->
+                <rect x="20" y="40" width="150" height="80" fill="#3498db" rx="8" />
+                <text x="95" y="85" text-anchor="middle" fill="white" font-size="16"
+                    font-weight="bold">Tokenization</text>
+                <text x="95" y="105" text-anchor="middle" fill="white" font-size="12">program_words()</text>
+
+                <!-- Arrow -->
+                <path d="M 170 80 L 210 80" stroke="#2c3e50" stroke-width="3" fill="none"
+                    marker-end="url(#arrowhead)" />
+
+                <!-- Phrase Length -->
+                <rect x="210" y="40" width="150" height="80" fill="#e74c3c" rx="8" />
+                <text x="285" y="85" text-anchor="middle" fill="white" font-size="16" font-weight="bold">Parse
+                    Tree</text>
+                <text x="285" y="105" text-anchor="middle" fill="white" font-size="12">phrase_length()</text>
+
+                <!-- Arrow -->
+                <path d="M 360 80 L 400 80" stroke="#2c3e50" stroke-width="3" fill="none"
+                    marker-end="url(#arrowhead)" />
+
+                <!-- Evaluation -->
+                <rect x="400" y="40" width="150" height="80" fill="#27ae60" rx="8" />
+                <text x="475" y="85" text-anchor="middle" fill="white" font-size="16"
+                    font-weight="bold">Evaluation</text>
+                <text x="475" y="105" text-anchor="middle" fill="white" font-size="12">evaluate_word()</text>
+
+                <!-- Arrow definitions -->
+                <defs>
+                    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                        <polygon points="0 0, 10 3, 0 6" fill="#2c3e50" />
+                    </marker>
+                </defs>
+
+                <!-- Labels -->
+                <text x="95" y="160" text-anchor="middle" fill="#2c3e50" font-size="13">Split input into tokens</text>
+                <text x="285" y="160" text-anchor="middle" fill="#2c3e50" font-size="13">Calculate expression
+                    sizes</text>
+                <text x="475" y="160" text-anchor="middle" fill="#2c3e50" font-size="13">Execute recursively</text>
+            </svg>
+        </div>
+
+        <h2>Getting Started</h2>
+
+        <h3>Running Pangea</h3>
+        <pre><code># REPL mode
+lua src/pangea1/main.lua
+
+# Execute a file
+lua src/pangea1/main.lua tests/fizzbuzz.words
+
+# Italian mode
+lua src/pangea1/main.lua italian tests/fizzbuzz.parole
+
+# Execute file then enter REPL
+lua src/pangea1/main.lua tests/factorial.words -</code></pre>
+
+        <h3>Your First Program</h3>
+
+        <div class="example-box">
+            <h4>hello.words</h4>
+            <pre><code>print " Hello, World! "
+print add 40 2</code></pre>
+
+            <h4>Output:</h4>
+            <pre><code>Hello, World!
+42</code></pre>
+        </div>
+
+        <h2>Learn More</h2>
+
+        <p>Explore the documentation sections:</p>
+
+        <ul style="font-size: 1.1rem; line-height: 2;">
+            <li><a href="polish-notation.html" style="color: var(--secondary-color);"><strong>Polish Notation
+                        Tutorial</strong></a> - Deep dive into prefix notation</li>
+            <li><a href="evaluation.html" style="color: var(--secondary-color);"><strong>Evaluation
+                        Mechanism</strong></a> - How the interpreter works (with animations!)</li>
+            <li><a href="examples.html" style="color: var(--secondary-color);"><strong>Examples</strong></a> - FizzBuzz,
+                factorial, and more</li>
+            <li><a href="reference.html" style="color: var(--secondary-color);"><strong>Language Reference</strong></a>
+                - Complete list of built-in words</li>
+        </ul>
+
+        <div class="info-box">
+            <h3>💡 Philosophy</h3>
+            <p>Pangea was designed as an exploration of Polish notation as a programming paradigm. By eliminating infix
+                operators and parentheses, it creates a consistent, unambiguous syntax where every expression follows
+                the same pattern: <code>operator arg1 arg2 ... argN</code></p>
+        </div>
+    </main>
+
+    <footer>
+        <p>Pangea/Pang &copy; 2026 | MIT License | <a href="https://github.com/arkenidar/pangea">GitHub Repository</a>
+        </p>
+    </footer>
+</body>
+
+</html>

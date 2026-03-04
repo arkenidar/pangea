@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Language Reference - Pangea Documentation</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .word-entry {
+            background: #f8f9fa;
+            border-left: 4px solid var(--secondary-color);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+
+        .word-entry h3 {
+            margin-top: 0;
+            color: var(--secondary-color);
+        }
+
+        .signature {
+            background: var(--code-bg);
+            color: var(--code-text);
+            padding: 0.8rem;
+            border-radius: 4px;
+            font-family: monospace;
+            margin: 1rem 0;
+        }
+
+        .category {
+            background: var(--secondary-color);
+            color: white;
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            margin-right: 0.5rem;
+        }
+
+        .arity-badge {
+            background: var(--accent-color);
+            color: white;
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>🌍 Pangea / Pang</h1>
+        <p>Complete Language Reference</p>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="polish-notation.html">Polish Notation</a></li>
+            <li><a href="evaluation.html">Evaluation Mechanism</a></li>
+            <li><a href="examples.html">Examples</a></li>
+            <li><a href="reference.html">Language Reference</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <h2>Language Reference</h2>
+
+        <p>Complete reference of all built-in words in Pangea. Each word is shown with its English and Italian name.</p>
+
+        <div class="info-box">
+            <h3>Notation</h3>
+            <p><strong>Arity</strong> refers to how many arguments a word takes.<br>
+                <strong>&lt;angle brackets&gt;</strong> indicate required arguments.
+            </p>
+        </div>
+
+        <h2>📤 Output</h2>
+
+        <div class="word-entry">
+            <h3>print / stampa</h3>
+            <span class="category">Output</span>
+            <span class="arity-badge">Arity: 1</span>
+
+            <div class="signature">print &lt;value&gt;</div>
+
+            <p><strong>Description:</strong> Evaluates and prints the value to standard output, followed by a newline.
+            </p>
+
+            <h4>Example:</h4>
+            <pre><code>print 42
+print add 5 6
+print " Hello, World! "</code></pre>
+
+            <h4>Output:</h4>
+            <pre><code>42
+11
+Hello, World!</code></pre>
+        </div>
+
+        <h2>➕ Arithmetic</h2>
+
+        <div class="word-entry">
+            <h3>add / somma</h3>
+            <span class="category">Arithmetic</span>
+            <span class="arity-badge">Arity: 2</span>
+
+            <div class="signature">add &lt;number1&gt; &lt;number2&gt;</div>
+
+            <p><strong>Description:</strong> Returns the sum of two numbers.</p>
+
+            <h4>Example:</h4>
+            <pre><code>add 5 6          → 11
+add -3 10        → 7
+add add 1 2 3    → 6</code></pre>
+        </div>
+
+        <div class="word-entry">
+            <h3>multiply / moltiplica</h3>
+            <span class="category">Arithmetic</span>
+            <span class="arity-badge">Arity: 2</span>
+
+            <div class="signature">multiply &lt;number1&gt; &lt;number2&gt;</div>
+
+            <p><strong>Description:</strong> Returns the product of two numbers.</p>
+
+            <h4>Example:</h4>
+            <pre><code>multiply 7 8           → 56
+multiply 3 add 2 3     → 15
+multiply -1 5          → -5</code></pre>
+        </div>
+
+        <div class="word-entry">
+            <h3>modulus / modulo</h3>
+            <span class="category">Arithmetic</span>
+            <span class="arity-badge">Arity: 2</span>
+
+            <div class="signature">modulus &lt;dividend&gt; &lt;divisor&gt;</div>
+
+            <p><strong>Description:</strong> Returns the remainder after division (modulo operation).</p>
+
+            <h4>Example:</h4>
+            <pre><code>modulus 10 3      → 1
+modulus 15 5      → 0
+modulus 7 2       → 1</code></pre>
+
+            <h4>Use Case:</h4>
+            <p>Check if a number is divisible by another:</p>
+            <pre><code>equal 0 modulus 15 3    → true (15 is divisible by 3)</code></pre>
+        </div>
+
+        <h2>🔢 Comparison</h2>
+
+        <div class="word-entry">
+            <h3>equal / uguale</h3>
+            <span class="category">Comparison</span>
+            <span class="arity-badge">Arity: 2</span>
+
+            <div class="signature">equal &lt;value1&gt; &lt;value2&gt;</div>
+
+            <p><strong>Description:</strong> Returns true if both values are equal, false otherwise.</p>
+
+            <h4>Example:</h4>
+            <pre><code>equal 5 5              → true
+equal 3 4              → false
+equal " hello " " hello "  → true</code></pre>
+        </div>
+
+        <div class="word-entry">
+            <h3>greater / maggiore</h3>
+            <span class="category">Comparison</span>
+            <span class="arity-badge">Arity: 2</span>
+
+            <div class="signature">greater &lt;value1&gt; &lt;value2&gt;</div>
+
+            <p><strong>Description:</strong> Returns true if value1 > value2.</p>
+
+            <h4>Example:</h4>
+            <pre><code>greater 10 5      → true
+greater 3 7       → false
+greater 5 5       → false</code></pre>
+        </div>
+
+        <h2>🔀 Logic</h2>
+
+        <div class="word-entry">
+            <h3>true / vero</h3>
+            <span class="category">Logic</span>
+            <span class="arity-badge">Arity: 0</span>
+
+            <div class="signature">true</div>
+
+            <p><strong>Description:</strong> Returns the boolean value true.</p>
+        </div>
+
+        <div class="word-entry">
+            <h3>false / falso</h3>
+            <span class="category">Logic</span>
+            <span class="arity-badge">Arity: 0</span>
+
+            <div class="signature">false</div>
+
+            <p><strong>Description:</strong> Returns the boolean value false.</p>
+        </div>
+
+        <div class="word-entry">
+            <h3>not / non</h3>
+            <span class="category">Logic</span>
+            <span class="arity-badge">Arity: 1</span>
+
+            <div class="signature">not &lt;boolean&gt;</div>
+
+            <p><strong>Description:</strong> Logical negation. Returns the opposite boolean value.</p>
+
+            <h4>Example:</h4>
+            <pre><code>not true              → false
+not false             → true
+not equal 3 4         → true
+not greater 5 10      → true</code></pre>
+        </div>
+
+        <h2>🎯 Control Flow</h2>
+
+        <div class="word-entry">
+            <h3>if / se</h3>
+            <span class="category">Control Flow</span>
+            <span class="arity-badge">Arity: 3</span>
+
+            <div class="signature">if &lt;condition&gt; &lt;then-branch&gt; &lt;else-branch&gt;</div>
+
+            <p><strong>Description:</strong> Conditional execution. Evaluates condition, then executes either the
+                then-branch or else-branch.</p>
+
+            <h4>Example:</h4>
+            <pre><code>if greater 5 3
+    print " 5 is greater "
+    print " 5 is not greater "</code></pre>
+
+            <h4>With blocks:</h4>
+            <pre><code>if equal get x 10 do
+    print " x is 10 "
+    print " doing something "
+end do
+    print " x is not 10 "
+end</code></pre>
+        </div>
+
+        <div class="word-entry">
+            <h3>while / mentre</h3>
+            <span class="category">Control Flow</span>
+            <span class="arity-badge">Arity: 2</span>
+
+            <div class="signature">while &lt;condition&gt; &lt;body&gt;</div>
+
+            <p><strong>Description:</strong> Loop that executes body while condition remains true.</p>
+
+            <h4>Example:</h4>
+            <pre><code>set i 1
+while not greater get i 5 do
+    print get i
+    set i add get i 1
+end</code></pre>
+
+            <h4>Output:</h4>
+            <pre><code>1
+2
+3
+4
+5</code></pre>
+        </div>
+
+        <div class="word-entry">
+            <h3>do ... end / fai ... fine</h3>
+            <span class="category">Control Flow</span>
+            <span class="arity-badge">Special</span>
+
+            <div class="signature">do &lt;statement1&gt; &lt;statement2&gt; ... end</div>
+
+            <p><strong>Description:</strong> Groups multiple statements into a single expression. Returns the value of
+                the last statement.</p>
+
+            <h4>Example:</h4>
+            <pre><code>set result do
+    set temp 5
+    multiply temp temp
+end
+print get result    → 25</code></pre>
+        </div>
+
+        <h2>📦 Variables</h2>
+
+        <div class="word-entry">
+            <h3>set / metti</h3>
+            <span class="category">Variables</span>
+            <span class="arity-badge">Arity: 2</span>
+
+            <div class="signature">set &lt;variable-name&gt; &lt;value&gt;</div>
+
+            <p><strong>Description:</strong> Stores a value in a variable in the current scope.</p>
+
+            <h4>Example:</h4>
+            <pre><code>set x 10
+set name : Alice
+set result add 5 6</code></pre>
+
+            <p><strong>Note:</strong> Use <code>:</code> to pass literal names without evaluation.</p>
+        </div>
+
+        <div class="word-entry">
+            <h3>get / prendi</h3>
+            <span class="category">Variables</span>
+            <span class="arity-badge">Arity: 1</span>
+
+            <div class="signature">get &lt;variable-name&gt;</div>
+
+            <p><strong>Description:</strong> Retrieves the value of a variable from the current scope.</p>
+
+            <h4>Example:</h4>
+            <pre><code>set x 42
+print get x       → 42
+print get : x     → 42</code></pre>
+        </div>
+
+        <div class="word-entry">
+            <h3>increment / incrementa</h3>
+            <span class="category">Variables</span>
+            <span class="arity-badge">Arity: 1</span>
+
+            <div class="signature">increment &lt;variable-name&gt;</div>
+
+            <p><strong>Description:</strong> Increments a numeric variable by 1 and returns the new value.</p>
+
+            <h4>Example:</h4>
+            <pre><code>set i 5
+increment : i     → 6
+print get i       → 6</code></pre>
+        </div>
+
+        <h2>🔧 Functions</h2>
+
+        <div class="word-entry">
+            <h3>define_word / definisci_parola</h3>
+            <span class="category">Functions</span>
+            <span class="arity-badge">Arity: 3</span>
+
+            <div class="signature">define_word &lt;name&gt; &lt;arity&gt; &lt;body&gt;</div>
+
+            <p><strong>Description:</strong> Defines a new word (function) with the specified name, number of arguments,
+                and body.</p>
+
+            <h4>Example:</h4>
+            <pre><code>define_word square 1
+    multiply argument 1 argument 1
+
+define_word sum3 3
+    add argument 1 add argument 2 argument 3
+
+print square 5      → 25
+print sum3 1 2 3    → 6</code></pre>
+        </div>
+
+        <div class="word-entry">
+            <h3>argument / argomento</h3>
+            <span class="category">Functions</span>
+            <span class="arity-badge">Arity: 1</span>
+
+            <div class="signature">argument &lt;index&gt;</div>
+
+            <p><strong>Description:</strong> Accesses a function parameter by index (1-based).</p>
+
+            <h4>Example:</h4>
+            <pre><code>define_word greet 2 do
+    print argument 1
+    print argument 2
+end
+
+greet " Hello " " World "</code></pre>
+        </div>
+
+        <div class="word-entry">
+            <h3>namespace</h3>
+            <span class="category">Functions</span>
+            <span class="arity-badge">Arity: 0</span>
+
+            <div class="signature">namespace</div>
+
+            <p><strong>Description:</strong> Returns the current function's namespace (variable table).</p>
+
+            <h4>Example:</h4>
+            <pre><code>define_word test 1
+    variable_set namespace : x argument 1
+    
+test 42</code></pre>
+        </div>
+
+        <h2>📝 Advanced Variables</h2>
+
+        <div class="word-entry">
+            <h3>variable_set / metti_variabile</h3>
+            <span class="category">Advanced</span>
+            <span class="arity-badge">Arity: 3</span>
+
+            <div class="signature">variable_set &lt;namespace&gt; &lt;name&gt; &lt;value&gt;</div>
+
+            <p><strong>Description:</strong> Sets a variable in a specific namespace (scope).</p>
+
+            <h4>Example:</h4>
+            <pre><code>variable_set namespace : x 100</code></pre>
+        </div>
+
+        <div class="word-entry">
+            <h3>variable_get / prendi_variabile</h3>
+            <span class="category">Advanced</span>
+            <span class="arity-badge">Arity: 2</span>
+
+            <div class="signature">variable_get &lt;namespace&gt; &lt;name&gt;</div>
+
+            <p><strong>Description:</strong> Gets a variable from a specific namespace (scope).</p>
+
+            <h4>Example:</h4>
+            <pre><code>print variable_get namespace : x</code></pre>
+        </div>
+
+        <h2>📄 File Operations</h2>
+
+        <div class="word-entry">
+            <h3>!</h3>
+            <span class="category">File</span>
+            <span class="arity-badge">Arity: 1</span>
+
+            <div class="signature">! &lt;filename&gt;</div>
+
+            <p><strong>Description:</strong> Executes the code in the specified file.</p>
+
+            <h4>Example:</h4>
+            <pre><code>! : helper.words
+! : ../tests/factorial.words</code></pre>
+
+            <p><strong>Note:</strong> File paths are relative to the current working directory.</p>
+        </div>
+
+        <h2>🎨 Special Operators</h2>
+
+        <div class="word-entry">
+            <h3>: (colon)</h3>
+            <span class="category">Special</span>
+            <span class="arity-badge">Arity: 1</span>
+
+            <div class="signature">: &lt;word&gt;</div>
+
+            <p><strong>Description:</strong> Returns the next word as a literal string without evaluating it.</p>
+
+            <h4>Example:</h4>
+            <pre><code>set x : hello       // Stores "hello", not the value of a word named hello
+get : x             // Retrieves x by name
+print : " literal " // Prints "literal"</code></pre>
+
+            <h4>Use Cases:</h4>
+            <ul>
+                <li>Variable names in set/get</li>
+                <li>String literals</li>
+                <li>Function names as data</li>
+            </ul>
+        </div>
+
+        <div class="word-entry">
+            <h3>dont / non_fare</h3>
+            <span class="category">Special</span>
+            <span class="arity-badge">Arity: 1</span>
+
+            <div class="signature">dont &lt;expression&gt;</div>
+
+            <p><strong>Description:</strong> Consumes one argument but does nothing. Used to comment out code or create
+                no-op placeholders.</p>
+
+            <h4>Example:</h4>
+            <pre><code>dont print " This won't be executed "
+print " But this will "</code></pre>
+        </div>
+
+        <div class="word-entry">
+            <h3>string / stringa</h3>
+            <span class="category">Special</span>
+            <span class="arity-badge">Arity: 1</span>
+
+            <div class="signature">string &lt;word&gt;</div>
+
+            <p><strong>Description:</strong> Returns the word as a string value (similar to <code>:</code>).</p>
+
+            <h4>Example:</h4>
+            <pre><code>print string hello    → "hello"</code></pre>
+        </div>
+
+        <h2>❓ Utilities</h2>
+
+        <div class="word-entry">
+            <h3>?</h3>
+            <span class="category">Utility</span>
+            <span class="arity-badge">Arity: 0</span>
+
+            <div class="signature">?</div>
+
+            <p><strong>Description:</strong> Lists all defined words with their arities.</p>
+
+            <h4>Example:</h4>
+            <pre><code>?</code></pre>
+
+            <h4>Output:</h4>
+            <pre><code>print&lt;1 add&lt;2 multiply&lt;2 if&lt;3 while&lt;2 ...</code></pre>
+        </div>
+
+        <div class="word-entry">
+            <h3>exit / esci</h3>
+            <span class="category">Utility</span>
+            <span class="arity-badge">Arity: 0</span>
+
+            <div class="signature">exit</div>
+
+            <p><strong>Description:</strong> Exits the REPL.</p>
+
+            <h4>Example:</h4>
+            <pre><code>exit</code></pre>
+        </div>
+
+        <h2>🌐 Bilingual Reference Table</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Category</th>
+                    <th>English</th>
+                    <th>Italian</th>
+                    <th>Arity</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Output</td>
+                    <td>print</td>
+                    <td>stampa</td>
+                    <td>1</td>
+                </tr>
+                <tr>
+                    <td>Arithmetic</td>
+                    <td>add</td>
+                    <td>somma</td>
+                    <td>2</td>
+                </tr>
+                <tr>
+                    <td>Arithmetic</td>
+                    <td>multiply</td>
+                    <td>moltiplica</td>
+                    <td>2</td>
+                </tr>
+                <tr>
+                    <td>Arithmetic</td>
+                    <td>modulus</td>
+                    <td>modulo</td>
+                    <td>2</td>
+                </tr>
+                <tr>
+                    <td>Comparison</td>
+                    <td>equal</td>
+                    <td>uguale</td>
+                    <td>2</td>
+                </tr>
+                <tr>
+                    <td>Comparison</td>
+                    <td>greater</td>
+                    <td>maggiore</td>
+                    <td>2</td>
+                </tr>
+                <tr>
+                    <td>Logic</td>
+                    <td>true</td>
+                    <td>vero</td>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <td>Logic</td>
+                    <td>false</td>
+                    <td>falso</td>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <td>Logic</td>
+                    <td>not</td>
+                    <td>non</td>
+                    <td>1</td>
+                </tr>
+                <tr>
+                    <td>Control Flow</td>
+                    <td>if</td>
+                    <td>se</td>
+                    <td>3</td>
+                </tr>
+                <tr>
+                    <td>Control Flow</td>
+                    <td>while</td>
+                    <td>mentre</td>
+                    <td>2</td>
+                </tr>
+                <tr>
+                    <td>Control Flow</td>
+                    <td>do</td>
+                    <td>fai</td>
+                    <td>special</td>
+                </tr>
+                <tr>
+                    <td>Control Flow</td>
+                    <td>end</td>
+                    <td>fine</td>
+                    <td>special</td>
+                </tr>
+                <tr>
+                    <td>Variables</td>
+                    <td>set</td>
+                    <td>metti</td>
+                    <td>2</td>
+                </tr>
+                <tr>
+                    <td>Variables</td>
+                    <td>get</td>
+                    <td>prendi</td>
+                    <td>1</td>
+                </tr>
+                <tr>
+                    <td>Variables</td>
+                    <td>increment</td>
+                    <td>incrementa</td>
+                    <td>1</td>
+                </tr>
+                <tr>
+                    <td>Functions</td>
+                    <td>define_word</td>
+                    <td>definisci_parola</td>
+                    <td>3</td>
+                </tr>
+                <tr>
+                    <td>Functions</td>
+                    <td>argument</td>
+                    <td>argomento</td>
+                    <td>1</td>
+                </tr>
+                <tr>
+                    <td>Special</td>
+                    <td>dont</td>
+                    <td>non_fare</td>
+                    <td>1</td>
+                </tr>
+                <tr>
+                    <td>Special</td>
+                    <td>string</td>
+                    <td>stringa</td>
+                    <td>1</td>
+                </tr>
+                <tr>
+                    <td>Special</td>
+                    <td>exit</td>
+                    <td>esci</td>
+                    <td>0</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="info-box">
+            <h3>💡 Missing a Feature?</h3>
+            <p>Pangea is intentionally minimal. Missing features include:</p>
+            <ul>
+                <li>Subtraction and division (use <code>add ... -N</code> for subtraction)</li>
+                <li>I/O operations (read from stdin, write to files)</li>
+                <li>Lists/arrays</li>
+                <li>Dictionaries/maps</li>
+                <li>String manipulation</li>
+                <li>Break statement in loops</li>
+            </ul>
+            <p>These can be added by defining new Lua functions in <code>word_definitions</code>.</p>
+        </div>
+
+        <div class="warning-box">
+            <h3>⚠ Known Limitations</h3>
+            <ul>
+                <li>No tail-call optimization (deep recursion may overflow)</li>
+                <li>No garbage collection control</li>
+                <li>Limited error messages</li>
+                <li>Case-sensitive keywords</li>
+                <li>File paths are relative to CWD, not script location</li>
+            </ul>
+        </div>
+    </main>
+
+    <footer>
+        <p>Pangea/Pang &copy; 2026 | MIT License</p>
+    </footer>
+</body>
+
+</html>

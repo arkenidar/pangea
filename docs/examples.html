@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Examples - Pangea Documentation</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <header>
+        <h1>🌍 Pangea / Pang</h1>
+        <p>Practical Code Examples</p>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="polish-notation.html">Polish Notation</a></li>
+            <li><a href="evaluation.html">Evaluation Mechanism</a></li>
+            <li><a href="examples.html">Examples</a></li>
+            <li><a href="reference.html">Language Reference</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <h2>Code Examples</h2>
+
+        <p>Learn Pangea through practical examples, from simple arithmetic to recursive functions.</p>
+
+        <h2>1. Hello World</h2>
+
+        <div class="example-box">
+            <h3>English Version</h3>
+            <pre><code>print " Hello, World! "</code></pre>
+
+            <h3>Italian Version</h3>
+            <pre><code>stampa " Ciao, Mondo! "</code></pre>
+
+            <h4>Output:</h4>
+            <pre><code>Hello, World!</code></pre>
+        </div>
+
+        <h2>2. Simple Arithmetic</h2>
+
+        <div class="example-box">
+            <h3>Addition and Multiplication</h3>
+            <pre><code>print add 5 6
+print multiply 7 8
+print add multiply 2 3 4</code></pre>
+
+            <h4>Output:</h4>
+            <pre><code>11
+56
+10</code></pre>
+
+            <h4>Explanation:</h4>
+            <ul>
+                <li><code>add 5 6</code> → 5 + 6 = 11</li>
+                <li><code>multiply 7 8</code> → 7 × 8 = 56</li>
+                <li><code>add multiply 2 3 4</code> → (2 × 3) + 4 = 10</li>
+            </ul>
+        </div>
+
+        <h2>3. Variables</h2>
+
+        <div class="example-box">
+            <h3>Setting and Getting Variables</h3>
+            <pre><code>set x 10
+set y 20
+print get x
+print add get x get y</code></pre>
+
+            <h4>Output:</h4>
+            <pre><code>10
+30</code></pre>
+
+            <h4>How it works:</h4>
+            <ul>
+                <li><code>set x 10</code> - Stores 10 in variable x</li>
+                <li><code>get x</code> - Retrieves the value of x</li>
+                <li>Variables are scoped to the current function/context</li>
+            </ul>
+        </div>
+
+        <h2>4. Conditional Logic (if)</h2>
+
+        <div class="example-box">
+            <h3>Simple If Statement</h3>
+            <pre><code>set x 15
+if greater get x 10
+    print " x is greater than 10 "
+    print " x is not greater than 10 "</code></pre>
+
+            <h4>Output:</h4>
+            <pre><code>x is greater than 10</code></pre>
+
+            <h4>Syntax:</h4>
+            <code>if &lt;condition&gt; &lt;then-branch&gt; &lt;else-branch&gt;</code>
+
+            <p>The <code>if</code> word takes exactly 3 arguments. Both branches are expressions that get evaluated only
+                if selected.</p>
+        </div>
+
+        <h2>5. Loops (while)</h2>
+
+        <div class="example-box">
+            <h3>Count to 5</h3>
+            <pre><code>set i 1
+while not greater get i 5 do
+    print get i
+    set i add get i 1
+end</code></pre>
+
+            <h4>Output:</h4>
+            <pre><code>1
+2
+3
+4
+5</code></pre>
+
+            <h4>Explanation:</h4>
+            <ul>
+                <li><code>while &lt;condition&gt; &lt;body&gt;</code> - Executes body while condition is true</li>
+                <li><code>do ... end</code> - Groups multiple statements</li>
+                <li>Loop continues while i ≤ 5</li>
+            </ul>
+        </div>
+
+        <h2>6. FizzBuzz</h2>
+
+        <div class="example-box">
+            <h3>Classic FizzBuzz (English)</h3>
+            <pre><code>set i 1
+while not greater get i 20 do
+    if equal 0 modulus get i 15
+        print " FizzBuzz "
+        if equal 0 modulus get i 3
+            print " Fizz "
+            if equal 0 modulus get i 5
+                print " Buzz "
+                print get i
+    set i add get i 1
+end</code></pre>
+
+            <h4>Sample Output:</h4>
+            <pre><code>1
+2
+Fizz
+4
+Buzz
+Fizz
+7
+8
+Fizz
+Buzz
+11
+Fizz
+13
+14
+FizzBuzz
+16
+17
+Fizz
+19
+Buzz</code></pre>
+        </div>
+
+        <div class="example-box">
+            <h3>FizzBuzz in Italian</h3>
+            <pre><code>metti i 1
+mentre non maggiore prendi i 20 fai
+    se uguale 0 modulo prendi i 15
+        stampa " FizzBuzz ... multiplo di 15 "
+        se uguale 0 modulo prendi i 3
+            stampa " Fizz ... multiplo di 3 "
+            se uguale 0 modulo prendi i 5
+                stampa " Buzz ... multiplo di 5 "
+                stampa prendi i
+    metti i somma prendi i 1
+fine</code></pre>
+        </div>
+
+        <h2>7. User-Defined Functions</h2>
+
+        <div class="example-box">
+            <h3>Square Function</h3>
+            <pre><code>define_word square 1
+    multiply argument 1 argument 1
+
+print square 5
+print square 12</code></pre>
+
+            <h4>Output:</h4>
+            <pre><code>25
+144</code></pre>
+
+            <h4>Syntax Breakdown:</h4>
+            <ul>
+                <li><code>define_word &lt;name&gt; &lt;arity&gt; &lt;body&gt;</code></li>
+                <li><code>square</code> - Function name</li>
+                <li><code>1</code> - Takes one argument</li>
+                <li><code>multiply argument 1 argument 1</code> - Function body</li>
+                <li><code>argument N</code> - Accesses the Nth parameter</li>
+            </ul>
+        </div>
+
+        <h2>8. Recursive Functions</h2>
+
+        <div class="example-box">
+            <h3>Factorial</h3>
+            <pre><code>define_word factorial 1
+    if equal 0 argument 1
+        1
+        multiply argument 1 factorial add -1 argument 1
+
+print factorial 0
+print factorial 4
+print factorial 5</code></pre>
+
+            <h4>Output:</h4>
+            <pre><code>1
+24
+120</code></pre>
+
+            <h4>How Recursion Works:</h4>
+            <ul>
+                <li>Base case: <code>if equal 0 argument 1</code> → return 1</li>
+                <li>Recursive case: <code>n × factorial(n - 1)</code></li>
+                <li>Example: factorial(4) = 4 × 3 × 2 × 1 = 24</li>
+            </ul>
+        </div>
+
+        <div class="example-box">
+            <h3>Fibonacci</h3>
+            <pre><code>define_word fib 1
+    if not greater argument 1 1
+        argument 1
+        add fib add -1 argument 1 fib add -2 argument 1
+
+print fib 0
+print fib 1
+print fib 5
+print fib 10</code></pre>
+
+            <h4>Output:</h4>
+            <pre><code>0
+1
+5
+55</code></pre>
+        </div>
+
+        <h2>9. The Colon Operator (:)</h2>
+
+        <div class="example-box">
+            <h3>Preventing Evaluation</h3>
+            <pre><code>set name : Alice
+print get : name
+
+define_word greet 1
+    print argument 1
+
+greet : " Hello! "</code></pre>
+
+            <h4>Output:</h4>
+            <pre><code>Alice
+Hello!</code></pre>
+
+            <h4>What : Does:</h4>
+            <p>The colon operator prevents the next word from being evaluated immediately. It's useful for:</p>
+            <ul>
+                <li>Variable names as data (not lookups)</li>
+                <li>Passing strings/literals to functions</li>
+                <li>Creating quoted expressions</li>
+            </ul>
+        </div>
+
+        <h2>10. File Includes</h2>
+
+        <div class="example-box">
+            <h3>main.words</h3>
+            <pre><code>print " Loading factorial... "
+! : factorial.words
+
+print " Computing factorial(5) "
+print factorial 5</code></pre>
+
+            <h3>factorial.words</h3>
+            <pre><code>define_word factorial 1
+    if equal 0 argument 1
+        1
+        multiply argument 1 factorial add -1 argument 1</code></pre>
+
+            <h4>Syntax:</h4>
+            <p><code>! : &lt;filename&gt;</code> - Executes the specified file</p>
+            <p>The <code>!</code> operator includes and runs another file's code.</p>
+        </div>
+
+        <h2>11. do...end Blocks</h2>
+
+        <div class="example-box">
+            <h3>Grouping Multiple Statements</h3>
+            <pre><code>set x 10
+
+if greater get x 5 do
+    print " x is greater than 5 "
+    print " The value is: "
+    print get x
+end do
+    print " x is not greater than 5 "
+end</code></pre>
+
+            <h4>Output (when x = 10):</h4>
+            <pre><code>x is greater than 5
+The value is:
+10</code></pre>
+
+            <h4>Usage:</h4>
+            <ul>
+                <li><code>do ... end</code> creates a block that evaluates all statements inside</li>
+                <li>Returns the value of the last expression</li>
+                <li>Useful for if/while branches that need multiple statements</li>
+            </ul>
+        </div>
+
+        <h2>12. Complex Example: Prime Number Check</h2>
+
+        <div class="example-box">
+            <h3>is_prime Function</h3>
+            <pre><code>define_word is_divisible 2
+    equal 0 modulus argument 1 argument 2
+
+define_word is_prime 1 do
+    set n argument 1
+    if not greater get n 1
+        false
+        if equal get n 2
+            true
+            do
+                set i 2
+                set prime true
+                while not greater get i multiply get n get n do
+                    if greater multiply get i get i get n
+                        set i multiply get n get n
+                        do
+                            if is_divisible get n get i
+                                set prime false
+                                dont nothing
+                            set i add get i 1
+                        end
+                end
+                get prime
+            end
+end
+
+print is_prime 2
+print is_prime 17
+print is_prime 20</code></pre>
+
+            <h4>Output:</h4>
+            <pre><code>true
+true
+false</code></pre>
+        </div>
+
+        <h2>13. Bilingual Programs</h2>
+
+        <p>The same logic in English and Italian:</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>English</th>
+                    <th>Italian</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>print</code></td>
+                    <td><code>stampa</code></td>
+                </tr>
+                <tr>
+                    <td><code>add</code></td>
+                    <td><code>somma</code></td>
+                </tr>
+                <tr>
+                    <td><code>multiply</code></td>
+                    <td><code>moltiplica</code></td>
+                </tr>
+                <tr>
+                    <td><code>set / get</code></td>
+                    <td><code>metti / prendi</code></td>
+                </tr>
+                <tr>
+                    <td><code>if</code></td>
+                    <td><code>se</code></td>
+                </tr>
+                <tr>
+                    <td><code>while</code></td>
+                    <td><code>mentre</code></td>
+                </tr>
+                <tr>
+                    <td><code>do / end</code></td>
+                    <td><code>fai / fine</code></td>
+                </tr>
+                <tr>
+                    <td><code>define_word</code></td>
+                    <td><code>definisci_parola</code></td>
+                </tr>
+                <tr>
+                    <td><code>argument</code></td>
+                    <td><code>argomento</code></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="warning-box">
+            <h3>⚠ Running Modes</h3>
+            <p>To run Italian programs:</p>
+            <pre><code>lua src/pangea1/main.lua italian program.parole</code></pre>
+            <p>For English (default):</p>
+            <pre><code>lua src/pangea1/main.lua program.words</code></pre>
+        </div>
+
+        <h2>Tips and Best Practices</h2>
+
+        <div class="info-box">
+            <h3>💡 Formatting</h3>
+            <ul>
+                <li>Use indentation to show structure (though not required)</li>
+                <li>One statement per line for readability</li>
+                <li>Group related logic with <code>do...end</code> blocks</li>
+            </ul>
+        </div>
+
+        <div class="info-box">
+            <h3>💡 Debugging</h3>
+            <ul>
+                <li>Use <code>print</code> liberally to trace execution</li>
+                <li>Type <code>?</code> in the REPL to see all available words</li>
+                <li>Test functions in isolation before combining</li>
+            </ul>
+        </div>
+
+        <div class="info-box">
+            <h3>💡 Performance</h3>
+            <ul>
+                <li>Recursion depth is limited by Lua's stack</li>
+                <li>No tail-call optimization</li>
+                <li>Consider iterative solutions for deep recursion</li>
+            </ul>
+        </div>
+
+        <div class="info-box">
+            <h3>🎓 Next Steps</h3>
+            <p>Explore the complete <a href="reference.html" style="color: var(--secondary-color);"><strong>Language
+                        Reference</strong></a> to see all built-in words and their usage.</p>
+        </div>
+    </main>
+
+    <footer>
+        <p>Pangea/Pang &copy; 2026 | MIT License</p>
+    </footer>
+</body>
+
+</html>

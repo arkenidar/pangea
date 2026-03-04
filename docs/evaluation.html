@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evaluation Mechanism - Pangea Documentation</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .step-animation {
+            margin: 2rem 0;
+            padding: 2rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        @keyframes highlight {
+
+            0%,
+            100% {
+                background: transparent;
+            }
+
+            50% {
+                background: #fff3cd;
+            }
+        }
+
+        .current-token {
+            animation: highlight 1.5s ease-in-out infinite;
+            padding: 0.5rem;
+            border-radius: 4px;
+        }
+
+        .phase {
+            background: white;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-left: 4px solid var(--secondary-color);
+            border-radius: 4px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>🌍 Pangea / Pang</h1>
+        <p>How the Interpreter Works</p>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="polish-notation.html">Polish Notation</a></li>
+            <li><a href="evaluation.html">Evaluation Mechanism</a></li>
+            <li><a href="examples.html">Examples</a></li>
+            <li><a href="reference.html">Language Reference</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <h2>The Evaluation Mechanism</h2>
+
+        <p>Pangea's interpreter is built around three core functions that work together to parse and execute programs:
+        </p>
+
+        <div class="diagram">
+            <svg width="700" height="280" viewBox="0 0 700 280">
+                <!-- program_words -->
+                <rect x="50" y="50" width="180" height="100" fill="#3498db" rx="8" />
+                <text x="140" y="95" text-anchor="middle" fill="white" font-size="18"
+                    font-weight="bold">program_words()</text>
+                <text x="140" y="120" text-anchor="middle" fill="white" font-size="13">Tokenizer</text>
+
+                <!-- phrase_length -->
+                <rect x="260" y="50" width="180" height="100" fill="#e74c3c" rx="8" />
+                <text x="350" y="95" text-anchor="middle" fill="white" font-size="18"
+                    font-weight="bold">phrase_length()</text>
+                <text x="350" y="120" text-anchor="middle" fill="white" font-size="13">Parser</text>
+
+                <!-- evaluate_word -->
+                <rect x="470" y="50" width="180" height="100" fill="#27ae60" rx="8" />
+                <text x="560" y="95" text-anchor="middle" fill="white" font-size="18"
+                    font-weight="bold">evaluate_word()</text>
+                <text x="560" y="120" text-anchor="middle" fill="white" font-size="13">Evaluator</text>
+
+                <!-- Arrows -->
+                <path d="M 230 100 L 255 100" stroke="#2c3e50" stroke-width="3" marker-end="url(#arrow)" />
+                <path d="M 440 100 L 465 100" stroke="#2c3e50" stroke-width="3" marker-end="url(#arrow)" />
+
+                <!-- word_definitions (data structure) -->
+                <rect x="245" y="180" width="210" height="60" fill="#95a5a6" rx="8" />
+                <text x="350" y="215" text-anchor="middle" fill="white" font-size="16"
+                    font-weight="bold">word_definitions{}</text>
+
+                <!-- Connections to word_definitions -->
+                <path d="M 350 150 L 350 175" stroke="#7f8c8d" stroke-width="2" stroke-dasharray="5,5" />
+                <path d="M 560 150 L 450 175" stroke="#7f8c8d" stroke-width="2" stroke-dasharray="5,5" />
+
+                <defs>
+                    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                        <polygon points="0 0, 10 3, 0 6" fill="#2c3e50" />
+                    </marker>
+                </defs>
+            </svg>
+        </div>
+
+        <h2>Phase 1: Tokenization (program_words)</h2>
+
+        <div class="phase">
+            <h3>Input: Text String</h3>
+            <pre><code>print add 5 6</code></pre>
+
+            <h3>Process:</h3>
+            <ul>
+                <li>Split by whitespace</li>
+                <li>Handle quoted strings (preserves spaces inside quotes)</li>
+                <li>Build <code>words[]</code> array</li>
+            </ul>
+
+            <h3>Output: Token Array</h3>
+            <div style="margin: 1rem 0;">
+                <span class="token">print</span>
+                <span class="token">add</span>
+                <span class="token number">5</span>
+                <span class="token number">6</span>
+            </div>
+        </div>
+
+        <div class="example-box">
+            <h4>String Handling Example</h4>
+            <pre><code>print " Hello World "</code></pre>
+            <p>Tokenizes to: <code>["print", "Hello World"]</code></p>
+            <p>The quotes are removed, and the text between them becomes a single token.</p>
+        </div>
+
+        <h2>Phase 2: Phrase Length Calculation (phrase_length)</h2>
+
+        <p>This function determines how many tokens each expression consumes. It's the key to understanding nested
+            expressions.</p>
+
+        <div class="phase">
+            <h3>Algorithm:</h3>
+            <pre><code>function phrase_length(word_index)
+  if word is a number → return 1
+  if word is a literal (after :) → return 1
+  if word is "do" → count to matching "end"
+  
+  word_definition = lookup(word)
+  arity = word_definition.argument_count
+  
+  length = 1  // the operator itself
+  for each argument (1 to arity):
+    length += phrase_length(next_position)
+  
+  return length</code></pre>
+        </div>
+
+        <h3>Visual Example: <code>add multiply 2 3 4</code></h3>
+
+        <div class="step-animation">
+            <div style="margin: 2rem 0;">
+                <div style="margin: 1rem 0;">
+                    <span class="token operator">add</span>
+                    <span class="token operator">multiply</span>
+                    <span class="token number">2</span>
+                    <span class="token number">3</span>
+                    <span class="token number">4</span>
+                </div>
+
+                <h4>Calculate phrase_length(1) for "add":</h4>
+                <ul>
+                    <li><strong>add</strong> has arity 2 → needs 2 arguments</li>
+                    <li>Argument 1 starts at position 2</li>
+                </ul>
+
+                <div style="margin: 1.5rem 0; padding: 1rem; background: #fff3cd; border-radius: 4px;">
+                    <h4>Calculate phrase_length(2) for "multiply":</h4>
+                    <ul>
+                        <li><strong>multiply</strong> has arity 2</li>
+                        <li>Takes position 3 (value: 2) → length 1</li>
+                        <li>Takes position 4 (value: 3) → length 1</li>
+                        <li>Total: 1 (multiply) + 1 + 1 = <strong>3 tokens</strong></li>
+                    </ul>
+                </div>
+
+                <ul>
+                    <li>Argument 1 length = 3 (the "multiply 2 3" sub-expression)</li>
+                    <li>Argument 2 starts at position 5 (2 + 3)</li>
+                    <li>Argument 2 is "4" → length 1</li>
+                    <li>Total: 1 (add) + 3 + 1 = <strong>5 tokens</strong></li>
+                </ul>
+
+                <p><strong>Result:</strong> The entire expression is 5 tokens long.</p>
+            </div>
+        </div>
+
+        <h2>Phase 3: Evaluation (evaluate_word)</h2>
+
+        <p>Now we recursively evaluate the expression using the phrase lengths:</p>
+
+        <div class="phase">
+            <h3>Algorithm:</h3>
+            <pre><code>function evaluate_word(word_index)
+  word = words[word_index]
+  
+  // Base case: number
+  if word is a number → return that number
+  
+  // Get word definition
+  word_definition = word_definitions[word]
+  arity = word_definition.arity
+  function = word_definition.function
+  
+  // Collect argument indices (not values!)
+  arguments = []
+  position = word_index + 1
+  for i = 1 to arity:
+    arguments.push(position)
+    position += phrase_length(position)
+  
+  // Execute function (which will recursively evaluate arguments)
+  return function(arguments)</code></pre>
+        </div>
+
+        <h3>Animated Walkthrough: <code>print add 5 6</code></h3>
+
+        <div class="animation-container">
+            <div class="eval-step">
+                <h4>🟢 Step 1: evaluate_word(1) - "print"</h4>
+                <div style="margin: 1rem 0;">
+                    <span class="token operator current-token">print</span>
+                    <span class="token operator">add</span>
+                    <span class="token number">5</span>
+                    <span class="token number">6</span>
+                </div>
+                <p>✓ Found word_definition for "print"<br>
+                    ✓ Arity: 1<br>
+                    ✓ Argument 1 at index 2</p>
+            </div>
+
+            <div class="eval-step">
+                <h4>🟡 Step 2: Call print_function with [2]</h4>
+                <p>print_function needs to evaluate its argument first...</p>
+            </div>
+
+            <div class="eval-step">
+                <h4>🟢 Step 3: evaluate_word(2) - "add"</h4>
+                <div style="margin: 1rem 0;">
+                    <span class="token operator">print</span>
+                    <span class="token operator current-token">add</span>
+                    <span class="token number">5</span>
+                    <span class="token number">6</span>
+                </div>
+                <p>✓ Found word_definition for "add"<br>
+                    ✓ Arity: 2<br>
+                    ✓ Argument 1 at index 3<br>
+                    ✓ Argument 2 at index 4</p>
+            </div>
+
+            <div class="eval-step">
+                <h4>🟡 Step 4: Call add_function with [3, 4]</h4>
+                <p>add_function evaluates both arguments...</p>
+            </div>
+
+            <div class="eval-step">
+                <h4>🟢 Step 5: evaluate_word(3) - "5"</h4>
+                <div style="margin: 1rem 0;">
+                    <span class="token operator">print</span>
+                    <span class="token operator">add</span>
+                    <span class="token number current-token">5</span>
+                    <span class="token number">6</span>
+                </div>
+                <p>✓ It's a number → return 5</p>
+            </div>
+
+            <div class="eval-step">
+                <h4>🟢 Step 6: evaluate_word(4) - "6"</h4>
+                <div style="margin: 1rem 0;">
+                    <span class="token operator">print</span>
+                    <span class="token operator">add</span>
+                    <span class="token number">5</span>
+                    <span class="token number current-token">6</span>
+                </div>
+                <p>✓ It's a number → return 6</p>
+            </div>
+
+            <div class="eval-step">
+                <h4>⬅ Step 7: add_function returns</h4>
+                <p>5 + 6 = <strong>11</strong></p>
+            </div>
+
+            <div class="eval-step">
+                <h4>⬅ Step 8: print_function receives 11</h4>
+                <p>Prints: <strong>11</strong></p>
+            </div>
+
+            <div
+                style="text-align: center; background: #27ae60; color: white; padding: 1.5rem; border-radius: 8px; font-size: 1.5rem; margin-top: 2rem;">
+                <strong>Output: 11</strong>
+            </div>
+        </div>
+
+        <h2>Call Stack Visualization</h2>
+
+        <p>For function calls, Pangea maintains a call stack with local variable contexts:</p>
+
+        <div class="example-box">
+            <h4>Example: Factorial Recursion</h4>
+            <pre><code>define_word factorial 1
+  if equal 0 argument 1
+    1
+    multiply argument 1 factorial add -1 argument 1
+
+print factorial 3</code></pre>
+
+            <div class="diagram">
+                <svg width="600" height="350" viewBox="0 0 600 350">
+                    <!-- Stack frames -->
+                    <text x="300" y="30" text-anchor="middle" font-size="18" font-weight="bold">Call Stack
+                        Evolution</text>
+
+                    <!-- Initial state -->
+                    <g transform="translate(50, 50)">
+                        <text x="0" y="0" font-size="14" font-weight="bold">factorial(3)</text>
+                        <rect x="0" y="10" width="120" height="60" fill="#3498db" rx="4" />
+                        <text x="60" y="35" text-anchor="middle" fill="white">arg[1] = 3</text>
+                        <text x="60" y="55" text-anchor="middle" fill="white" font-size="12">3 * fact(2)</text>
+                    </g>
+
+                    <!-- After first recursion -->
+                    <g transform="translate(200, 50)">
+                        <text x="0" y="0" font-size="14" font-weight="bold">factorial(2)</text>
+                        <rect x="0" y="10" width="120" height="60" fill="#e74c3c" rx="4" />
+                        <text x="60" y="35" text-anchor="middle" fill="white">arg[1] = 2</text>
+                        <text x="60" y="55" text-anchor="middle" fill="white" font-size="12">2 * fact(1)</text>
+
+                        <rect x="0" y="80" width="120" height="60" fill="#3498db" rx="4" />
+                        <text x="60" y="105" text-anchor="middle" fill="white">arg[1] = 3</text>
+                        <text x="60" y="125" text-anchor="middle" fill="white" font-size="12">waiting...</text>
+                    </g>
+
+                    <!-- After second recursion -->
+                    <g transform="translate(350, 50)">
+                        <text x="0" y="0" font-size="14" font-weight="bold">factorial(1)</text>
+                        <rect x="0" y="10" width="120" height="60" fill="#27ae60" rx="4" />
+                        <text x="60" y="35" text-anchor="middle" fill="white">arg[1] = 1</text>
+                        <text x="60" y="55" text-anchor="middle" fill="white" font-size="12">1 * fact(0)</text>
+
+                        <rect x="0" y="80" width="120" height="60" fill="#e74c3c" rx="4" />
+                        <text x="60" y="105" text-anchor="middle" fill="white">arg[1] = 2</text>
+
+                        <rect x="0" y="150" width="120" height="60" fill="#3498db" rx="4" />
+                        <text x="60" y="175" text-anchor="middle" fill="white">arg[1] = 3</text>
+                    </g>
+
+                    <!-- Base case -->
+                    <g transform="translate(50, 250)">
+                        <text x="0" y="0" font-size="14" font-weight="bold">factorial(0) → 1</text>
+                        <text x="0" y="25" font-size="13">Returns 1 (base case)</text>
+                    </g>
+
+                    <!-- Unwinding -->
+                    <g transform="translate(250, 250)">
+                        <text x="0" y="0" font-size="14" font-weight="bold">Unwinding</text>
+                        <text x="0" y="25" font-size="13">1 * 1 = 1</text>
+                        <text x="0" y="45" font-size="13">2 * 1 = 2</text>
+                        <text x="0" y="65" font-size="13">3 * 2 = 6</text>
+                    </g>
+                </svg>
+            </div>
+        </div>
+
+        <h2>Key Implementation Details</h2>
+
+        <h3>1. Deferred Evaluation</h3>
+        <div class="info-box">
+            <p>Functions receive <strong>indices</strong> to arguments, not values. This allows:</p>
+            <ul>
+                <li>Control flow (if/while can skip evaluating branches)</li>
+                <li>Lazy evaluation</li>
+                <li>The <code>:</code> operator (quote a word without executing it)</li>
+            </ul>
+        </div>
+
+        <h3>2. The words[] Global Array</h3>
+        <div class="info-box">
+            <p>All tokens are stored in a single global array. Functions work with indices into this array, making it
+                easy to handle nested expressions and file includes.</p>
+        </div>
+
+        <h3>3. word_definitions Table Structure</h3>
+        <pre><code>word_definitions = {
+  ["print"] = {1, print_function},
+  ["add"] = {2, add_function},
+  ["if"] = {3, if_function},
+  ...
+}
+
+-- Format: {arity, function}</code></pre>
+
+        <h3>4. Translation Layer</h3>
+        <div class="info-box">
+            <p>The <code>tr()</code> function wraps all keyword access, allowing seamless Italian/English switching:</p>
+            <pre><code>word_definitions[tr("print")] = {1, print_function}
+// Registers as "print" in English mode
+// Registers as "stampa" in Italian mode</code></pre>
+        </div>
+
+        <h2>Complete Flow Diagram</h2>
+
+        <div class="diagram">
+            <svg width="650" height="500" viewBox="0 0 650 500">
+                <!-- User input -->
+                <rect x="225" y="20" width="200" height="50" fill="#95a5a6" rx="8" />
+                <text x="325" y="50" text-anchor="middle" fill="white" font-size="14" font-weight="bold">User Input /
+                    File</text>
+
+                <path d="M 325 70 L 325 95" stroke="#2c3e50" stroke-width="3" marker-end="url(#arrow2)" />
+
+                <!-- Tokenize -->
+                <rect x="225" y="100" width="200" height="60" fill="#3498db" rx="8" />
+                <text x="325" y="135" text-anchor="middle" fill="white" font-size="14"
+                    font-weight="bold">program_words()</text>
+
+                <path d="M 325 160 L 325 185" stroke="#2c3e50" stroke-width="3" marker-end="url(#arrow2)" />
+
+                <!-- words[] array -->
+                <rect x="200" y="190" width="250" height="60" fill="#7f8c8d" rx="8" />
+                <text x="325" y="215" text-anchor="middle" fill="white" font-size="14" font-weight="bold">words[] =
+                    [token, token, ...]</text>
+                <text x="325" y="235" text-anchor="middle" fill="white" font-size="12">Global token array</text>
+
+                <path d="M 325 250 L 325 275" stroke="#2c3e50" stroke-width="3" marker-end="url(#arrow2)" />
+
+                <!-- evaluate_word loop -->
+                <rect x="225" y="280" width="200" height="80" fill="#27ae60" rx="8" />
+                <text x="325" y="310" text-anchor="middle" fill="white" font-size="14"
+                    font-weight="bold">evaluate_word(index)</text>
+                <text x="325" y="330" text-anchor="middle" fill="white" font-size="12">Recursive evaluation</text>
+                <text x="325" y="345" text-anchor="middle" fill="white" font-size="12">using phrase_length()</text>
+
+                <!-- Recursive arrow -->
+                <path d="M 425 320 Q 480 320 480 290 Q 480 260 430 260" stroke="#e74c3c" stroke-width="2"
+                    stroke-dasharray="5,5" marker-end="url(#arrow2)" fill="none" />
+                <text x="500" y="290" fill="#e74c3c" font-size="12">recursive</text>
+
+                <path d="M 325 360 L 325 385" stroke="#2c3e50" stroke-width="3" marker-end="url(#arrow2)" />
+
+                <!-- word_definitions lookup -->
+                <rect x="50" y="280" width="150" height="80" fill="#e74c3c" rx="8" />
+                <text x="125" y="310" text-anchor="middle" fill="white" font-size="12"
+                    font-weight="bold">word_definitions</text>
+                <text x="125" y="330" text-anchor="middle" fill="white" font-size="11">{word: [arity, fn]}</text>
+
+                <path d="M 200 320 L 220 320" stroke="#7f8c8d" stroke-width="2" stroke-dasharray="3,3" />
+
+                <!-- Output -->
+                <rect x="225" y="390" width="200" height="50" fill="#27ae60" rx="8" />
+                <text x="325" y="420" text-anchor="middle" fill="white" font-size="14" font-weight="bold">Result / Side
+                    Effects</text>
+
+                <defs>
+                    <marker id="arrow2" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                        <polygon points="0 0, 10 3, 0 6" fill="#2c3e50" />
+                    </marker>
+                </defs>
+            </svg>
+        </div>
+
+        <div class="info-box">
+            <h3>🎓 Next Steps</h3>
+            <p>Now that you understand the evaluation mechanism, see it in action with <a href="examples.html"
+                    style="color: var(--secondary-color);"><strong>real examples</strong></a> including FizzBuzz and
+                factorial implementations.</p>
+        </div>
+    </main>
+
+    <footer>
+        <p>Pangea/Pang &copy; 2026 | MIT License</p>
+    </footer>
+
+    <defs>
+        <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+            <polygon points="0 0, 10 3, 0 6" fill="#2c3e50" />
+        </marker>
+    </defs>
+</body>
+
+</html>
