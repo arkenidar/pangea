@@ -221,7 +221,13 @@ function phrase_length(word_index)
   if number~=nil then return 1 end
   local word_definition=word_definitions[word]
 
-  --if word_definition==nil or word_index>1 and (words[word_index-1]==tr("string") or words[word_index-1]==tr("define_word") or words[word_index-1]==tr("set") or words[word_index-1]==tr("increment")) then return 1 end
+  --[[
+  if word_definition==nil or word_index>1 and (words[word_index-1]==tr("string") or
+   words[word_index-1]==tr("define_word") or
+    words[word_index-1]==tr("set") or
+     words[word_index-1]==tr("increment"))
+      then return 1 end
+  --]]
 
   ----if word_definition==nil or word_index>1 and words[word_index-1]==":" then return 1 end
   --if word_index>1 and words[word_index-1]==":" then return 1 end
@@ -466,7 +472,8 @@ stampa prendi : n
 conta1 : n
 stampa prendi : n
 
-stampa : " ('conta2') namespaces issues (current way, working). security issue namespace can be accessed for other variables beyond the one specified by name "
+stampa : " ('conta2') namespaces issues (current way, working). "
+stampa : " security issue namespace can be accessed for other variables beyond the one specified by name "
 
 definisci_parola : conta2 2 metti_variabile argomento 2 argomento 1 somma prendi_variabile argomento 2 argomento 1 3
 
