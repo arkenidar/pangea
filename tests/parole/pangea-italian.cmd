@@ -1,3 +1,3 @@
-lua ../src/pangea1/main.lua italian %*
+lua ../../src/pangea1/main.lua italian %*
 
 pause
