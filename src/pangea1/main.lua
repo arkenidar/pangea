@@ -21,7 +21,6 @@ local translate_italian = {
     ["get"] = "prendi",
     ["variable_set"] = "metti_variabile",
     ["variable_get"] = "prendi_variabile",
-    ---metti_chiamante
     ["caller_set"] = "metti_chiamante",
     ["caller_get"] = "prendi_chiamante",
     ["while"] = "mentre",
@@ -235,15 +234,6 @@ function phrase_length(word_index)
     end
     local word_definition = word_definitions[word]
 
-    --[[
-  if word_definition==nil or word_index>1 and (words[word_index-1]==tr("string") or
-   words[word_index-1]==tr("define_word") or
-    words[word_index-1]==tr("set") or
-     words[word_index-1]==tr("increment"))
-      then return 1 end
-  --]]
-    ----if word_definition==nil or word_index>1 and words[word_index-1]==":" then return 1 end
-    -- if word_index>1 and words[word_index-1]==":" then return 1 end
     if word_definition == nil then
         return 1
     end
@@ -319,25 +309,12 @@ function execute_program(pn_program)
 
     local words_to_add = #words
 
-    --[[
-  for word in string.gmatch(pn_program, "%S+") do
-    table.insert(words,word)
-  end
-  --]]
-    -- words=program_words(pn_program)
     program_words(pn_program)
 
     if #words == words_to_add then
         -- print("empty program")
         return
     end
-
-    -- if false then -- DEBUG
-    --   for word_index=words_to_add+1,#words do
-    --     io.write("["..words[word_index].."]"..phrase_length(word_index).." ")
-    --   end
-    --   print()
-    -- end
 
     evaluate_word(1 + words_to_add)
 end
@@ -355,7 +332,6 @@ function hashbang_remove(pn_program)
 end
 
 function execute_words_file(file_name)
-    -- local file_name=words[arguments[1]]
     local file = io.open(file_name, "r")
 
     local program = ""
@@ -419,31 +395,17 @@ function argument_function(arguments)
 end
 word_definitions[tr("argument")] = {1, argument_function}
 
--- TEST for word definition and use with arguments
--- porting to Italian added
--- execute_program("define_word square 1 multiply argument 1 argument 1")  --> English
--- execute_program("definisci_parola quadrato 1 moltiplica argomento 1 argomento 1") --> Italian
--- execute_program("print square 4") --> 16 --> English
--- execute_program("stampa quadrato 4") --> 16 --> Italian
-
--- TEST for recursion
--- execute_program("define_word factorial 1 if equal 0 argument 1 1 multiply argument 1 factorial add -1 argument 1")
--- execute_program("print factorial 0") --> 1
--- execute_program("print factorial 4") --> 24
-
 function read_execute_loop()
     while true do
         local program = io.read()
         if program == nil or program == tr("exit") then
             break
-        end --- may it be "end"? TODO
+        end
         execute_program(program)
     end
 end
 word_definitions[tr("command_prompt")] = {0, read_execute_loop}
 
--- EXAMPLES
---- metti i somma 1 prendi i
 function increment_function(arguments)
     local variables = call_stack[#call_stack]
     local variable_name = evaluate_word(arguments[1]) -- evaluate_word(arguments[1])
@@ -455,84 +417,6 @@ end
 -- definition
 translate_italian["increment"] = "incrementa"
 word_definitions[tr("increment")] = {1, increment_function}
-
----]] block WIP considered harmful getting the caller's namespace without caller passing it
--- -- definition
--- translate_italian["get_caller"]="prendi_chiamante"
--- word_definitions[tr("get_caller")]={1,get_caller_function}
-
--- -- definition
--- translate_italian["set_caller"]="metti_chiamante"
--- word_definitions[tr("set_caller")]={2,set_caller_function}
--- ]]
-
--- local test_string_bug_hunt=[[
-
--- stampa 1
--- : non_fare
--- : fai
--- stampa 2
-
--- ]]
-
--- : non_fare
--- : fai
---- TO DO incrementa stringa i   | incrementa : 1
--- test_string=[[
-
--- : " 'incrementa' is a Lua function "
-
--- : non_fare
--- : fai
-
---  : inizio
-
--- metti : i 1
--- stampa prendi : i
--- incrementa : i
--- incrementa : i
--- stampa prendi : i
-
--- : fine
-
--- non_fare
--- fai
-
--- stampa : " ('conta1') namespaces issues (previous way, not working, security issues) "
-
--- definisci_parola : prendi_chiamante 1 : " not implemented here (chiamante means caller function/namespace) "
--- definisci_parola : metti_chiamante 2 : " not implemented here "
-
--- definisci_parola : conta1 1 non_fare metti_chiamante argomento 1 somma 3 prendi_chiamante argomento 1
-
--- metti : n 1
--- stampa prendi : n
--- conta1 : n
--- stampa prendi : n
--- conta1 : n
--- stampa prendi : n
-
--- stampa : " ('conta2') namespaces issues (current way, working). "
--- stampa : " security issue namespace can be accessed for other variables beyond the one specified by name "
-
--- definisci_parola : conta2 2 metti_variabile argomento 2 argomento 1 somma prendi_variabile argomento 2 argomento 1 3
-
--- metti : n 1
--- stampa prendi : n
--- conta2 : n namespace
--- stampa prendi : n
--- conta2 : n namespace
--- stampa prendi : n
-
--- stampa : " 'conta0' previous work... much started from here "
--- metti : numero 10
--- definisci_parola : conta0 1 metti argomento 1 somma 1 prendi argomento 1
--- non_fare conta0 : numero
--- stampa prendi : numero
--- ]]
--- execute_program(test_string) -- test_string_bug_hunt
-
--- execute_words_file("principale-001.parole")
 
 function main()
     print("? for help")
