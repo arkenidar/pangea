@@ -11,7 +11,7 @@ local translate_italian={
   ["multiply"]="moltiplica",
   ["argument"]="argomento",
   ["do"]="fai",["end"]="fine",
-  
+
   ["set"]="metti",
   ["get"]="prendi",
   ["variable_set"]="metti_variabile",
@@ -19,7 +19,7 @@ local translate_italian={
   ---metti_chiamante
   ["caller_set"]="metti_chiamante",
   ["caller_get"]="prendi_chiamante",
-  
+
   ["while"]="mentre",
   ["not"]="non",
   ["greater"]="maggiore",
@@ -29,17 +29,17 @@ local translate_italian={
   ["modulus"]="modulo",
   ["string"]="stringa",
   ["add"]="somma",
-  
+
   ["true"]="vero",
   ["false"]="falso",
-  
+
   ["dont"]="non_fare",
-  
+
   ["word:"]="parola:",
   [" definition not found"]=" definizione non trovata",
-  
+
   ["command_prompt"]="richiesta_comandi",
-  
+
 }
 function tr(string) -- translate / traduci
   if language=="italian" then -- italiano supportato
@@ -211,7 +211,7 @@ function phrase_length(word_index)
   if word_index>1 and words[word_index-1]==":" then return 1 end
   if word==tr("do") then
     while true do
-      if words[word_index+length]==tr("end") or 
+      if words[word_index+length]==tr("end") or
       words[word_index+length]==nil
       then return length+1 end
       length=length+phrase_length(word_index+length)
@@ -220,13 +220,13 @@ function phrase_length(word_index)
   local number=tonumber(word)
   if number~=nil then return 1 end
   local word_definition=word_definitions[word]
-  
+
   --if word_definition==nil or word_index>1 and (words[word_index-1]==tr("string") or words[word_index-1]==tr("define_word") or words[word_index-1]==tr("set") or words[word_index-1]==tr("increment")) then return 1 end
-  
+
   ----if word_definition==nil or word_index>1 and words[word_index-1]==":" then return 1 end
   --if word_index>1 and words[word_index-1]==":" then return 1 end
   if word_definition==nil then return 1 end
-  
+
   local argument_length=word_definition[1]
   for argument_index=1,argument_length do
     length=length+phrase_length(word_index+length)
@@ -291,7 +291,7 @@ function execute_program(pn_program)
   pn_program=tr("do").." "..pn_program.." "..tr("end")
 
   local words_to_add=#words
-  
+
   --[[
   for word in string.gmatch(pn_program, "%S+") do
     table.insert(words,word)
@@ -299,12 +299,12 @@ function execute_program(pn_program)
   --]]
   --words=program_words(pn_program)
   program_words(pn_program)
-  
+
   if #words==words_to_add then
     --print("empty program")
     return
   end
-  
+
   if false then -- DEBUG
     for word_index=words_to_add+1,#words do
       io.write("["..words[word_index].."]"..phrase_length(word_index).." ")
@@ -319,16 +319,16 @@ end
 function execute_words_file(file_name)
   --local file_name=words[arguments[1]]
   local file=io.open(file_name,"r")
-  
+
   local program=""
   while true do
     local program_line=file:read()
     if program_line==nil then break end
     program=program..program_line.."\n"
   end
-  
+
   file:close()
-  
+
   --print(program)
   execute_program(program)
 end
@@ -348,12 +348,12 @@ word_definitions[tr("dont")]={1,function() end}
 function define_word_function(arguments)
   local arity=evaluate_word(arguments[2])
   local word_function=function(word_arguments)
-    
+
     local value_arguments={}
     for argument_index,word_argument in pairs(word_arguments) do
       value_arguments[argument_index]=evaluate_word(word_argument)
     end
-    
+
     local returned
     table.insert(call_stack,value_arguments)
     returned=evaluate_word(arguments[3])
@@ -490,7 +490,7 @@ stampa prendi : numero
 function main()
   print("? for help")
   local filename=arg[1]
-  if filename~=nil then 
+  if filename~=nil then
     if filename=="-" then read_execute_loop() else
     execute_words_file(filename)
     if arg[2]=="-" then read_execute_loop() end
