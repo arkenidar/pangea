@@ -1,14 +1,8 @@
 -- pang: polish notation language
 -- pang: linguaggio a notazione polacca
 
-local pang_version="028 (PanGea:1.0.1)" -- versione
+local pang_version="028" -- versione
 local language=nil --"italian" -- lingua -- nil
-
-if arg[1]=="italian" then
-  language="italian"
-  table.remove(arg, 1)
-end
-
 local translate_italian={
   ["pang version: "]="pang versione: ",
   ["exit"]="esci",
@@ -17,7 +11,7 @@ local translate_italian={
   ["multiply"]="moltiplica",
   ["argument"]="argomento",
   ["do"]="fai",["end"]="fine",
-  
+
   ["set"]="metti",
   ["get"]="prendi",
   ["variable_set"]="metti_variabile",
@@ -25,7 +19,7 @@ local translate_italian={
   ---metti_chiamante
   ["caller_set"]="metti_chiamante",
   ["caller_get"]="prendi_chiamante",
-  
+
   ["while"]="mentre",
   ["not"]="non",
   ["greater"]="maggiore",
@@ -35,17 +29,17 @@ local translate_italian={
   ["modulus"]="modulo",
   ["string"]="stringa",
   ["add"]="somma",
-  
+
   ["true"]="vero",
   ["false"]="falso",
-  
+
   ["dont"]="non_fare",
-  
+
   ["word:"]="parola:",
   [" definition not found"]=" definizione non trovata",
-  
+
   ["command_prompt"]="richiesta_comandi",
-  
+
 }
 function tr(string) -- translate / traduci
   if language=="italian" then -- italiano supportato
@@ -80,10 +74,10 @@ function multiply_function(arguments)
   return evaluate_word(arguments[1])*evaluate_word(arguments[2])
 end
 
-function true_function(arguments)
+function true_function()
   return true
 end
-function false_function(arguments)
+function false_function()
   return false
 end
 
@@ -177,9 +171,9 @@ end
 function modulus_function(arguments)
   return evaluate_word(arguments[1])%evaluate_word(arguments[2])
 end
-function lesser_than_or_equal_function(arguments)
-  return evaluate_word(arguments[1])<=evaluate_word(arguments[2])
-end
+-- function lesser_than_or_equal_function(arguments)
+--   return evaluate_word(arguments[1])<=evaluate_word(arguments[2])
+-- end
 -- greater <lesser> <greater>
 function greater_function(arguments)
   return evaluate_word(arguments[1])>evaluate_word(arguments[2])
@@ -203,7 +197,7 @@ word_definitions[":"]={1,word_function}
 
 word_definitions[tr("multiply")]={2,multiply_function}
 
-function list_word_definitions_function(arguments)
+function list_word_definitions_function()
   for word,word_definition in pairs(word_definitions) do
     io.write(word.."<"..word_definition[1].." ")
   end
@@ -217,7 +211,7 @@ function phrase_length(word_index)
   if word_index>1 and words[word_index-1]==":" then return 1 end
   if word==tr("do") then
     while true do
-      if words[word_index+length]==tr("end") or 
+      if words[word_index+length]==tr("end") or
       words[word_index+length]==nil
       then return length+1 end
       length=length+phrase_length(word_index+length)
@@ -226,15 +220,21 @@ function phrase_length(word_index)
   local number=tonumber(word)
   if number~=nil then return 1 end
   local word_definition=word_definitions[word]
-  
-  --if word_definition==nil or word_index>1 and (words[word_index-1]==tr("string") or words[word_index-1]==tr("define_word") or words[word_index-1]==tr("set") or words[word_index-1]==tr("increment")) then return 1 end
-  
+
+  --[[
+  if word_definition==nil or word_index>1 and (words[word_index-1]==tr("string") or
+   words[word_index-1]==tr("define_word") or
+    words[word_index-1]==tr("set") or
+     words[word_index-1]==tr("increment"))
+      then return 1 end
+  --]]
+
   ----if word_definition==nil or word_index>1 and words[word_index-1]==":" then return 1 end
   --if word_index>1 and words[word_index-1]==":" then return 1 end
   if word_definition==nil then return 1 end
-  
+
   local argument_length=word_definition[1]
-  for argument_index=1,argument_length do
+  for _=1,argument_length do
     length=length+phrase_length(word_index+length)
   end
   return length
@@ -262,7 +262,7 @@ function evaluate_word(word_index)
   local arity, argument_word_index
   arity=word_definition[1]
   argument_word_index=word_index+1
-  for argument_index=1,arity do
+  for _=1,arity do
     table.insert(arguments,argument_word_index)
     argument_word_index=argument_word_index+phrase_length(argument_word_index)
   end
@@ -297,7 +297,7 @@ function execute_program(pn_program)
   pn_program=tr("do").." "..pn_program.." "..tr("end")
 
   local words_to_add=#words
-  
+
   --[[
   for word in string.gmatch(pn_program, "%S+") do
     table.insert(words,word)
@@ -305,50 +305,35 @@ function execute_program(pn_program)
   --]]
   --words=program_words(pn_program)
   program_words(pn_program)
-  
+
   if #words==words_to_add then
     --print("empty program")
     return
   end
-  
-  if false then -- DEBUG
-    for word_index=words_to_add+1,#words do
-      io.write("["..words[word_index].."]"..phrase_length(word_index).." ")
-    end
-    print()
-  end
+
+  -- if false then -- DEBUG
+  --   for word_index=words_to_add+1,#words do
+  --     io.write("["..words[word_index].."]"..phrase_length(word_index).." ")
+  --   end
+  --   print()
+  -- end
 
   evaluate_word(1+words_to_add)
 
 end
 
--- ignore hashbang if present
-function hashbang_remove(pn_program)
-    function remove_first_line(text)
-        i=string.find(text,"\n")
-        return string.sub(text,i+1)
-    end
-    if pn_program:sub(1,1)=="#" then -- hasbang present
-        pn_program=remove_first_line(pn_program)
-    end
-    return pn_program
-end
-  
 function execute_words_file(file_name)
   --local file_name=words[arguments[1]]
   local file=io.open(file_name,"r")
-  
+
   local program=""
   while true do
     local program_line=file:read()
     if program_line==nil then break end
     program=program..program_line.."\n"
   end
-  
+
   file:close()
-  
-  -- ignore hashbang if present
-  program=hashbang_remove(program)
 
   --print(program)
   execute_program(program)
@@ -369,12 +354,12 @@ word_definitions[tr("dont")]={1,function() end}
 function define_word_function(arguments)
   local arity=evaluate_word(arguments[2])
   local word_function=function(word_arguments)
-    
+
     local value_arguments={}
     for argument_index,word_argument in pairs(word_arguments) do
       value_arguments[argument_index]=evaluate_word(word_argument)
     end
-    
+
     local returned
     table.insert(call_stack,value_arguments)
     returned=evaluate_word(arguments[3])
@@ -431,79 +416,80 @@ translate_italian["increment"]="incrementa"
 word_definitions[tr("increment")]={1,increment_function}
 
 ---]] block WIP considered harmful getting the caller's namespace without caller passing it
--- definition
-translate_italian["get_caller"]="prendi_chiamante"
-word_definitions[tr("get_caller")]={1,get_caller_function}
+-- -- definition
+-- translate_italian["get_caller"]="prendi_chiamante"
+-- word_definitions[tr("get_caller")]={1,get_caller_function}
 
--- definition
-translate_italian["set_caller"]="metti_chiamante"
-word_definitions[tr("set_caller")]={2,set_caller_function}
+-- -- definition
+-- translate_italian["set_caller"]="metti_chiamante"
+-- word_definitions[tr("set_caller")]={2,set_caller_function}
 --]]
 
 
-local test_string_bug_hunt=[[
+-- local test_string_bug_hunt=[[
 
-stampa 1
-: non_fare
-: fai
-stampa 2
+-- stampa 1
+-- : non_fare
+-- : fai
+-- stampa 2
 
-]]
+-- ]]
 
 -- : non_fare
 -- : fai
 --- TO DO incrementa stringa i   | incrementa : 1
-test_string=[[
+-- test_string=[[
 
-: " 'incrementa' is a Lua function "
+-- : " 'incrementa' is a Lua function "
 
-: non_fare
-: fai
+-- : non_fare
+-- : fai
 
- : inizio
+--  : inizio
 
-metti : i 1
-stampa prendi : i
-incrementa : i
-incrementa : i
-stampa prendi : i
+-- metti : i 1
+-- stampa prendi : i
+-- incrementa : i
+-- incrementa : i
+-- stampa prendi : i
 
-: fine
+-- : fine
 
-non_fare
-fai
+-- non_fare
+-- fai
 
-stampa : " ('conta1') namespaces issues (previous way, not working, security issues) "
+-- stampa : " ('conta1') namespaces issues (previous way, not working, security issues) "
 
-definisci_parola : prendi_chiamante 1 : " not implemented here (chiamante means caller function/namespace) "
-definisci_parola : metti_chiamante 2 : " not implemented here "
+-- definisci_parola : prendi_chiamante 1 : " not implemented here (chiamante means caller function/namespace) "
+-- definisci_parola : metti_chiamante 2 : " not implemented here "
 
-definisci_parola : conta1 1 non_fare metti_chiamante argomento 1 somma 3 prendi_chiamante argomento 1
+-- definisci_parola : conta1 1 non_fare metti_chiamante argomento 1 somma 3 prendi_chiamante argomento 1
 
-metti : n 1
-stampa prendi : n
-conta1 : n
-stampa prendi : n
-conta1 : n
-stampa prendi : n
+-- metti : n 1
+-- stampa prendi : n
+-- conta1 : n
+-- stampa prendi : n
+-- conta1 : n
+-- stampa prendi : n
 
-stampa : " ('conta2') namespaces issues (current way, working). security issue namespace can be accessed for other variables beyond the one specified by name "
+-- stampa : " ('conta2') namespaces issues (current way, working). "
+-- stampa : " security issue namespace can be accessed for other variables beyond the one specified by name "
 
-definisci_parola : conta2 2 metti_variabile argomento 2 argomento 1 somma prendi_variabile argomento 2 argomento 1 3
+-- definisci_parola : conta2 2 metti_variabile argomento 2 argomento 1 somma prendi_variabile argomento 2 argomento 1 3
 
-metti : n 1
-stampa prendi : n
-conta2 : n namespace
-stampa prendi : n
-conta2 : n namespace
-stampa prendi : n
+-- metti : n 1
+-- stampa prendi : n
+-- conta2 : n namespace
+-- stampa prendi : n
+-- conta2 : n namespace
+-- stampa prendi : n
 
-stampa : " 'conta0' previous work... much started from here "
-metti : numero 10
-definisci_parola : conta0 1 metti argomento 1 somma 1 prendi argomento 1
-non_fare conta0 : numero
-stampa prendi : numero
-]]
+-- stampa : " 'conta0' previous work... much started from here "
+-- metti : numero 10
+-- definisci_parola : conta0 1 metti argomento 1 somma 1 prendi argomento 1
+-- non_fare conta0 : numero
+-- stampa prendi : numero
+-- ]]
 --execute_program(test_string) -- test_string_bug_hunt
 
 --execute_words_file("principale-001.parole")
@@ -511,7 +497,7 @@ stampa prendi : numero
 function main()
   print("? for help")
   local filename=arg[1]
-  if filename~=nil then 
+  if filename~=nil then
     if filename=="-" then read_execute_loop() else
     execute_words_file(filename)
     if arg[2]=="-" then read_execute_loop() end
