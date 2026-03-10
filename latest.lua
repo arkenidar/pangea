@@ -74,10 +74,10 @@ function multiply_function(arguments)
   return evaluate_word(arguments[1])*evaluate_word(arguments[2])
 end
 
-function true_function(arguments)
+function true_function()
   return true
 end
-function false_function(arguments)
+function false_function()
   return false
 end
 
@@ -171,9 +171,9 @@ end
 function modulus_function(arguments)
   return evaluate_word(arguments[1])%evaluate_word(arguments[2])
 end
-function lesser_than_or_equal_function(arguments)
-  return evaluate_word(arguments[1])<=evaluate_word(arguments[2])
-end
+-- function lesser_than_or_equal_function(arguments)
+--   return evaluate_word(arguments[1])<=evaluate_word(arguments[2])
+-- end
 -- greater <lesser> <greater>
 function greater_function(arguments)
   return evaluate_word(arguments[1])>evaluate_word(arguments[2])
@@ -197,7 +197,7 @@ word_definitions[":"]={1,word_function}
 
 word_definitions[tr("multiply")]={2,multiply_function}
 
-function list_word_definitions_function(arguments)
+function list_word_definitions_function()
   for word,word_definition in pairs(word_definitions) do
     io.write(word.."<"..word_definition[1].." ")
   end
@@ -234,7 +234,7 @@ function phrase_length(word_index)
   if word_definition==nil then return 1 end
 
   local argument_length=word_definition[1]
-  for argument_index=1,argument_length do
+  for _=1,argument_length do
     length=length+phrase_length(word_index+length)
   end
   return length
@@ -262,7 +262,7 @@ function evaluate_word(word_index)
   local arity, argument_word_index
   arity=word_definition[1]
   argument_word_index=word_index+1
-  for argument_index=1,arity do
+  for _=1,arity do
     table.insert(arguments,argument_word_index)
     argument_word_index=argument_word_index+phrase_length(argument_word_index)
   end
@@ -311,12 +311,12 @@ function execute_program(pn_program)
     return
   end
 
-  if false then -- DEBUG
-    for word_index=words_to_add+1,#words do
-      io.write("["..words[word_index].."]"..phrase_length(word_index).." ")
-    end
-    print()
-  end
+  -- if false then -- DEBUG
+  --   for word_index=words_to_add+1,#words do
+  --     io.write("["..words[word_index].."]"..phrase_length(word_index).." ")
+  --   end
+  --   print()
+  -- end
 
   evaluate_word(1+words_to_add)
 
@@ -416,80 +416,80 @@ translate_italian["increment"]="incrementa"
 word_definitions[tr("increment")]={1,increment_function}
 
 ---]] block WIP considered harmful getting the caller's namespace without caller passing it
--- definition
-translate_italian["get_caller"]="prendi_chiamante"
-word_definitions[tr("get_caller")]={1,get_caller_function}
+-- -- definition
+-- translate_italian["get_caller"]="prendi_chiamante"
+-- word_definitions[tr("get_caller")]={1,get_caller_function}
 
--- definition
-translate_italian["set_caller"]="metti_chiamante"
-word_definitions[tr("set_caller")]={2,set_caller_function}
+-- -- definition
+-- translate_italian["set_caller"]="metti_chiamante"
+-- word_definitions[tr("set_caller")]={2,set_caller_function}
 --]]
 
 
-local test_string_bug_hunt=[[
+-- local test_string_bug_hunt=[[
 
-stampa 1
-: non_fare
-: fai
-stampa 2
+-- stampa 1
+-- : non_fare
+-- : fai
+-- stampa 2
 
-]]
+-- ]]
 
 -- : non_fare
 -- : fai
 --- TO DO incrementa stringa i   | incrementa : 1
-test_string=[[
+-- test_string=[[
 
-: " 'incrementa' is a Lua function "
+-- : " 'incrementa' is a Lua function "
 
-: non_fare
-: fai
+-- : non_fare
+-- : fai
 
- : inizio
+--  : inizio
 
-metti : i 1
-stampa prendi : i
-incrementa : i
-incrementa : i
-stampa prendi : i
+-- metti : i 1
+-- stampa prendi : i
+-- incrementa : i
+-- incrementa : i
+-- stampa prendi : i
 
-: fine
+-- : fine
 
-non_fare
-fai
+-- non_fare
+-- fai
 
-stampa : " ('conta1') namespaces issues (previous way, not working, security issues) "
+-- stampa : " ('conta1') namespaces issues (previous way, not working, security issues) "
 
-definisci_parola : prendi_chiamante 1 : " not implemented here (chiamante means caller function/namespace) "
-definisci_parola : metti_chiamante 2 : " not implemented here "
+-- definisci_parola : prendi_chiamante 1 : " not implemented here (chiamante means caller function/namespace) "
+-- definisci_parola : metti_chiamante 2 : " not implemented here "
 
-definisci_parola : conta1 1 non_fare metti_chiamante argomento 1 somma 3 prendi_chiamante argomento 1
+-- definisci_parola : conta1 1 non_fare metti_chiamante argomento 1 somma 3 prendi_chiamante argomento 1
 
-metti : n 1
-stampa prendi : n
-conta1 : n
-stampa prendi : n
-conta1 : n
-stampa prendi : n
+-- metti : n 1
+-- stampa prendi : n
+-- conta1 : n
+-- stampa prendi : n
+-- conta1 : n
+-- stampa prendi : n
 
-stampa : " ('conta2') namespaces issues (current way, working). "
-stampa : " security issue namespace can be accessed for other variables beyond the one specified by name "
+-- stampa : " ('conta2') namespaces issues (current way, working). "
+-- stampa : " security issue namespace can be accessed for other variables beyond the one specified by name "
 
-definisci_parola : conta2 2 metti_variabile argomento 2 argomento 1 somma prendi_variabile argomento 2 argomento 1 3
+-- definisci_parola : conta2 2 metti_variabile argomento 2 argomento 1 somma prendi_variabile argomento 2 argomento 1 3
 
-metti : n 1
-stampa prendi : n
-conta2 : n namespace
-stampa prendi : n
-conta2 : n namespace
-stampa prendi : n
+-- metti : n 1
+-- stampa prendi : n
+-- conta2 : n namespace
+-- stampa prendi : n
+-- conta2 : n namespace
+-- stampa prendi : n
 
-stampa : " 'conta0' previous work... much started from here "
-metti : numero 10
-definisci_parola : conta0 1 metti argomento 1 somma 1 prendi argomento 1
-non_fare conta0 : numero
-stampa prendi : numero
-]]
+-- stampa : " 'conta0' previous work... much started from here "
+-- metti : numero 10
+-- definisci_parola : conta0 1 metti argomento 1 somma 1 prendi argomento 1
+-- non_fare conta0 : numero
+-- stampa prendi : numero
+-- ]]
 --execute_program(test_string) -- test_string_bug_hunt
 
 --execute_words_file("principale-001.parole")
