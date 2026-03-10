@@ -3,6 +3,12 @@
 
 local pang_version="028" -- versione
 local language=nil --"italian" -- lingua -- nil
+
+if arg[1]=="italian" then
+  language="italian"
+  table.remove(arg, 1)
+end
+
 local translate_italian={
   ["pang version: "]="pang versione: ",
   ["exit"]="esci",
@@ -322,6 +328,18 @@ function execute_program(pn_program)
 
 end
 
+-- ignore hashbang if present
+function hashbang_remove(pn_program)
+    function remove_first_line(text)
+        i=string.find(text,"\n")
+        return string.sub(text,i+1)
+    end
+    if pn_program:sub(1,1)=="#" then -- hasbang present
+        pn_program=remove_first_line(pn_program)
+    end
+    return pn_program
+end
+
 function execute_words_file(file_name)
   --local file_name=words[arguments[1]]
   local file=io.open(file_name,"r")
@@ -334,6 +352,9 @@ function execute_words_file(file_name)
   end
 
   file:close()
+
+  -- ignore hashbang if present
+  program=hashbang_remove(program)
 
   --print(program)
   execute_program(program)
