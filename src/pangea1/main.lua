@@ -53,6 +53,41 @@ print(tr("pang version: ") .. pang_version)
 
 local words = {}
 
+local file_directory_stack = {}
+
+function path_is_absolute(path)
+    return path:sub(1, 1) == "/" or string.match(path, "^[A-Za-z]:[\\/]") ~= nil
+end
+
+function path_dirname(path)
+    local normalized = path:gsub("\\", "/")
+    local dirname = normalized:match("^(.*)/[^/]*$")
+    if dirname == nil or dirname == "" then
+        return "."
+    end
+    return dirname
+end
+
+function path_join(base, name)
+    if base == "" or base == "." then
+        return name
+    end
+    if base:sub(-1) == "/" then
+        return base .. name
+    end
+    return base .. "/" .. name
+end
+
+function resolve_words_file_name(file_name)
+    if path_is_absolute(file_name) then
+        return file_name
+    end
+    if #file_directory_stack == 0 then
+        return file_name
+    end
+    return path_join(file_directory_stack[#file_directory_stack], file_name)
+end
+
 local word_definitions = {}
 
 -- print <printable>
@@ -332,7 +367,20 @@ function hashbang_remove(pn_program)
 end
 
 function execute_words_file(file_name)
-    local file = io.open(file_name, "r")
+    local resolved_file_name = resolve_words_file_name(file_name)
+    local file = io.open(resolved_file_name, "r")
+
+    -- Keep compatibility with previous cwd-based lookup if relative include lookup fails.
+    if file == nil and resolved_file_name ~= file_name then
+        file = io.open(file_name, "r")
+        if file ~= nil then
+            resolved_file_name = file_name
+        end
+    end
+
+    if file == nil then
+        error("cannot open words file: " .. file_name)
+    end
 
     local program = ""
     while true do
@@ -349,7 +397,12 @@ function execute_words_file(file_name)
     program = hashbang_remove(program)
 
     -- print(program)
-    execute_program(program)
+    table.insert(file_directory_stack, path_dirname(resolved_file_name))
+    local ok, runtime_error = pcall(execute_program, program)
+    table.remove(file_directory_stack)
+    if not ok then
+        error(runtime_error)
+    end
 end
 
 -- execute_words_file <filename>
