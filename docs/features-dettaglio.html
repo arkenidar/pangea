@@ -1,0 +1,1301 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Le Features di Pangea - Guida Dettagliata</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <style>
+      .feature-section {
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        border-left: 6px solid var(--secondary-color);
+        padding: 2rem;
+        margin: 2rem 0;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      .code-snippet {
+        background: #1e1e1e;
+        color: #d4d4d4;
+        padding: 1rem;
+        border-radius: 4px;
+        margin: 1rem 0;
+        overflow-x: auto;
+        font-family: "Courier New", monospace;
+        font-size: 0.9rem;
+        border-left: 3px solid var(--accent-color);
+      }
+
+      .code-snippet .keyword {
+        color: #569cd6;
+      }
+
+      .code-snippet .function {
+        color: #dcdcaa;
+      }
+
+      .code-snippet .string {
+        color: #ce9178;
+      }
+
+      .code-snippet .comment {
+        color: #6a9955;
+      }
+
+      .code-snippet .number {
+        color: #b5cea8;
+      }
+
+      .comparison-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 1.5rem 0;
+        background: white;
+        border-radius: 4px;
+        overflow: hidden;
+      }
+
+      .comparison-table th {
+        background: var(--secondary-color);
+        color: white;
+        padding: 1rem;
+        text-align: left;
+        font-weight: bold;
+      }
+
+      .comparison-table td {
+        padding: 1rem;
+        border-bottom: 1px solid #e0e0e0;
+      }
+
+      .comparison-table tr:hover {
+        background: #f5f5f5;
+      }
+
+      .step-box {
+        background: white;
+        border: 2px solid var(--secondary-color);
+        padding: 1.5rem;
+        margin: 1rem 0;
+        border-radius: 4px;
+        border-left: 6px solid var(--secondary-color);
+      }
+
+      .step-number {
+        display: inline-block;
+        width: 40px;
+        height: 40px;
+        background: var(--secondary-color);
+        color: white;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 40px;
+        font-weight: bold;
+        margin-right: 1rem;
+      }
+
+      .highlight-box {
+        background: #fffacd;
+        border-left: 4px solid #ffd700;
+        padding: 1rem;
+        margin: 1rem 0;
+        border-radius: 4px;
+      }
+
+      .lua-ref {
+        background: #e8f4f8;
+        border-left: 4px solid #0288d1;
+        padding: 1rem;
+        margin: 1rem 0;
+        border-radius: 4px;
+        font-size: 0.95rem;
+      }
+
+      .lua-ref strong {
+        color: #01579b;
+      }
+
+      .interactive-example {
+        background: #f3e5f5;
+        border: 2px dashed #9c27b0;
+        padding: 1.5rem;
+        margin: 1.5rem 0;
+        border-radius: 4px;
+      }
+
+      .stack-visualization {
+        display: flex;
+        align-items: flex-end;
+        gap: 0.5rem;
+        margin: 1rem 0;
+        justify-content: flex-start;
+      }
+
+      .stack-frame {
+        background: #e3f2fd;
+        border: 2px solid #1976d2;
+        border-radius: 4px;
+        padding: 1rem;
+        min-width: 100px;
+        text-align: center;
+      }
+
+      .stack-frame.active {
+        background: #1976d2;
+        color: white;
+        font-weight: bold;
+      }
+
+      .divider {
+        margin: 2rem 0;
+        text-align: center;
+        color: #999;
+      }
+
+      .feature-title {
+        color: var(--secondary-color);
+        margin-top: 2rem;
+        padding-bottom: 1rem;
+        border-bottom: 3px solid var(--secondary-color);
+      }
+
+      ul.feature-list {
+        list-style: none;
+        padding: 0;
+      }
+
+      ul.feature-list li {
+        padding: 0.5rem 0;
+        padding-left: 2rem;
+        position: relative;
+      }
+
+      ul.feature-list li:before {
+        content: "✓";
+        position: absolute;
+        left: 0;
+        color: var(--accent-color);
+        font-weight: bold;
+        font-size: 1.2rem;
+      }
+
+      .note-box {
+        background: #fff3e0;
+        border-left: 4px solid #ff9800;
+        padding: 1rem;
+        margin: 1rem 0;
+        border-radius: 4px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <h1>
+        🎮 Le Features di Pangea - Guida Dettagliata per Ragazzi e Ragazze
+      </h1>
+      <p>
+        Scopri come funziona veramente questo linguaggio di programmazione
+        unico!
+      </p>
+    </header>
+
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="polish-notation.html">Notazione Polacca</a></li>
+        <li><a href="features-dettaglio.html">📍 Features in Dettaglio</a></li>
+        <li><a href="evaluation.html">Meccanismo di Valutazione</a></li>
+        <li><a href="examples.html">Esempi</a></li>
+      </ul>
+    </nav>
+
+    <main>
+      <h2>🚀 Cosa Rende Pangea Speciale?</h2>
+
+      <p>
+        Pangea non è un linguaggio di programmazione ordinario. È un esperimento
+        affascinante su come scrivere codice in modo completamente diverso. In
+        questa guida scoprirai <strong>7 feature straordinarie</strong>
+        che lo rendono unico e come funzionano dietro le quinte!
+      </p>
+
+      <!-- FEATURE 1: NOTAZIONE PREFISSA -->
+      <div class="feature-section">
+        <h2 class="feature-title">1️⃣ Notazione Prefissa (Polish Notation)</h2>
+
+        <p>
+          Quando usi la maggior parte dei linguaggi di programmazione, scrivi
+          <strong>operatore in mezzo</strong>
+          agli operandi (notazione infissa):
+        </p>
+
+        <div class="code-snippet">
+          5 + 6 <span class="comment">← standard (infissa)</span>
+        </div>
+
+        <p>
+          In Pangea, scrivi l'operatore <strong>prima</strong> degli operandi:
+        </p>
+
+        <div class="code-snippet">
+          <span class="keyword">add</span> 5 6
+          <span class="comment">← Pangea (prefissa)</span>
+        </div>
+
+        <h3>💡 Perché è Utile?</h3>
+        <ul class="feature-list">
+          <li>
+            <strong>Zero ambiguità:</strong> Non serve ricordare che la
+            moltiplicazione ha priorità dell'addizione
+          </li>
+          <li>
+            <strong>Niente parentesi:</strong> La struttura è sempre chiara
+          </li>
+          <li>
+            <strong>Facile da interpretare:</strong> L'interprete sa esattamente
+            cosa fare
+          </li>
+        </ul>
+
+        <h3>Confronto: Infix vs Prefix</h3>
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th>Cosa Vuoi Fare</th>
+              <th>Standard (Infix)</th>
+              <th>Pangea (Prefix)</th>
+              <th>Risultato</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Somma semplice</td>
+              <td><code>5 + 6</code></td>
+              <td><code>add 5 6</code></td>
+              <td><strong>11</strong></td>
+            </tr>
+            <tr>
+              <td>Moltiplicazione</td>
+              <td><code>3 * 4</code></td>
+              <td><code>multiply 3 4</code></td>
+              <td><strong>12</strong></td>
+            </tr>
+            <tr>
+              <td>Operazioni miste</td>
+              <td><code>(2 + 3) * 4</code></td>
+              <td><code>multiply add 2 3 4</code></td>
+              <td><strong>20</strong></td>
+            </tr>
+            <tr>
+              <td>Operazioni complesse</td>
+              <td><code>((5+6)*(7-2))</code></td>
+              <td><code>multiply add 5 6 subtract 7 2</code></td>
+              <td><strong>55</strong></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="lua-ref">
+          <strong>🔍 Come funziona nel codice Lua:</strong>
+          <p>
+            Nel file <code>main.lua</code>, la funzione
+            <span class="function">phrase_length()</span> calcola quanti token
+            un operatore consuma:
+          </p>
+          <div class="code-snippet">
+            <span class="keyword">function</span>
+            <span class="function">phrase_length</span>(word_index) local word =
+            words[word_index] local length = 1 local word_definition =
+            word_definitions[word] if word_definition == nil
+            <span class="keyword">then</span>
+            <span class="keyword">return</span> 1
+            <span class="keyword">end</span>
+
+            local argument_length = word_definition[1]
+            <span class="comment">-- Quanti argomenti?</span>
+            <span class="keyword">for</span> _ = 1, argument_length
+            <span class="keyword">do</span>
+            length = length + phrase_length(word_index + length)
+            <span class="keyword">end</span>
+            <span class="keyword">return</span> length
+            <span class="keyword">end</span>
+          </div>
+          <p>
+            Esempio: <code>add</code> ha arity=2 (prende 2 argomenti), quindi
+            phrase_length calcola quanti token occupano gli ultimi 2 valori da
+            valutare.
+          </p>
+        </div>
+      </div>
+
+      <!-- FEATURE 2: LITERALI QUOTATI -->
+      <div class="feature-section">
+        <h2 class="feature-title">2️⃣ Literali Quotati con Escape Support</h2>
+
+        <p>
+          In Pangea, le stringhe (testi) sono semplicemente
+          <strong>parole tra virgolette</strong>. Dentro le virgolette puoi
+          scrivere qualsiasi cosa, inclusi spazi e caratteri speciali.
+        </p>
+
+        <h3>Sintassi Base</h3>
+        <div class="code-snippet">
+          <span class="string">"Ciao Mondo"</span>
+          <span class="comment">← Una stringa semplice con spazi</span>
+          <span class="string">"nome"</span>
+          <span class="comment">← Un nome di variabile</span>
+          <span class="string">"Hello, World!"</span>
+          <span class="comment">← Con punteggiatura</span>
+        </div>
+
+        <h3>Sequenze di Escape</h3>
+        <p>
+          All'interno di una stringa tra virgolette, puoi usare caratteri
+          speciali con il backslash (<code>\</code>):
+        </p>
+
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th>Sequenza</th>
+              <th>Cosa Rappresenta</th>
+              <th>Esempio</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>\"</code></td>
+              <td>Una virgoletta dentro la stringa</td>
+              <td>
+                <code>"Lui ha detto \"Ciao\""</code> → Lui ha detto "Ciao"
+              </td>
+            </tr>
+            <tr>
+              <td><code>\\</code></td>
+              <td>Un backslash letterale</td>
+              <td><code>"C:\\Users"</code> → C:\Users</td>
+            </tr>
+            <tr>
+              <td><code>\n</code></td>
+              <td>Vai a capo (newline)</td>
+              <td><code>"Riga 1\nRiga 2"</code> → due righe</td>
+            </tr>
+            <tr>
+              <td><code>\t</code></td>
+              <td>Una tabulazione (spazi allineati)</td>
+              <td><code>"Nome\tEtà"</code> → colonne allineate</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>Esempi Pratici</h3>
+        <div class="step-box">
+          <span class="step-number">1</span>
+          <strong>Stampare una frase</strong>
+          <div class="code-snippet">
+            <span class="keyword">print</span>
+            <span class="string">"Benvenuto in Pangea!"</span>
+          </div>
+          <p>Output: <code>Benvenuto in Pangea!</code></p>
+        </div>
+
+        <div class="step-box">
+          <span class="step-number">2</span>
+          <strong>Usare una stringa come nome variabile</strong>
+          <div class="code-snippet">
+            <span class="keyword">set</span> <span class="string">"nome"</span>
+            <span class="string">"Mario"</span>
+            <span class="keyword">print</span> <span class="keyword">get</span>
+            <span class="string">"nome"</span>
+          </div>
+          <p>Output: <code>Mario</code></p>
+        </div>
+
+        <div class="step-box">
+          <span class="step-number">3</span>
+          <strong>Escape per testo multi-riga</strong>
+          <div class="code-snippet">
+            <span class="keyword">print</span>
+            <span class="string">"Riga 1\nRiga 2\nRiga 3"</span>
+          </div>
+          <p>Output: tre righe separate</p>
+        </div>
+
+        <div class="lua-ref">
+          <strong>🔍 Come funziona nel codice Lua:</strong>
+          <p>
+            Nel file <code>main.lua</code>, la funzione
+            <span class="function">program_words()</span> analizza il testo
+            carattere per carattere e gestisce le stringhe quotate:
+          </p>
+          <div class="code-snippet">
+            <span class="keyword">function</span>
+            <span class="function">program_words</span>(pn_program) local
+            in_string = false local escaping = false local quoted = {}
+
+            <span class="keyword">for</span> i = 1, #pn_program
+            <span class="keyword">do</span>
+            local char = pn_program:sub(i, i)
+
+            <span class="keyword">if</span> in_string
+            <span class="keyword">then</span>
+            <span class="keyword">if</span> escaping
+            <span class="keyword">then</span>
+            <span class="keyword">if</span> char ==
+            <span class="string">'"'</span>
+            <span class="keyword">then</span> table.insert(quoted,
+            <span class="string">'"'</span>)
+            <span class="keyword">elseif</span> char ==
+            <span class="string">'n'</span>
+            <span class="keyword">then</span> table.insert(quoted,
+            <span class="string">"\n"</span>)
+            <span class="keyword">end</span>
+            escaping = false
+            <span class="keyword">elseif</span> char ==
+            <span class="string">'"'</span> <span class="keyword">then</span>
+            <span class="comment">-- Fine stringa</span>
+            in_string = false
+            <span class="keyword">end</span>
+            <span class="keyword">elseif</span> char ==
+            <span class="string">'"'</span> <span class="keyword">then</span>
+            <span class="comment">-- Inizio stringa</span>
+            in_string = true
+            <span class="keyword">end</span>
+            <span class="keyword">end</span>
+            <span class="keyword">end</span>
+          </div>
+          <p>
+            Il token viene marcato nella tabella <code>string_literals</code> in
+            modo che l'evaluatore sappia che è un letterale e non una parola da
+            cercare nei word_definitions.
+          </p>
+        </div>
+
+        <div class="highlight-box">
+          ⚠️ <strong>Attenzione:</strong> Se scrivi una sequenza di escape non
+          valida (tipo <code>\q</code>), Pangea ti mostrerà un errore!
+        </div>
+      </div>
+
+      <!-- FEATURE 3: SCOPING LESSICALE -->
+      <div class="feature-section">
+        <h2 class="feature-title">3️⃣ Scoping Lessicale (Variabili Locali)</h2>
+
+        <p>
+          <strong>Scope</strong> significa "area di validità". In Pangea, le
+          variabili vivono solo dentro la funzione in cui sono dichiarate.
+          Questo si chiama <strong>scoping lessicale</strong>.
+        </p>
+
+        <h3>Il Concetto di Call Stack</h3>
+        <p>
+          Immagina una pila di scatole (<strong>call stack</strong>). Ogni volta
+          che chiami una funzione, una nuova scatola viene messa sopra. Le
+          variabili dentro quella scatola esistono solo in quella funzione.
+          Quando la funzione finisce, la scatola viene tolta e le variabili
+          spariscono.
+        </p>
+
+        <div class="interactive-example">
+          <h4>Come funziona il Call Stack</h4>
+
+          <p><strong>Programma:</strong></p>
+          <div class="code-snippet">
+            <span class="keyword">set</span> <span class="string">"x"</span> 10
+            <span class="comment">← x va nello scope globale</span>
+            <span class="keyword">define_word</span>
+            <span class="string">"miaFunzione"</span> 0
+            <span class="keyword">set</span> <span class="string">"x"</span> 20
+            <span class="comment"
+              >← x va nello scope locale della funzione</span
+            >
+            <span class="keyword">miaFunzione</span>
+            <span class="keyword">print</span> <span class="keyword">get</span>
+            <span class="string">"x"</span>
+            <span class="comment">← Stampa x globale (10)</span>
+          </div>
+
+          <p><strong>Visualizzazione del Call Stack:</strong></p>
+
+          <h5>Stato 1: Prima di chiamare la funzione</h5>
+          <div class="stack-visualization">
+            <div class="stack-frame active">
+              <strong>Global</strong><br />
+              x = 10
+            </div>
+          </div>
+
+          <h5>Stato 2: Durante l'esecuzione della funzione</h5>
+          <div class="stack-visualization">
+            <div class="stack-frame">
+              <strong>Global</strong><br />
+              x = 10
+            </div>
+            <div class="stack-frame active">
+              <strong>miaFunzione</strong><br />
+              x = 20
+            </div>
+          </div>
+
+          <p><em>Nota: la x nella funzione è diversa da quella globale!</em></p>
+
+          <h5>Stato 3: Dopo la funzione</h5>
+          <div class="stack-visualization">
+            <div class="stack-frame active">
+              <strong>Global</strong><br />
+              x = 10
+            </div>
+          </div>
+
+          <p>
+            <strong>Output:</strong> <code>10</code> (la x della funzione è
+            sparita)
+          </p>
+        </div>
+
+        <h3>Perché è Importante?</h3>
+        <ul class="feature-list">
+          <li>
+            <strong>Isolamento:</strong> Le funzioni non si interferiscono a
+            vicenda
+          </li>
+          <li>
+            <strong>Riutilizzabilità:</strong> Puoi usare lo stesso nome di
+            variabile in funzioni diverse
+          </li>
+          <li>
+            <strong>Sicurezza:</strong> Non rischi di sovrascrivere dati
+            accidentalmente
+          </li>
+        </ul>
+
+        <div class="lua-ref">
+          <strong>🔍 Come funziona nel codice Lua:</strong>
+          <p>
+            In Pangea, c'è una variabile globale <code>call_stack</code> che è
+            una lista di tabelle:
+          </p>
+          <div class="code-snippet">
+            local call_stack = {{}}
+            <span class="comment">-- Inizia con uno scope vuoto</span>
+
+            <span class="keyword">function</span>
+            <span class="function">get_function</span>(arguments) local
+            variables = call_stack[#call_stack]
+            <span class="comment"
+              >-- Leggi dall'ultimo scope (il corrente)</span
+            >
+            local variable_name = evaluate_word(arguments[1])
+            <span class="keyword">return</span> variables[variable_name]
+            <span class="keyword">end</span>
+
+            <span class="keyword">function</span>
+            <span class="function">define_word_function</span>(arguments) local
+            word_function =
+            <span class="keyword">function</span>(word_arguments)
+            <span class="comment">-- CREA UN NUOVO SCOPE</span>
+            table.insert(call_stack, {})
+
+            <span class="comment">-- Esegui il corpo della funzione</span>
+            local returned = evaluate_word(arguments[3])
+
+            <span class="comment">-- ELIMINA LO SCOPE</span>
+            table.remove(call_stack)
+
+            <span class="keyword">return</span> returned
+            <span class="keyword">end</span>
+            <span class="keyword">end</span>
+          </div>
+        </div>
+
+        <div class="note-box">
+          📝 <strong>Nota tecnica:</strong>
+          <code>call_stack[#call_stack]</code> significa "l'ultimo elemento
+          della lista", che è sempre lo scope corrente.
+        </div>
+      </div>
+
+      <!-- FEATURE 4: RECURSIVE DESCENT -->
+      <div class="feature-section">
+        <h2 class="feature-title">
+          4️⃣ Recursive Descent (Valutazione Ricorsiva)
+        </h2>
+
+        <p>
+          <strong>Recursive descent</strong> è il modo in cui Pangea
+          <em>legge e valuta</em> quello che scrivi. È un processo ricorsivo:
+          ogni funzione chiama altre funzioni per valutare i suoi argomenti.
+        </p>
+
+        <h3>Il Meccanismo Fondamentale</h3>
+        <p>
+          La funzione centrale è
+          <span class="function">evaluate_word(word_index)</span>. Ecco cosa fa:
+        </p>
+
+        <div class="step-box">
+          <span class="step-number">1</span>
+          <strong>Leggi il token</strong>
+          <p>Prende il token all'indice <code>word_index</code></p>
+        </div>
+
+        <div class="step-box">
+          <span class="step-number">2</span>
+          <strong>Decidi cosa fare</strong>
+          <ul>
+            <li>Se è un numero → restituisci il numero</li>
+            <li>Se è una stringa quotata → restituisci la stringa</li>
+            <li>Se è una parola registrata → cercala in word_definitions</li>
+          </ul>
+        </div>
+
+        <div class="step-box">
+          <span class="step-number">3</span>
+          <strong>Calcola quanti argomenti servono</strong>
+          <p>
+            Usa <span class="function">phrase_length()</span> per sapere quanti
+            token occupano gli argomenti
+          </p>
+        </div>
+
+        <div class="step-box">
+          <span class="step-number">4</span>
+          <strong>Chiama ricorsivamente gli argomenti</strong>
+          <p>
+            Per ogni argomento, chiama di nuovo
+            <span class="function">evaluate_word()</span>
+          </p>
+        </div>
+
+        <div class="step-box">
+          <span class="step-number">5</span>
+          <strong>Esegui la funzione</strong>
+          <p>
+            Ora che hai i valori, esegui la vera operazione (add, print, ecc.)
+          </p>
+        </div>
+
+        <h3>Esempio Pratico: Traccia di Esecuzione</h3>
+
+        <p>Programma: <code>print add 5 6</code></p>
+
+        <div class="highlight-box">
+          <strong>Tokens:</strong> [1: print, 2: add, 3: 5, 4: 6]
+        </div>
+
+        <p><strong>Traccia:</strong></p>
+
+        <div class="code-snippet">
+          evaluate_word(1) <span class="comment">← Valuta "print"</span> ├─
+          "print" ha arity=1
+          <span class="comment">← Ha bisogno di 1 argomento</span> ├─ Argomento
+          1: evaluate_word(2) <span class="comment">← Valuta "add"</span> │ ├─
+          "add" ha arity=2
+          <span class="comment">← Ha bisogno di 2 argomenti</span> │ ├─
+          Argomento 1: evaluate_word(3)
+          <span class="comment">← Valuta "5" → 5</span> │ ├─ Argomento 2:
+          evaluate_word(4) <span class="comment">← Valuta "6" → 6</span>
+          │ └─ Restituisce: 5 + 6 = 11 └─ print(11) └─ Output: 11
+        </div>
+
+        <div class="lua-ref">
+          <strong>🔍 Come funziona nel codice Lua:</strong>
+          <div class="code-snippet">
+            <span class="keyword">function</span>
+            <span class="function">evaluate_word</span>(word_index) local word =
+            words[word_index]
+
+            <span class="comment">-- Caso 1: È un numero?</span>
+            local returned_value = tonumber(word)
+            <span class="keyword">if</span> returned_value ~= nil
+            <span class="keyword">then</span>
+            <span class="keyword">return</span> returned_value
+            <span class="keyword">end</span>
+
+            <span class="comment">-- Caso 2: È una stringa quotata?</span>
+            <span class="keyword">if</span> string_literals[word_index]
+            <span class="keyword">then</span>
+            <span class="keyword">return</span> word
+            <span class="keyword">end</span>
+
+            <span class="comment">-- Caso 3: È una parola registrata?</span>
+            local word_definition = word_definitions[word]
+            <span class="keyword">if</span> word_definition == nil
+            <span class="keyword">then</span>
+            <span class="keyword">return</span> <span class="keyword">end</span>
+
+            <span class="comment">-- Calcola argomenti ricorsivamente</span>
+            local arguments = {} local arity = word_definition[1] local
+            argument_word_index = word_index + 1
+
+            <span class="keyword">for</span> _ = 1, arity
+            <span class="keyword">do</span>
+            table.insert(arguments, argument_word_index) argument_word_index =
+            argument_word_index + phrase_length(argument_word_index)
+            <span class="keyword">end</span>
+
+            <span class="comment">-- Esegui la funzione</span>
+            <span class="keyword">return</span> word_definition[2](arguments)
+            <span class="keyword">end</span>
+          </div>
+        </div>
+
+        <h3>Perché "Recursive Descent"?</h3>
+        <p>Si chiama così perché:</p>
+        <ul class="feature-list">
+          <li><strong>Recursive:</strong> Chiama se stessa (recursione)</li>
+          <li>
+            <strong>Descent:</strong> Scende dentro la struttura del programma
+          </li>
+        </ul>
+      </div>
+
+      <!-- FEATURE 5: MODULARITÀ -->
+      <div class="feature-section">
+        <h2 class="feature-title">5️⃣ Modularità - Includere File Esterni</h2>
+
+        <p>
+          Non vuoi scrivere tutto in un solo file? In Pangea puoi dividere il
+          tuo programma in più file e includerli uno dentro l'altro. Questo si
+          chiama <strong>modularità</strong>.
+        </p>
+
+        <h3>La Parola Chiave: "!"</h3>
+        <p>
+          Per includere un file, usa il simbolo <code>!</code> seguito dal nome
+          del file tra virgolette:
+        </p>
+
+        <div class="code-snippet">
+          <span class="keyword">!</span>
+          <span class="string">"file-esterno.words"</span>
+        </div>
+
+        <h3>Esempio Pratico</h3>
+
+        <p><strong>File 1: funzioni-comuni.words</strong></p>
+        <div class="code-snippet">
+          <span class="keyword">define_word</span>
+          <span class="string">"doppio"</span> 1
+          <span class="keyword">multiply</span>
+          <span class="keyword">argument</span> 1 2
+        </div>
+
+        <p><strong>File 2: programma-principale.words</strong></p>
+        <div class="code-snippet">
+          <span class="keyword">!</span>
+          <span class="string">"funzioni-comuni.words"</span>
+
+          <span class="keyword">print</span>
+          <span class="keyword">doppio</span> 5
+          <span class="comment">← Usa la funzione da file-esterno</span>
+        </div>
+
+        <p><strong>Output:</strong> <code>10</code></p>
+
+        <h3>Path Relativi e Assoluti</h3>
+        <p>Pangea supporta sia percorsi relativi che assoluti:</p>
+
+        <div class="code-snippet">
+          <span class="keyword">!</span>
+          <span class="string">"utils/helper.words"</span>
+          <span class="comment">← Relativo: cerca in subdirectory</span>
+          <span class="keyword">!</span>
+          <span class="string">"/home/user/file.words"</span>
+          <span class="comment">← Assoluto: percorso completo</span>
+        </div>
+
+        <div class="lua-ref">
+          <strong>🔍 Come funziona nel codice Lua:</strong>
+          <p>
+            Nel file <code>main.lua</code>, c'è il concetto di
+            <strong>file_directory_stack</strong>:
+          </p>
+          <div class="code-snippet">
+            local file_directory_stack = {}
+
+            <span class="keyword">function</span>
+            <span class="function">execute_words_file</span>(file_name) local
+            file = io.open(resolved_file_name, <span class="string">"r"</span>)
+
+            <span class="comment"
+              >-- Metti la directory del file sullo stack</span
+            >
+            table.insert(file_directory_stack, path_dirname(resolved_file_name))
+
+            <span class="comment">-- Esegui il programma</span>
+            execute_program(program)
+
+            <span class="comment">-- Togli la directory dallo stack</span>
+            table.remove(file_directory_stack)
+            <span class="keyword">end</span>
+          </div>
+          <p>
+            In questo modo Pangea sa dove cercare i file relativi, anche quando
+            includi file che a loro volta includono altri file (nesting).
+          </p>
+        </div>
+
+        <h3>Vantaggi della Modularità</h3>
+        <ul class="feature-list">
+          <li><strong>Organizzazione:</strong> Tieni il codice d'ordine</li>
+          <li>
+            <strong>Riutilizzabilità:</strong> Scrivi una funzione una volta,
+            usala ovunque
+          </li>
+          <li>
+            <strong>Manutenzione:</strong> Più facile trovare e correggere i bug
+          </li>
+          <li>
+            <strong>Collaborazione:</strong> Puoi condividere file con gli amici
+          </li>
+        </ul>
+
+        <div class="note-box">
+          📝 <strong>Convention:</strong> In Pangea, i file in inglese finiscono
+          con <code>.words</code> e quelli in italiano finiscono con
+          <code>.parole</code>.
+        </div>
+      </div>
+
+      <!-- FEATURE 6: BILINGUE -->
+      <div class="feature-section">
+        <h2 class="feature-title">6️⃣ Bilingual - Italiano e Inglese</h2>
+
+        <p>
+          Pangea supporta <strong>sia l'italiano che l'inglese</strong> come
+          linguaggio di programmazione. Puoi scrivere il tuo codice nella lingua
+          che preferisci!
+        </p>
+
+        <h3>Come Attivare la Modalità Italiana</h3>
+        <p>
+          Quando lanci Pangea, passa <code>italian</code> come primo argomento:
+        </p>
+
+        <div class="code-snippet">
+          lua src/pangea1/main.lua
+          <span class="comment">← Modalità Inglese (default)</span> lua
+          src/pangea1/main.lua italian
+          <span class="comment">← Modalità Italiana</span>
+        </div>
+
+        <h3>Parole Traducibili</h3>
+        <p>Ecco un confronto tra inglese e italiano per le parole chiave:</p>
+
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th>Funzione</th>
+              <th>Inglese</th>
+              <th>Italiano</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Stampa output</td>
+              <td><code>print</code></td>
+              <td><code>stampa</code></td>
+            </tr>
+            <tr>
+              <td>Addizione</td>
+              <td><code>add</code></td>
+              <td><code>somma</code></td>
+            </tr>
+            <tr>
+              <td>Moltiplicazione</td>
+              <td><code>multiply</code></td>
+              <td><code>moltiplica</code></td>
+            </tr>
+            <tr>
+              <td>Assegna variabile</td>
+              <td><code>set</code></td>
+              <td><code>metti</code></td>
+            </tr>
+            <tr>
+              <td>Leggi variabile</td>
+              <td><code>get</code></td>
+              <td><code>prendi</code></td>
+            </tr>
+            <tr>
+              <td>Condizione</td>
+              <td><code>if</code></td>
+              <td><code>se</code></td>
+            </tr>
+            <tr>
+              <td>Ciclo</td>
+              <td><code>while</code></td>
+              <td><code>mentre</code></td>
+            </tr>
+            <tr>
+              <td>Uguaglianza</td>
+              <td><code>equal</code></td>
+              <td><code>uguale</code></td>
+            </tr>
+            <tr>
+              <td>Maggiore di</td>
+              <td><code>greater</code></td>
+              <td><code>maggiore</code></td>
+            </tr>
+            <tr>
+              <td>Definifico funzione</td>
+              <td><code>define_word</code></td>
+              <td><code>definisci_parola</code></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>Esempio Comparativo</h3>
+
+        <p><strong>Lo stesso programma in inglese e italiano:</strong></p>
+
+        <div
+          style="
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin: 1rem 0;
+          "
+        >
+          <div>
+            <h4>English (words)</h4>
+            <div class="code-snippet">
+              print add 5 6 set "x" 10 print get "x"
+            </div>
+          </div>
+          <div>
+            <h4>Italiano (parole)</h4>
+            <div class="code-snippet">
+              stampa somma 5 6 metti "x" 10 stampa prendi "x"
+            </div>
+          </div>
+        </div>
+
+        <div class="lua-ref">
+          <strong>🔍 Come funziona nel codice Lua:</strong>
+          <p>
+            Nel file <code>main.lua</code>, c'è una tabella di traduzione e una
+            funzione <span class="function">tr()</span>:
+          </p>
+          <div class="code-snippet">
+            local translate_italian = { [<span class="string">"print"</span>] =
+            <span class="string">"stampa"</span>, [<span class="string"
+              >"add"</span
+            >] = <span class="string">"somma"</span>, [<span class="string"
+              >"multiply"</span
+            >] = <span class="string">"moltiplica"</span>,
+            <span class="comment">-- ... e altri 20+ termini</span>
+            }
+
+            <span class="keyword">function</span>
+            <span class="function">tr</span>(string)
+            <span class="keyword">if</span> language ==
+            <span class="string">"italian"</span>
+            <span class="keyword">then</span>
+            local traduced = translate_italian[string]
+            <span class="keyword">return</span> traduced
+            <span class="keyword">end</span>
+            <span class="keyword">return</span> string
+            <span class="keyword">end</span>
+          </div>
+          <p>
+            Quando definisci le parole, usano
+            <span class="function">tr()</span> come chiave:
+          </p>
+          <div class="code-snippet">
+            word_definitions[<span class="function">tr</span>(<span
+              class="string"
+              >"print"</span
+            >)] = {1, print_function} word_definitions[<span class="function"
+              >tr</span
+            >(<span class="string">"add"</span>)] = {2, add_function}
+          </div>
+          <p>
+            Se la lingua è italiana, <code>tr("print")</code> restituisce
+            <code>"stampa"</code>, quindi la parola viene registrata come
+            "stampa" e funziona!
+          </p>
+        </div>
+
+        <div class="highlight-box">
+          💡 <strong>Idea geniale:</strong> Puoi anche mescolare inglese e
+          italiano nello stesso programma se vuoi. Basta che usi la sintassi
+          corretta per la modalità in cui stai eseguendo il programma!
+        </div>
+      </div>
+
+      <!-- FEATURE 7: REPL E SCRIPT MODE -->
+      <div class="feature-section">
+        <h2 class="feature-title">
+          7️⃣ REPL & Script Modes (Interattivo e Batch)
+        </h2>
+
+        <p>
+          Pangea può funzionare in due modalità diverse:
+          <strong>interattiva (REPL)</strong> dove scrivi comandi uno per uno, e
+          <strong>script mode</strong> dove esegui un intero file.
+        </p>
+
+        <h3>Modalità REPL (Interattiva)</h3>
+        <p>
+          REPL significa "Read-Eval-Print Loop" (Leggi-Valuta-Stampa in Loop). È
+          come avere una conversazione con il computer:
+        </p>
+
+        <div class="code-snippet">
+          $ lua src/pangea1/main.lua pang version: 028
+          <span class="keyword">?</span> for help
+
+          <span class="comment">← Scrivi qui il tuo comando</span>
+          <span class="keyword">print</span> <span class="string">"Ciao"</span>
+          Ciao
+
+          <span class="keyword">add</span> 5 6 11
+
+          <span class="keyword">exit</span>
+          bye
+        </div>
+
+        <h3>Script Mode</h3>
+        <p>Passa il nome di un file e Pangea esegue il file intero:</p>
+
+        <div class="code-snippet">
+          $ lua src/pangea1/main.lua mio-programma.words
+          <span class="comment">← Il programma si esegue automaticamente</span>
+          Risultato... bye
+        </div>
+
+        <h3>Script Mode Ibrido: File + REPL</h3>
+        <p>
+          Se aggiungi un trattino <code>-</code> dopo il nome del file, Pangea
+          esegue il file E POI entra nella modalità interattiva:
+        </p>
+
+        <div class="code-snippet">
+          $ lua src/pangea1/main.lua mio-programma.words -
+          <span class="comment">← Esegue il file</span>
+          <span class="comment">← Poi entra in REPL</span>
+
+          <span class="keyword">print</span>
+          <span class="string">"Posso scrivere altri comandi!"</span>
+          Posso scrivere altri comandi!
+        </div>
+
+        <h3>Confronto delle Modalità</h3>
+
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th>Modalità</th>
+              <th>Comando</th>
+              <th>Uso Principale</th>
+              <th>Vantaggio</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>REPL</strong></td>
+              <td><code>lua src/pangea1/main.lua</code></td>
+              <td>Sperimentare e imparare</td>
+              <td>Feedback immediato</td>
+            </tr>
+            <tr>
+              <td><strong>Script</strong></td>
+              <td><code>lua src/pangea1/main.lua file.words</code></td>
+              <td>Eseguire programmi</td>
+              <td>Automatizzazione</td>
+            </tr>
+            <tr>
+              <td><strong>Ibrido</strong></td>
+              <td><code>lua src/pangea1/main.lua file.words -</code></td>
+              <td>Carica dati poi sperimenta</td>
+              <td>Entrambi i vantaggi</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>Caso d'Uso Pratico</h3>
+        <p>
+          Immagina di avere un file <code>setup.words</code> che inizializza le
+          tue variabili:
+        </p>
+
+        <div class="code-snippet">
+          <span class="keyword">set</span> <span class="string">"nome"</span>
+          <span class="string">"Mario"</span> <span class="keyword">set</span>
+          <span class="string">"numero_magico"</span> 42
+        </div>
+
+        <p>Poi esegui:</p>
+
+        <div class="code-snippet">
+          $ lua src/pangea1/main.lua setup.words -
+          <span class="comment"
+            >← Ora entra in REPL CO LE VARIABILI CARICATE</span
+          >
+
+          <span class="keyword">print</span> <span class="keyword">get</span>
+          <span class="string">"nome"</span>
+          <span class="comment">← "Mario" è già disponibile!</span>
+          Mario
+
+          <span class="keyword">add</span> <span class="keyword">get</span>
+          <span class="string">"numero_magico"</span> 8 50
+        </div>
+
+        <div class="lua-ref">
+          <strong>🔍 Come funziona nel codice Lua:</strong>
+
+          <p>
+            Nel <code>main.lua</code>, la funzione
+            <span class="function">main()</span> gestisce tutte e tre le
+            modalità:
+          </p>
+
+          <div class="code-snippet">
+            <span class="keyword">function</span>
+            <span class="function">main</span>() local filename = arg[1]
+
+            <span class="keyword">if</span> filename ~= nil
+            <span class="keyword">then</span>
+            <span class="keyword">if</span> filename ==
+            <span class="string">"-"</span> <span class="keyword">then</span>
+            <span class="comment">-- Solo REPL</span>
+            read_execute_loop()
+            <span class="keyword">else</span>
+            <span class="comment">-- Esegui file</span>
+            execute_words_file(filename)
+
+            <span class="comment"
+              >-- Se arg[2] == "-", entra anche in REPL</span
+            >
+            <span class="keyword">if</span> arg[2] ==
+            <span class="string">"-"</span> <span class="keyword">then</span>
+            read_execute_loop()
+            <span class="keyword">end</span>
+            <span class="keyword">end</span>
+            <span class="keyword">else</span>
+            <span class="comment">-- Nessun file: REPL diretto</span>
+            read_execute_loop()
+            <span class="keyword">end</span>
+            <span class="keyword">end</span>
+          </div>
+
+          <p>
+            La funzione <span class="function">read_execute_loop()</span> legge
+            linea per linea finché non premi <code>exit</code>:
+          </p>
+
+          <div class="code-snippet">
+            <span class="keyword">function</span>
+            <span class="function">read_execute_loop</span>()
+            <span class="keyword">while</span> true
+            <span class="keyword">do</span>
+            local program = io.read()
+            <span class="keyword">if</span> program == nil or program ==
+            tr(<span class="string">"exit"</span>)
+            <span class="keyword">then</span>
+            <span class="keyword">break</span>
+            <span class="keyword">end</span>
+            execute_program(program)
+            <span class="keyword">end</span>
+            <span class="keyword">end</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- SEZIONE CONCLUSIVA -->
+      <div
+        class="feature-section"
+        style="
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          color: white;
+        "
+      >
+        <h2 style="color: white; border-bottom-color: white">
+          🎉 Riassunto: Le 7 Features di Pangea
+        </h2>
+
+        <ul style="list-style: none; padding: 0">
+          <li style="padding: 1rem 0; display: flex; align-items: center">
+            <span style="font-size: 2rem; margin-right: 1rem">1️⃣</span>
+            <span
+              ><strong>Notazione Prefissa:</strong> Operatore prima degli
+              operandi, zero ambiguità</span
+            >
+          </li>
+          <li style="padding: 1rem 0; display: flex; align-items: center">
+            <span style="font-size: 2rem; margin-right: 1rem">2️⃣</span>
+            <span
+              ><strong>Literali Quotati:</strong> Stringhe con escape support
+              (`\"`, `\\`, `\n`, `\t`)</span
+            >
+          </li>
+          <li style="padding: 1rem 0; display: flex; align-items: center">
+            <span style="font-size: 2rem; margin-right: 1rem">3️⃣</span>
+            <span
+              ><strong>Scoping Lessicale:</strong> Variabili isolate per
+              funzione/scope</span
+            >
+          </li>
+          <li style="padding: 1rem 0; display: flex; align-items: center">
+            <span style="font-size: 2rem; margin-right: 1rem">4️⃣</span>
+            <span
+              ><strong>Recursive Descent:</strong> Valutazione ricorsiva e
+              naturale di espressioni</span
+            >
+          </li>
+          <li style="padding: 1rem 0; display: flex; align-items: center">
+            <span style="font-size: 2rem; margin-right: 1rem">5️⃣</span>
+            <span
+              ><strong>Modularità:</strong> Includere file esterni con `!`</span
+            >
+          </li>
+          <li style="padding: 1rem 0; display: flex; align-items: center">
+            <span style="font-size: 2rem; margin-right: 1rem">6️⃣</span>
+            <span
+              ><strong>Bilingual:</strong> Italiano e Inglese
+              interscambiabili</span
+            >
+          </li>
+          <li style="padding: 1rem 0; display: flex; align-items: center">
+            <span style="font-size: 2rem; margin-right: 1rem">7️⃣</span>
+            <span
+              ><strong>REPL & Script:</strong> Modalità interattiva e
+              batch</span
+            >
+          </li>
+        </ul>
+      </div>
+
+      <div class="divider">--- ⭐ ---</div>
+
+      <h2>🧠 Prossimi Passi</h2>
+      <p>Ora che conosci le features in dettaglio, prova:</p>
+      <ul class="feature-list">
+        <li>Scrivi un piccolo programma in REPL</li>
+        <li>Crea un file `.words` con funzioni personalizzate</li>
+        <li>Fai un programma in italiano (`.parole`)</li>
+        <li>
+          Leggi il codice Lua in <code>src/pangea1/main.lua</code> per capire
+          ancora meglio
+        </li>
+        <li>Crea una funzione ricorsiva (come il fattoriale)</li>
+      </ul>
+
+      <div class="highlight-box">
+        💪 <strong>Sfida:</strong> Crea un gioco semplice in Pangea usando un
+        ciclo while e variabili!
+      </div>
+    </main>
+
+    <footer>
+      <p>
+        Pangea/Pang &copy; 2026 | Documentazione Italiana |
+        <a href="https://github.com/arkenidar/pangea">GitHub Repository</a>
+      </p>
+    </footer>
+  </body>
+</html>
