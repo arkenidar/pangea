@@ -1,3 +1,6 @@
+-- ARCHIVE SNAPSHOT NOTICE:
+-- This historical snapshot may preserve legacy literal syntax (for example ':' and/or string keyword forms).
+-- Canonical current behavior is implemented in src/pangea1/main.lua and ark/lua/latest.lua.
 -- pang: polish notation language
 
 local pang_version="003"
