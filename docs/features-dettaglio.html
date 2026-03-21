@@ -236,18 +236,13 @@
           agli operandi (notazione infissa):
         </p>
 
-        <div class="code-snippet">
-          5 + 6 <span class="comment">← standard (infissa)</span>
-        </div>
+        <pre class="code-snippet">5 + 6 <span class="comment">← standard (infissa)</span></pre>
 
         <p>
           In Pangea, scrivi l'operatore <strong>prima</strong> degli operandi:
         </p>
 
-        <div class="code-snippet">
-          <span class="keyword">add</span> 5 6
-          <span class="comment">← Pangea (prefissa)</span>
-        </div>
+        <pre class="code-snippet"><span class="keyword">add</span> 5 6 <span class="comment">← Pangea (prefissa)</span></pre>
 
         <h3>💡 Perché è Utile?</h3>
         <ul class="feature-list">
@@ -309,25 +304,20 @@
             <span class="function">phrase_length()</span> calcola quanti token
             un operatore consuma:
           </p>
-          <div class="code-snippet">
-            <span class="keyword">function</span>
-            <span class="function">phrase_length</span>(word_index) local word =
-            words[word_index] local length = 1 local word_definition =
-            word_definitions[word]
-            <span class="keyword">if</span> word_definition ==
-            <span class="keyword">nil</span> <span class="keyword">then</span>
-            <span class="keyword">return</span> 1
-            <span class="keyword">end</span>
+          <pre class="code-snippet"><span class="keyword">function</span> <span class="function">phrase_length</span>(word_index)
+  <span class="keyword">local</span> word = words[word_index]
+  <span class="keyword">local</span> length = 1
+  <span class="keyword">local</span> word_definition = word_definitions[word]
+  <span class="keyword">if</span> word_definition == <span class="keyword">nil</span> <span class="keyword">then</span>
+    <span class="keyword">return</span> 1
+  <span class="keyword">end</span>
 
-            local argument_length = word_definition[1]
-            <span class="comment">-- Quanti argomenti?</span>
-            <span class="keyword">for</span> _ = 1, argument_length
-            <span class="keyword">do</span>
-            length = length + phrase_length(word_index + length)
-            <span class="keyword">end</span>
-            <span class="keyword">return</span> length
-            <span class="keyword">end</span>
-          </div>
+  <span class="keyword">local</span> argument_length = word_definition[1] <span class="comment">-- Quanti argomenti?</span>
+  <span class="keyword">for</span> _ = 1, argument_length <span class="keyword">do</span>
+    length = length + phrase_length(word_index + length)
+  <span class="keyword">end</span>
+  <span class="keyword">return</span> length
+<span class="keyword">end</span></pre>
           <p>
             Esempio: <code>add</code> ha arity=2 (prende 2 argomenti), quindi
             phrase_length calcola quanti token occupano gli ultimi 2 valori da
@@ -347,14 +337,9 @@
         </p>
 
         <h3>Sintassi Base</h3>
-        <div class="code-snippet">
-          <span class="string">"Ciao Mondo"</span>
-          <span class="comment">← Una stringa semplice con spazi</span>
-          <span class="string">"nome"</span>
-          <span class="comment">← Un nome di variabile</span>
-          <span class="string">"Hello, World!"</span>
-          <span class="comment">← Con punteggiatura</span>
-        </div>
+        <pre class="code-snippet"><span class="string">"Ciao Mondo"</span>       <span class="comment">← Una stringa semplice con spazi</span>
+<span class="string">"nome"</span>             <span class="comment">← Un nome di variabile</span>
+<span class="string">"Hello, World!"</span>    <span class="comment">← Con punteggiatura</span></pre>
 
         <h3>Sequenze di Escape</h3>
         <p>
@@ -400,32 +385,22 @@
         <div class="step-box">
           <span class="step-number">1</span>
           <strong>Stampare una frase</strong>
-          <div class="code-snippet">
-            <span class="keyword">print</span>
-            <span class="string">"Benvenuto in Pangea!"</span>
-          </div>
+          <pre class="code-snippet"><span class="keyword">print</span> <span class="string">"Benvenuto in Pangea!"</span></pre>
           <p>Output: <code>Benvenuto in Pangea!</code></p>
         </div>
 
         <div class="step-box">
           <span class="step-number">2</span>
           <strong>Usare una stringa come nome variabile</strong>
-          <div class="code-snippet">
-            <span class="keyword">set</span> <span class="string">"nome"</span>
-            <span class="string">"Mario"</span>
-            <span class="keyword">print</span> <span class="keyword">get</span>
-            <span class="string">"nome"</span>
-          </div>
+          <pre class="code-snippet"><span class="keyword">set</span> <span class="string">"nome"</span> <span class="string">"Mario"</span>
+<span class="keyword">print</span> <span class="keyword">get</span> <span class="string">"nome"</span></pre>
           <p>Output: <code>Mario</code></p>
         </div>
 
         <div class="step-box">
           <span class="step-number">3</span>
           <strong>Escape per testo multi-riga</strong>
-          <div class="code-snippet">
-            <span class="keyword">print</span>
-            <span class="string">"Riga 1\nRiga 2\nRiga 3"</span>
-          </div>
+          <pre class="code-snippet"><span class="keyword">print</span> <span class="string">"Riga 1\nRiga 2\nRiga 3"</span></pre>
           <p>Output: tre righe separate</p>
         </div>
 
@@ -436,42 +411,28 @@
             <span class="function">program_words()</span> analizza il testo
             carattere per carattere e gestisce le stringhe quotate:
           </p>
-          <div class="code-snippet">
-            <span class="keyword">function</span>
-            <span class="function">program_words</span>(pn_program) local
-            in_string = false local escaping = false local quoted = {}
+          <pre class="code-snippet"><span class="keyword">function</span> <span class="function">program_words</span>(pn_program)
+  <span class="keyword">local</span> in_string = <span class="keyword">false</span>
+  <span class="keyword">local</span> escaping = <span class="keyword">false</span>
+  <span class="keyword">local</span> quoted = {}
 
-            <span class="keyword">for</span> i = 1, #pn_program
-            <span class="keyword">do</span>
-            local char = pn_program:sub(i, i)
+  <span class="keyword">for</span> i = 1, #pn_program <span class="keyword">do</span>
+    <span class="keyword">local</span> char = pn_program:sub(i, i)
 
-            <span class="keyword">if</span> in_string
-            <span class="keyword">then</span>
-            <span class="keyword">if</span> escaping
-            <span class="keyword">then</span>
-            <span class="keyword">if</span> char ==
-            <span class="string">'"'</span>
-            <span class="keyword">then</span> table.insert(quoted,
-            <span class="string">'"'</span>)
-            <span class="keyword">elseif</span> char ==
-            <span class="string">'n'</span>
-            <span class="keyword">then</span> table.insert(quoted,
-            <span class="string">"\n"</span>)
-            <span class="keyword">end</span>
-            escaping = false
-            <span class="keyword">elseif</span> char ==
-            <span class="string">'"'</span> <span class="keyword">then</span>
-            <span class="comment">-- Fine stringa</span>
-            in_string = false
-            <span class="keyword">end</span>
-            <span class="keyword">elseif</span> char ==
-            <span class="string">'"'</span> <span class="keyword">then</span>
-            <span class="comment">-- Inizio stringa</span>
-            in_string = true
-            <span class="keyword">end</span>
-            <span class="keyword">end</span>
-            <span class="keyword">end</span>
-          </div>
+    <span class="keyword">if</span> in_string <span class="keyword">then</span>
+      <span class="keyword">if</span> escaping <span class="keyword">then</span>
+        <span class="keyword">if</span>    char == <span class="string">'"'</span> <span class="keyword">then</span> table.insert(quoted, <span class="string">'"'</span>)
+        <span class="keyword">elseif</span> char == <span class="string">'n'</span> <span class="keyword">then</span> table.insert(quoted, <span class="string">"\n"</span>)
+        <span class="keyword">end</span>
+        escaping = <span class="keyword">false</span>
+      <span class="keyword">elseif</span> char == <span class="string">'"'</span> <span class="keyword">then</span>
+        in_string = <span class="keyword">false</span> <span class="comment">-- Fine stringa</span>
+      <span class="keyword">end</span>
+    <span class="keyword">elseif</span> char == <span class="string">'"'</span> <span class="keyword">then</span>
+      in_string = <span class="keyword">true</span> <span class="comment">-- Inizio stringa</span>
+    <span class="keyword">end</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span></pre>
           <p>
             Il token viene marcato nella tabella <code>string_literals</code> in
             modo che l'evaluatore sappia che è un letterale e non una parola da
@@ -508,20 +469,11 @@
           <h4>Come funziona il Call Stack</h4>
 
           <p><strong>Programma:</strong></p>
-          <div class="code-snippet">
-            <span class="keyword">set</span> <span class="string">"x"</span> 10
-            <span class="comment">← x va nello scope globale</span>
-            <span class="keyword">define_word</span>
-            <span class="string">"miaFunzione"</span> 0
-            <span class="keyword">set</span> <span class="string">"x"</span> 20
-            <span class="comment"
-              >← x va nello scope locale della funzione</span
-            >
-            <span class="keyword">miaFunzione</span>
-            <span class="keyword">print</span> <span class="keyword">get</span>
-            <span class="string">"x"</span>
-            <span class="comment">← Stampa x globale (10)</span>
-          </div>
+          <pre class="code-snippet"><span class="keyword">set</span> <span class="string">"x"</span> 10 <span class="comment">← x va nello scope globale</span>
+<span class="keyword">define_word</span> <span class="string">"miaFunzione"</span> 0
+  <span class="keyword">set</span> <span class="string">"x"</span> 20 <span class="comment">← x va nello scope locale della funzione</span>
+<span class="keyword">miaFunzione</span>
+<span class="keyword">print</span> <span class="keyword">get</span> <span class="string">"x"</span> <span class="comment">← Stampa x globale (10)</span></pre>
 
           <p><strong>Visualizzazione del Call Stack:</strong></p>
 
@@ -583,37 +535,28 @@
             In Pangea, c'è una variabile globale <code>call_stack</code> che è
             una lista di tabelle:
           </p>
-          <div class="code-snippet">
-            local call_stack = {{}}
-            <span class="comment">-- Inizia con uno scope vuoto</span>
+          <pre class="code-snippet"><span class="keyword">local</span> call_stack = {{}} <span class="comment">-- Inizia con uno scope vuoto</span>
 
-            <span class="keyword">function</span>
-            <span class="function">get_function</span>(arguments) local
-            variables = call_stack[#call_stack]
-            <span class="comment"
-              >-- Leggi dall'ultimo scope (il corrente)</span
-            >
-            local variable_name = evaluate_word(arguments[1])
-            <span class="keyword">return</span> variables[variable_name]
-            <span class="keyword">end</span>
+<span class="keyword">function</span> <span class="function">get_function</span>(arguments)
+  <span class="keyword">local</span> variables = call_stack[#call_stack] <span class="comment">-- Leggi dall'ultimo scope (il corrente)</span>
+  <span class="keyword">local</span> variable_name = evaluate_word(arguments[1])
+  <span class="keyword">return</span> variables[variable_name]
+<span class="keyword">end</span>
 
-            <span class="keyword">function</span>
-            <span class="function">define_word_function</span>(arguments) local
-            word_function =
-            <span class="keyword">function</span>(word_arguments)
-            <span class="comment">-- CREA UN NUOVO SCOPE</span>
-            table.insert(call_stack, {})
+<span class="keyword">function</span> <span class="function">define_word_function</span>(arguments)
+  <span class="keyword">local</span> word_function = <span class="keyword">function</span>(word_arguments)
+    <span class="comment">-- CREA UN NUOVO SCOPE</span>
+    table.insert(call_stack, {})
 
-            <span class="comment">-- Esegui il corpo della funzione</span>
-            local returned = evaluate_word(arguments[3])
+    <span class="comment">-- Esegui il corpo della funzione</span>
+    <span class="keyword">local</span> returned = evaluate_word(arguments[3])
 
-            <span class="comment">-- ELIMINA LO SCOPE</span>
-            table.remove(call_stack)
+    <span class="comment">-- ELIMINA LO SCOPE</span>
+    table.remove(call_stack)
 
-            <span class="keyword">return</span> returned
-            <span class="keyword">end</span>
-            <span class="keyword">end</span>
-          </div>
+    <span class="keyword">return</span> returned
+  <span class="keyword">end</span>
+<span class="keyword">end</span></pre>
         </div>
 
         <div class="note-box">
@@ -693,59 +636,51 @@
 
         <p><strong>Traccia:</strong></p>
 
-        <div class="code-snippet">
-          evaluate_word(1) <span class="comment">← Valuta "print"</span> ├─
-          "print" ha arity=1
-          <span class="comment">← Ha bisogno di 1 argomento</span> ├─ Argomento
-          1: evaluate_word(2) <span class="comment">← Valuta "add"</span> │ ├─
-          "add" ha arity=2
-          <span class="comment">← Ha bisogno di 2 argomenti</span> │ ├─
-          Argomento 1: evaluate_word(3)
-          <span class="comment">← Valuta "5" → 5</span> │ ├─ Argomento 2:
-          evaluate_word(4) <span class="comment">← Valuta "6" → 6</span> │ └─
-          Restituisce: 5 + 6 = 11 └─ print(11) └─ Output: 11
-        </div>
+        <pre class="code-snippet">evaluate_word(1) <span class="comment">← Valuta "print"</span>
+├─ "print" ha arity=1 <span class="comment">← Ha bisogno di 1 argomento</span>
+├─ Argomento 1: evaluate_word(2) <span class="comment">← Valuta "add"</span>
+│  ├─ "add" ha arity=2 <span class="comment">← Ha bisogno di 2 argomenti</span>
+│  ├─ Argomento 1: evaluate_word(3) <span class="comment">← Valuta "5" → 5</span>
+│  ├─ Argomento 2: evaluate_word(4) <span class="comment">← Valuta "6" → 6</span>
+│  └─ Restituisce: 5 + 6 = 11
+└─ print(11)
+   └─ Output: 11</pre>
 
         <div class="lua-ref">
           <strong>🔍 Come funziona nel codice Lua:</strong>
-          <div class="code-snippet">
-            <span class="keyword">function</span>
-            <span class="function">evaluate_word</span>(word_index) local word =
-            words[word_index]
+          <pre class="code-snippet"><span class="keyword">function</span> <span class="function">evaluate_word</span>(word_index)
+  <span class="keyword">local</span> word = words[word_index]
 
-            <span class="comment">-- Caso 1: È un numero?</span>
-            local returned_value = tonumber(word)
-            <span class="keyword">if</span> returned_value ~=
-            <span class="keyword">nil</span> <span class="keyword">then</span>
-            <span class="keyword">return</span> returned_value
-            <span class="keyword">end</span>
+  <span class="comment">-- Caso 1: È un numero?</span>
+  <span class="keyword">local</span> returned_value = tonumber(word)
+  <span class="keyword">if</span> returned_value ~= <span class="keyword">nil</span> <span class="keyword">then</span>
+    <span class="keyword">return</span> returned_value
+  <span class="keyword">end</span>
 
-            <span class="comment">-- Caso 2: È una stringa quotata?</span>
-            <span class="keyword">if</span> string_literals[word_index]
-            <span class="keyword">then</span>
-            <span class="keyword">return</span> word
-            <span class="keyword">end</span>
+  <span class="comment">-- Caso 2: È una stringa quotata?</span>
+  <span class="keyword">if</span> string_literals[word_index] <span class="keyword">then</span>
+    <span class="keyword">return</span> word
+  <span class="keyword">end</span>
 
-            <span class="comment">-- Caso 3: È una parola registrata?</span>
-            local word_definition = word_definitions[word]
-            <span class="keyword">if</span> word_definition ==
-            <span class="keyword">nil</span> <span class="keyword">then</span>
-            <span class="keyword">return</span> <span class="keyword">end</span>
+  <span class="comment">-- Caso 3: È una parola registrata?</span>
+  <span class="keyword">local</span> word_definition = word_definitions[word]
+  <span class="keyword">if</span> word_definition == <span class="keyword">nil</span> <span class="keyword">then</span>
+    <span class="keyword">return</span>
+  <span class="keyword">end</span>
 
-            <span class="comment">-- Calcola argomenti ricorsivamente</span>
-            local arguments = {} local arity = word_definition[1] local
-            argument_word_index = word_index + 1
+  <span class="comment">-- Calcola argomenti ricorsivamente</span>
+  <span class="keyword">local</span> arguments = {}
+  <span class="keyword">local</span> arity = word_definition[1]
+  <span class="keyword">local</span> argument_word_index = word_index + 1
 
-            <span class="keyword">for</span> _ = 1, arity
-            <span class="keyword">do</span>
-            table.insert(arguments, argument_word_index) argument_word_index =
-            argument_word_index + phrase_length(argument_word_index)
-            <span class="keyword">end</span>
+  <span class="keyword">for</span> _ = 1, arity <span class="keyword">do</span>
+    table.insert(arguments, argument_word_index)
+    argument_word_index = argument_word_index + phrase_length(argument_word_index)
+  <span class="keyword">end</span>
 
-            <span class="comment">-- Esegui la funzione</span>
-            <span class="keyword">return</span> word_definition[2](arguments)
-            <span class="keyword">end</span>
-          </div>
+  <span class="comment">-- Esegui la funzione</span>
+  <span class="keyword">return</span> word_definition[2](arguments)
+<span class="keyword">end</span></pre>
         </div>
 
         <h3>Perché "Recursive Descent"?</h3>
@@ -774,44 +709,26 @@
           del file tra virgolette:
         </p>
 
-        <div class="code-snippet">
-          <span class="keyword">!</span>
-          <span class="string">"file-esterno.words"</span>
-        </div>
+        <pre class="code-snippet"><span class="keyword">!</span> <span class="string">"file-esterno.words"</span></pre>
 
         <h3>Esempio Pratico</h3>
 
         <p><strong>File 1: funzioni-comuni.words</strong></p>
-        <div class="code-snippet">
-          <span class="keyword">define_word</span>
-          <span class="string">"doppio"</span> 1
-          <span class="keyword">multiply</span>
-          <span class="keyword">argument</span> 1 2
-        </div>
+        <pre class="code-snippet"><span class="keyword">define_word</span> <span class="string">"doppio"</span> 1
+  <span class="keyword">multiply</span> <span class="keyword">argument</span> 1 2</pre>
 
         <p><strong>File 2: programma-principale.words</strong></p>
-        <div class="code-snippet">
-          <span class="keyword">!</span>
-          <span class="string">"funzioni-comuni.words"</span>
+        <pre class="code-snippet"><span class="keyword">!</span> <span class="string">"funzioni-comuni.words"</span>
 
-          <span class="keyword">print</span>
-          <span class="keyword">doppio</span> 5
-          <span class="comment">← Usa la funzione da file-esterno</span>
-        </div>
+<span class="keyword">print</span> <span class="keyword">doppio</span> 5 <span class="comment">← Usa la funzione da file-esterno</span></pre>
 
         <p><strong>Output:</strong> <code>10</code></p>
 
         <h3>Path Relativi e Assoluti</h3>
         <p>Pangea supporta sia percorsi relativi che assoluti:</p>
 
-        <div class="code-snippet">
-          <span class="keyword">!</span>
-          <span class="string">"utils/helper.words"</span>
-          <span class="comment">← Relativo: cerca in subdirectory</span>
-          <span class="keyword">!</span>
-          <span class="string">"/home/user/file.words"</span>
-          <span class="comment">← Assoluto: percorso completo</span>
-        </div>
+        <pre class="code-snippet"><span class="keyword">!</span> <span class="string">"utils/helper.words"</span>    <span class="comment">← Relativo: cerca in subdirectory</span>
+<span class="keyword">!</span> <span class="string">"/home/user/file.words"</span> <span class="comment">← Assoluto: percorso completo</span></pre>
 
         <div class="lua-ref">
           <strong>🔍 Come funziona nel codice Lua:</strong>
@@ -819,25 +736,20 @@
             Nel file <code>main.lua</code>, c'è il concetto di
             <strong>file_directory_stack</strong>:
           </p>
-          <div class="code-snippet">
-            local file_directory_stack = {}
+          <pre class="code-snippet"><span class="keyword">local</span> file_directory_stack = {}
 
-            <span class="keyword">function</span>
-            <span class="function">execute_words_file</span>(file_name) local
-            file = io.open(resolved_file_name, <span class="string">"r"</span>)
+<span class="keyword">function</span> <span class="function">execute_words_file</span>(file_name)
+  <span class="keyword">local</span> file = io.open(resolved_file_name, <span class="string">"r"</span>)
 
-            <span class="comment"
-              >-- Metti la directory del file sullo stack</span
-            >
-            table.insert(file_directory_stack, path_dirname(resolved_file_name))
+  <span class="comment">-- Metti la directory del file sullo stack</span>
+  table.insert(file_directory_stack, path_dirname(resolved_file_name))
 
-            <span class="comment">-- Esegui il programma</span>
-            execute_program(program)
+  <span class="comment">-- Esegui il programma</span>
+  execute_program(program)
 
-            <span class="comment">-- Togli la directory dallo stack</span>
-            table.remove(file_directory_stack)
-            <span class="keyword">end</span>
-          </div>
+  <span class="comment">-- Togli la directory dallo stack</span>
+  table.remove(file_directory_stack)
+<span class="keyword">end</span></pre>
           <p>
             In questo modo Pangea sa dove cercare i file relativi, anche quando
             includi file che a loro volta includono altri file (nesting).
@@ -881,12 +793,8 @@
           Quando lanci Pangea, passa <code>italian</code> come primo argomento:
         </p>
 
-        <div class="code-snippet">
-          lua src/pangea1/main.lua
-          <span class="comment">← Modalità Inglese (default)</span> lua
-          src/pangea1/main.lua italian
-          <span class="comment">← Modalità Italiana</span>
-        </div>
+        <pre class="code-snippet">lua src/pangea1/main.lua          <span class="comment">← Modalità Inglese (default)</span>
+lua src/pangea1/main.lua italian  <span class="comment">← Modalità Italiana</span></pre>
 
         <h3>Parole Traducibili</h3>
         <p>Ecco un confronto tra inglese e italiano per le parole chiave:</p>
@@ -967,15 +875,15 @@
         >
           <div>
             <h4>English (words)</h4>
-            <div class="code-snippet">
-              print add 5 6 set "x" 10 print get "x"
-            </div>
+            <pre class="code-snippet"><span class="keyword">print</span> <span class="keyword">add</span> 5 6
+<span class="keyword">set</span> <span class="string">"x"</span> 10
+<span class="keyword">print</span> <span class="keyword">get</span> <span class="string">"x"</span></pre>
           </div>
           <div>
             <h4>Italiano (parole)</h4>
-            <div class="code-snippet">
-              stampa somma 5 6 metti "x" 10 stampa prendi "x"
-            </div>
+            <pre class="code-snippet"><span class="keyword">stampa</span> <span class="keyword">somma</span> 5 6
+<span class="keyword">metti</span> <span class="string">"x"</span> 10
+<span class="keyword">stampa</span> <span class="keyword">prendi</span> <span class="string">"x"</span></pre>
           </div>
         </div>
 
@@ -985,39 +893,26 @@
             Nel file <code>main.lua</code>, c'è una tabella di traduzione e una
             funzione <span class="function">tr()</span>:
           </p>
-          <div class="code-snippet">
-            local translate_italian = { [<span class="string">"print"</span>] =
-            <span class="string">"stampa"</span>, [<span class="string"
-              >"add"</span
-            >] = <span class="string">"somma"</span>, [<span class="string"
-              >"multiply"</span
-            >] = <span class="string">"moltiplica"</span>,
-            <span class="comment">-- ... e altri 20+ termini</span>
-            }
+          <pre class="code-snippet"><span class="keyword">local</span> translate_italian = {
+  [<span class="string">"print"</span>]    = <span class="string">"stampa"</span>,
+  [<span class="string">"add"</span>]      = <span class="string">"somma"</span>,
+  [<span class="string">"multiply"</span>] = <span class="string">"moltiplica"</span>,
+  <span class="comment">-- ... e altri 20+ termini</span>
+}
 
-            <span class="keyword">function</span>
-            <span class="function">tr</span>(string)
-            <span class="keyword">if</span> language ==
-            <span class="string">"italian"</span>
-            <span class="keyword">then</span>
-            local traduced = translate_italian[string]
-            <span class="keyword">return</span> traduced
-            <span class="keyword">end</span>
-            <span class="keyword">return</span> string
-            <span class="keyword">end</span>
-          </div>
+<span class="keyword">function</span> <span class="function">tr</span>(string)
+  <span class="keyword">if</span> language == <span class="string">"italian"</span> <span class="keyword">then</span>
+    <span class="keyword">local</span> traduced = translate_italian[string]
+    <span class="keyword">return</span> traduced
+  <span class="keyword">end</span>
+  <span class="keyword">return</span> string
+<span class="keyword">end</span></pre>
           <p>
             Quando definisci le parole, usano
             <span class="function">tr()</span> come chiave:
           </p>
-          <div class="code-snippet">
-            word_definitions[<span class="function">tr</span>(<span
-              class="string"
-              >"print"</span
-            >)] = {1, print_function} word_definitions[<span class="function"
-              >tr</span
-            >(<span class="string">"add"</span>)] = {2, add_function}
-          </div>
+          <pre class="code-snippet">word_definitions[<span class="function">tr</span>(<span class="string">"print"</span>)] = {1, print_function}
+word_definitions[<span class="function">tr</span>(<span class="string">"add"</span>)]   = {2, add_function}</pre>
           <p>
             Se la lingua è italiana, <code>tr("print")</code> restituisce
             <code>"stampa"</code>, quindi la parola viene registrata come
@@ -1050,27 +945,24 @@
           come avere una conversazione con il computer:
         </p>
 
-        <div class="code-snippet">
-          $ lua src/pangea1/main.lua pang version: 028 ? for help
+        <pre class="code-snippet">$ lua src/pangea1/main.lua
+pang version: 028  ? for help
 
-          <span class="comment">← Scrivi qui il tuo comando</span>
-          <span class="keyword">print</span> <span class="string">"Ciao"</span>
-          Ciao
+<span class="keyword">print</span> <span class="string">"Ciao"</span>    <span class="comment">← Scrivi qui il tuo comando</span>
+Ciao
 
-          <span class="keyword">add</span> 5 6 11
+<span class="keyword">add</span> 5 6
+11
 
-          <span class="keyword">exit</span>
-          bye
-        </div>
+<span class="keyword">exit</span>
+bye</pre>
 
         <h3>Script Mode</h3>
         <p>Passa il nome di un file e Pangea esegue il file intero:</p>
 
-        <div class="code-snippet">
-          $ lua src/pangea1/main.lua mio-programma.words
-          <span class="comment">← Il programma si esegue automaticamente</span>
-          Risultato... bye
-        </div>
+        <pre class="code-snippet">$ lua src/pangea1/main.lua mio-programma.words  <span class="comment">← Il programma si esegue automaticamente</span>
+Risultato...
+bye</pre>
 
         <h3>Script Mode Ibrido: File + REPL</h3>
         <p>
@@ -1078,15 +970,11 @@
           esegue il file E POI entra nella modalità interattiva:
         </p>
 
-        <div class="code-snippet">
-          $ lua src/pangea1/main.lua mio-programma.words -
-          <span class="comment">← Esegue il file</span>
-          <span class="comment">← Poi entra in REPL</span>
+        <pre class="code-snippet">$ lua src/pangea1/main.lua mio-programma.words -  <span class="comment">← Esegue il file</span>
+                                                   <span class="comment">← Poi entra in REPL</span>
 
-          <span class="keyword">print</span>
-          <span class="string">"Posso scrivere altri comandi!"</span> Posso
-          scrivere altri comandi!
-        </div>
+<span class="keyword">print</span> <span class="string">"Posso scrivere altri comandi!"</span>
+Posso scrivere altri comandi!</pre>
 
         <h3>Confronto delle Modalità</h3>
 
@@ -1127,28 +1015,18 @@
           tue variabili:
         </p>
 
-        <div class="code-snippet">
-          <span class="keyword">set</span> <span class="string">"nome"</span>
-          <span class="string">"Mario"</span> <span class="keyword">set</span>
-          <span class="string">"numero_magico"</span> 42
-        </div>
+        <pre class="code-snippet"><span class="keyword">set</span> <span class="string">"nome"</span>          <span class="string">"Mario"</span>
+<span class="keyword">set</span> <span class="string">"numero_magico"</span> 42</pre>
 
         <p>Poi esegui:</p>
 
-        <div class="code-snippet">
-          $ lua src/pangea1/main.lua setup.words -
-          <span class="comment"
-            >← Ora entra in REPL con le variabili già caricate</span
-          >
+        <pre class="code-snippet">$ lua src/pangea1/main.lua setup.words -  <span class="comment">← Ora entra in REPL con le variabili già caricate</span>
 
-          <span class="keyword">print</span> <span class="keyword">get</span>
-          <span class="string">"nome"</span>
-          <span class="comment">← "Mario" è già disponibile!</span>
-          Mario
+<span class="keyword">print</span> <span class="keyword">get</span> <span class="string">"nome"</span>          <span class="comment">← "Mario" è già disponibile!</span>
+Mario
 
-          <span class="keyword">add</span> <span class="keyword">get</span>
-          <span class="string">"numero_magico"</span> 8 50
-        </div>
+<span class="keyword">add</span> <span class="keyword">get</span> <span class="string">"numero_magico"</span> 8
+50</pre>
 
         <div class="lua-ref">
           <strong>🔍 Come funziona nel codice Lua:</strong>
@@ -1159,57 +1037,42 @@
             modalità:
           </p>
 
-          <div class="code-snippet">
-            <span class="keyword">function</span>
-            <span class="function">main</span>() local filename = arg[1]
+          <pre class="code-snippet"><span class="keyword">function</span> <span class="function">main</span>()
+  <span class="keyword">local</span> filename = arg[1]
 
-            <span class="keyword">if</span> filename ~=
-            <span class="keyword">nil</span> <span class="keyword">then</span>
-            <span class="keyword">if</span> filename ==
-            <span class="string">"-"</span> <span class="keyword">then</span>
-            <span class="comment">-- Solo REPL</span>
-            read_execute_loop()
-            <span class="keyword">else</span>
-            <span class="comment">-- Esegui file</span>
-            execute_words_file(filename)
+  <span class="keyword">if</span> filename ~= <span class="keyword">nil</span> <span class="keyword">then</span>
+    <span class="keyword">if</span> filename == <span class="string">"-"</span> <span class="keyword">then</span>
+      <span class="comment">-- Solo REPL</span>
+      read_execute_loop()
+    <span class="keyword">else</span>
+      <span class="comment">-- Esegui file</span>
+      execute_words_file(filename)
 
-            <span class="comment"
-              >-- Se arg[2] == "-", entra anche in REPL</span
-            >
-            <span class="keyword">if</span> arg[2] ==
-            <span class="string">"-"</span> <span class="keyword">then</span>
-            read_execute_loop()
-            <span class="keyword">end</span>
-            <span class="keyword">end</span>
-            <span class="keyword">else</span>
-            <span class="comment">-- Nessun file: REPL diretto</span>
-            read_execute_loop()
-            <span class="keyword">end</span>
-            <span class="keyword">end</span>
-          </div>
+      <span class="comment">-- Se arg[2] == "-", entra anche in REPL</span>
+      <span class="keyword">if</span> arg[2] == <span class="string">"-"</span> <span class="keyword">then</span>
+        read_execute_loop()
+      <span class="keyword">end</span>
+    <span class="keyword">end</span>
+  <span class="keyword">else</span>
+    <span class="comment">-- Nessun file: REPL diretto</span>
+    read_execute_loop()
+  <span class="keyword">end</span>
+<span class="keyword">end</span></pre>
 
           <p>
             La funzione <span class="function">read_execute_loop()</span> legge
             linea per linea finché non premi <code>exit</code>:
           </p>
 
-          <div class="code-snippet">
-            <span class="keyword">function</span>
-            <span class="function">read_execute_loop</span>()
-            <span class="keyword">while</span> true
-            <span class="keyword">do</span>
-            local program = io.read()
-            <span class="keyword">if</span> program ==
-            <span class="keyword">nil</span> or program == tr(<span
-              class="string"
-              >"exit"</span
-            >) <span class="keyword">then</span>
-            <span class="keyword">break</span>
-            <span class="keyword">end</span>
-            execute_program(program)
-            <span class="keyword">end</span>
-            <span class="keyword">end</span>
-          </div>
+          <pre class="code-snippet"><span class="keyword">function</span> <span class="function">read_execute_loop</span>()
+  <span class="keyword">while</span> <span class="keyword">true</span> <span class="keyword">do</span>
+    <span class="keyword">local</span> program = io.read()
+    <span class="keyword">if</span> program == <span class="keyword">nil</span> or program == tr(<span class="string">"exit"</span>) <span class="keyword">then</span>
+      <span class="keyword">break</span>
+    <span class="keyword">end</span>
+    execute_program(program)
+  <span class="keyword">end</span>
+<span class="keyword">end</span></pre>
         </div>
       </div>
 
