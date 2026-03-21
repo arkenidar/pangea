@@ -6,3 +6,6 @@ stampa fattoriale 4
 
 stampa " Fizz-Buzz gioco matematico "
 ! "fizzbuzz.parole"
+
+stampa " test conversione input "
+! "input-conversion.parole"

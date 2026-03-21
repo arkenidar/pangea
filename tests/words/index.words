@@ -8,4 +8,7 @@ print " FizzBuzz TEST "
 print " Factorial TEST "
 ! "factorial.words"
 
+print " Input conversion TEST "
+! "input-conversion.words"
+
 print " END of TESTs "

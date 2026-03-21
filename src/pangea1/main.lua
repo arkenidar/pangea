@@ -36,7 +36,9 @@ local translate_italian = {
     ["dont"] = "non_fare",
     ["word:"] = "parola:",
     [" definition not found"] = " definizione non trovata",
-    ["command_prompt"] = "richiesta_comandi"
+    ["command_prompt"] = "richiesta_comandi",
+    ["read_text"] = "leggi_testo",
+    ["to_number"] = "numero_da_testo"
 }
 function tr(string) -- translate / traduci
     if language == "italian" then -- italiano supportato
@@ -96,6 +98,21 @@ function print_function(arguments)
     local value = evaluate_word(arguments[1])
     print(value)
     return value
+end
+
+-- read_text
+function read_text_function()
+    local text = io.read()
+    if text == nil then
+        return ""
+    end
+    return text
+end
+
+-- to_number <text>
+function to_number_function(arguments)
+    local value = evaluate_word(arguments[1])
+    return tonumber(value)
 end
 
 -- add <number> <number>
@@ -215,6 +232,8 @@ end
 -- local word_definitions
 -- word_definitions={
 word_definitions[tr("print")] = {1, print_function}
+word_definitions[tr("read_text")] = {0, read_text_function}
+word_definitions[tr("to_number")] = {1, to_number_function}
 word_definitions[tr("add")] = {2, add_function}
 word_definitions[tr("true")] = {0, true_function}
 word_definitions[tr("false")] = {0, false_function}

@@ -446,9 +446,69 @@
         </div>
       </div>
 
-      <!-- FEATURE 3: SCOPING LESSICALE -->
+      <!-- FEATURE: INPUT TESTUALE E CONVERSIONE -->
       <div class="feature-section">
-        <h2 class="feature-title">3️⃣ Scoping Lessicale (Variabili Locali)</h2>
+        <h2 class="feature-title">3️⃣ Input Testuale e Conversione Numerica</h2>
+
+        <p>
+          Pangea include due parole utili per i programmi interattivi:
+          <code>read_text</code> / <code>leggi_testo</code> per leggere una
+          riga da console e <code>to_number</code> /
+          <code>numero_da_testo</code> per convertirla in numero.
+        </p>
+
+        <h3>Lettura da Console</h3>
+        <pre class="code-snippet"><span class="keyword">set</span> <span class="string">"nome"</span> <span class="keyword">read_text</span>
+<span class="keyword">print</span> <span class="keyword">get</span> <span class="string">"nome"</span></pre>
+        <p>
+          <strong>Comportamento:</strong> legge una singola riga da input
+          standard e la restituisce come testo.
+        </p>
+
+        <h3>Conversione da Testo a Numero</h3>
+        <pre class="code-snippet"><span class="keyword">print</span> <span class="keyword">to_number</span> <span class="string">"42"</span>
+<span class="keyword">print</span> <span class="keyword">add</span> <span class="keyword">to_number</span> <span class="string">"7"</span> 5</pre>
+        <p>
+          <strong>Risultato:</strong> il testo numerico viene convertito in
+          numero e puo essere usato direttamente con <code>add</code>,
+          <code>multiply</code>, <code>modulus</code>, ecc.
+        </p>
+
+        <h3>Comportamento su Input Non Valido</h3>
+        <pre class="code-snippet"><span class="keyword">print</span> <span class="keyword">to_number</span> <span class="string">"abc"</span>   <span class="comment">← stampa nil</span>
+<span class="keyword">add</span> <span class="keyword">to_number</span> <span class="string">"abc"</span> 5   <span class="comment">← errore Lua: aritmetica su nil</span></pre>
+        <p>
+          <strong>Nota:</strong> la semantica corrente non forza errore in
+          <code>to_number</code>/<code>numero_da_testo</code>; in caso di testo
+          non numerico ritorna <code>nil</code>.
+        </p>
+
+        <p>
+          <strong>EOF su leggi_testo/read_text:</strong> se non ci sono piu
+          righe disponibili in input, viene restituita una stringa vuota
+          (<code>""</code>).
+        </p>
+
+        <div class="lua-ref">
+          <strong>🔍 Come funziona nel codice Lua:</strong>
+          <pre class="code-snippet"><span class="keyword">function</span> <span class="function">read_text_function</span>()
+  <span class="keyword">local</span> text = io.read()
+  <span class="keyword">if</span> text == <span class="keyword">nil</span> <span class="keyword">then</span>
+    <span class="keyword">return</span> <span class="string">""</span>
+  <span class="keyword">end</span>
+  <span class="keyword">return</span> text
+<span class="keyword">end</span>
+
+<span class="keyword">function</span> <span class="function">to_number_function</span>(arguments)
+  <span class="keyword">local</span> value = evaluate_word(arguments[1])
+  <span class="keyword">return</span> tonumber(value)
+<span class="keyword">end</span></pre>
+        </div>
+      </div>
+
+      <!-- FEATURE 4: SCOPING LESSICALE -->
+      <div class="feature-section">
+        <h2 class="feature-title">4️⃣ Scoping Lessicale (Variabili Locali)</h2>
 
         <p>
           <strong>Scope</strong> significa "area di validità". In Pangea, le

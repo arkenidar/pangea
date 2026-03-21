@@ -106,6 +106,49 @@ print " Hello, World! "</code></pre>
 Hello, World!</code></pre>
       </div>
 
+      <h2>⌨️ Input And Conversion</h2>
+
+      <div class="word-entry">
+        <h3>read_text / leggi_testo</h3>
+        <span class="category">Input</span>
+        <span class="arity-badge">Arity: 0</span>
+
+        <div class="signature">read_text</div>
+
+        <p>
+          <strong>Description:</strong> Reads one line from standard input and
+          returns it as text.
+        </p>
+
+        <h4>Example:</h4>
+        <pre><code>set "line" read_text
+print get "line"</code></pre>
+
+        <h4>Error/Edge Behavior:</h4>
+        <pre><code>At EOF, read_text returns "" (empty string).</code></pre>
+      </div>
+
+      <div class="word-entry">
+        <h3>to_number / numero_da_testo</h3>
+        <span class="category">Conversion</span>
+        <span class="arity-badge">Arity: 1</span>
+
+        <div class="signature">to_number &lt;text&gt;</div>
+
+        <p>
+          <strong>Description:</strong> Converts text to a number using Lua
+          numeric parsing rules.
+        </p>
+
+        <h4>Example:</h4>
+        <pre><code>print to_number "42"        → 42
+print add to_number "7" 5   → 12</code></pre>
+
+        <h4>Error/Edge Behavior:</h4>
+        <pre><code>print to_number "abc"       → nil
+      add to_number "abc" 5       → Lua runtime error (arithmetic on nil)</code></pre>
+      </div>
+
       <h2>➕ Arithmetic</h2>
 
       <div class="word-entry">

@@ -1,0 +1,5 @@
+#!/usr/bin/env pangea-italian
+
+stampa " comportamento conversione input "
+stampa numero_da_testo "42"
+stampa numero_da_testo "abc"
