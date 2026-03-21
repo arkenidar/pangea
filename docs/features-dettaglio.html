@@ -18,15 +18,18 @@
       .code-snippet {
         background: #1e1e1e;
         color: #d4d4d4;
-        padding: 1rem;
+        padding: 1.2rem;
         border-radius: 4px;
         margin: 1rem 0;
         overflow-x: auto;
         font-family: "Courier New", monospace;
-        font-size: 0.9rem;
+        font-size: 0.95rem;
         border-left: 3px solid var(--accent-color);
         white-space: pre-wrap;
         word-wrap: break-word;
+        display: block;
+        line-height: 1.6;
+        letter-spacing: 0.3px;
       }
 
       .code-snippet .keyword {
@@ -310,8 +313,9 @@
             <span class="keyword">function</span>
             <span class="function">phrase_length</span>(word_index) local word =
             words[word_index] local length = 1 local word_definition =
-            word_definitions[word] if word_definition == nil
-            <span class="keyword">then</span>
+            word_definitions[word]
+            <span class="keyword">if</span> word_definition ==
+            <span class="keyword">nil</span> <span class="keyword">then</span>
             <span class="keyword">return</span> 1
             <span class="keyword">end</span>
 
@@ -698,8 +702,8 @@
           <span class="comment">← Ha bisogno di 2 argomenti</span> │ ├─
           Argomento 1: evaluate_word(3)
           <span class="comment">← Valuta "5" → 5</span> │ ├─ Argomento 2:
-          evaluate_word(4) <span class="comment">← Valuta "6" → 6</span>
-          │ └─ Restituisce: 5 + 6 = 11 └─ print(11) └─ Output: 11
+          evaluate_word(4) <span class="comment">← Valuta "6" → 6</span> │ └─
+          Restituisce: 5 + 6 = 11 └─ print(11) └─ Output: 11
         </div>
 
         <div class="lua-ref">
@@ -711,8 +715,8 @@
 
             <span class="comment">-- Caso 1: È un numero?</span>
             local returned_value = tonumber(word)
-            <span class="keyword">if</span> returned_value ~= nil
-            <span class="keyword">then</span>
+            <span class="keyword">if</span> returned_value ~=
+            <span class="keyword">nil</span> <span class="keyword">then</span>
             <span class="keyword">return</span> returned_value
             <span class="keyword">end</span>
 
@@ -724,8 +728,8 @@
 
             <span class="comment">-- Caso 3: È una parola registrata?</span>
             local word_definition = word_definitions[word]
-            <span class="keyword">if</span> word_definition == nil
-            <span class="keyword">then</span>
+            <span class="keyword">if</span> word_definition ==
+            <span class="keyword">nil</span> <span class="keyword">then</span>
             <span class="keyword">return</span> <span class="keyword">end</span>
 
             <span class="comment">-- Calcola argomenti ricorsivamente</span>
@@ -1160,8 +1164,8 @@
             <span class="keyword">function</span>
             <span class="function">main</span>() local filename = arg[1]
 
-            <span class="keyword">if</span> filename ~= nil
-            <span class="keyword">then</span>
+            <span class="keyword">if</span> filename ~=
+            <span class="keyword">nil</span> <span class="keyword">then</span>
             <span class="keyword">if</span> filename ==
             <span class="string">"-"</span> <span class="keyword">then</span>
             <span class="comment">-- Solo REPL</span>
@@ -1196,9 +1200,11 @@
             <span class="keyword">while</span> true
             <span class="keyword">do</span>
             local program = io.read()
-            <span class="keyword">if</span> program == nil or program ==
-            tr(<span class="string">"exit"</span>)
-            <span class="keyword">then</span>
+            <span class="keyword">if</span> program ==
+            <span class="keyword">nil</span> or program == tr(<span
+              class="string"
+              >"exit"</span
+            >) <span class="keyword">then</span>
             <span class="keyword">break</span>
             <span class="keyword">end</span>
             execute_program(program)
