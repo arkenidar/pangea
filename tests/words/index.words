@@ -1,11 +1,11 @@
 #!/usr/bin/env pangea
 
-print : " Starting all TESTs! "
+print " Starting all TESTs! "
 
-print : " FizzBuzz TEST "
-! : fizzbuzz.words
+print " FizzBuzz TEST "
+! "fizzbuzz.words"
 
-print : " Factorial TEST "
-! : factorial.words
+print " Factorial TEST "
+! "factorial.words"
 
-print : " END of TESTs "
+print " END of TESTs "

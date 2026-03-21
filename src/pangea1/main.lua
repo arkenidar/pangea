@@ -52,6 +52,7 @@ end
 print(tr("pang version: ") .. pang_version)
 
 local words = {}
+local string_literals = {}
 
 local file_directory_stack = {}
 
@@ -200,17 +201,6 @@ word_definitions["namespace"] = {
         return call_stack[#call_stack]
     end
 }
----------------------------------------
--- string <word as string>
-function string_function(arguments)
-    return words[arguments[1]]
-end
-
--- word <word (not processed)>
-function word_function(arguments)
-    return words[arguments[1]]
-end
-
 -- modulus <dividend> <divisor>
 function modulus_function(arguments)
     return evaluate_word(arguments[1]) % evaluate_word(arguments[2])
@@ -233,10 +223,8 @@ word_definitions[tr("while")] = {2, while_function}
 word_definitions[tr("not")] = {1, not_function}
 word_definitions[tr("equal")] = {2, equal_function}
 
-word_definitions[tr("string")] = {1, string_function}
 word_definitions[tr("modulus")] = {2, modulus_function}
 word_definitions[tr("greater")] = {2, greater_function}
-word_definitions[":"] = {1, word_function}
 -- }
 
 word_definitions[tr("multiply")] = {2, multiply_function}
@@ -252,7 +240,7 @@ word_definitions["?"] = {0, list_word_definitions_function}
 function phrase_length(word_index)
     local word = words[word_index]
     local length = 1
-    if word_index > 1 and words[word_index - 1] == ":" then
+    if string_literals[word_index] then
         return 1
     end
     if word == tr("do") then
@@ -283,6 +271,9 @@ end
 function evaluate_word(word_index)
     local returned_value
     local word = words[word_index]
+    if string_literals[word_index] then
+        return word
+    end
     returned_value = tonumber(word)
     if returned_value ~= nil then
         return returned_value
@@ -316,27 +307,71 @@ function evaluate_word(word_index)
 end
 
 function program_words(pn_program)
-    local quoted = ""
-    local opened = false
-    local quote = '"'
-    for word in string.gmatch(pn_program, "%S+") do
-        if word == quote then
-            if opened then
-                -- print(quote..quoted..quote)
-                table.insert(words, quoted)
-                quoted = ""
-            end
-            opened = not opened
-        elseif opened then
-            if quoted ~= "" then
-                quoted = quoted .. " "
-            end
-            quoted = quoted .. word
-        else
-            -- print(word)
-            table.insert(words, word)
+    local token = {}
+    local quoted = {}
+    local in_string = false
+    local escaping = false
+
+    local function flush_token()
+        if #token > 0 then
+            table.insert(words, table.concat(token))
+            table.insert(string_literals, false)
+            token = {}
         end
     end
+
+    local function flush_quoted()
+        table.insert(words, table.concat(quoted))
+        table.insert(string_literals, true)
+        quoted = {}
+    end
+
+    local function append_escape(char)
+        if char == '"' then
+            table.insert(quoted, '"')
+        elseif char == "\\" then
+            table.insert(quoted, "\\")
+        elseif char == "n" then
+            table.insert(quoted, "\n")
+        elseif char == "t" then
+            table.insert(quoted, "\t")
+        else
+            error("invalid escape sequence: \\" .. char)
+        end
+    end
+
+    for i = 1, #pn_program do
+        local char = pn_program:sub(i, i)
+        if in_string then
+            if escaping then
+                append_escape(char)
+                escaping = false
+            elseif char == "\\" then
+                escaping = true
+            elseif char == '"' then
+                flush_quoted()
+                in_string = false
+            else
+                table.insert(quoted, char)
+            end
+        elseif string.match(char, "%s") then
+            flush_token()
+        elseif char == '"' then
+            flush_token()
+            in_string = true
+        else
+            table.insert(token, char)
+        end
+    end
+
+    if escaping then
+        error("unterminated escape sequence in string literal")
+    end
+    if in_string then
+        error("unterminated string literal")
+    end
+
+    flush_token()
 end
 
 function execute_program(pn_program)

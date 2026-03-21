@@ -65,12 +65,14 @@ To publish this documentation on GitHub Pages:
 ## Documentation Coverage
 
 ### 1. Conceptual Understanding
+
 - Polish notation fundamentals
 - Prefix vs infix comparison
 - Parse tree visualization
 - Evaluation order
 
 ### 2. Technical Details
+
 - Tokenization (program_words)
 - Phrase length calculation
 - Recursive evaluation (evaluate_word)
@@ -78,6 +80,7 @@ To publish this documentation on GitHub Pages:
 - word_definitions table structure
 
 ### 3. Practical Usage
+
 - 13+ complete code examples
 - FizzBuzz, factorial, Fibonacci
 - Variable scoping
@@ -86,10 +89,21 @@ To publish this documentation on GitHub Pages:
 - Best practices
 
 ### 4. Complete Reference
+
 - All 30+ built-in words documented
 - Arity and signature for each
 - English/Italian translation table
 - Known limitations
+
+## Syntax Migration Note
+
+Current versions use quoted string literals as the canonical and only literal form.
+
+- Removed: colon literal operator `:`.
+- Removed: legacy `string`/`stringa` keyword behavior.
+- Use quoted names for variable and function-name data, e.g. `set "x" 10`, `get "x"`, `define_word "square" 1 ...`.
+- File includes now use quoted paths, e.g. `! "factorial.words"`.
+- Supported escapes in quoted strings: `\"`, `\\`, `\n`, `\t`.
 
 ## Maintenance
 
@@ -111,12 +125,14 @@ To update the documentation:
 ## Browser Compatibility
 
 Tested and working on:
+
 - Chrome/Chromium 90+
 - Firefox 88+
 - Safari 14+
 - Edge 90+
 
 Requires:
+
 - CSS Grid support
 - SVG support
 - ES6 JavaScript (for future interactivity)
