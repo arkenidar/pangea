@@ -38,7 +38,8 @@ local translate_italian = {
     [" definition not found"] = " definizione non trovata",
     ["command_prompt"] = "richiesta_comandi",
     ["read_text"] = "leggi_testo",
-    ["to_number"] = "numero_da_testo"
+    ["to_number"] = "numero_da_testo",
+    ["repeat"] = "ripeti"
 }
 function tr(string) -- translate / traduci
     if language == "italian" then -- italiano supportato
@@ -153,6 +154,20 @@ function while_function(arguments)
     end
 end
 
+-- repeat <times_count> <deferred_code>
+function repeat_function(arguments)
+    local total = tonumber(evaluate_word(arguments[1]))
+    if total == nil then
+        return
+    end
+
+    local result
+    for _ = 1, total do
+        result = evaluate_word(arguments[2])
+    end
+    return result
+end
+
 -- not <boolean>
 function not_function(arguments)
     return not evaluate_word(arguments[1])
@@ -239,6 +254,7 @@ word_definitions[tr("true")] = {0, true_function}
 word_definitions[tr("false")] = {0, false_function}
 word_definitions[tr("if")] = {3, if_function}
 word_definitions[tr("while")] = {2, while_function}
+word_definitions[tr("repeat")] = {2, repeat_function}
 word_definitions[tr("not")] = {1, not_function}
 word_definitions[tr("equal")] = {2, equal_function}
 
