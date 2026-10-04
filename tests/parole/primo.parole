@@ -1,0 +1,27 @@
+#!/usr/bin/env pangea-italian
+
+definisci_parola "divisibile" 2
+    uguale 0 modulo @1 @2
+
+definisci_parola "primo" 1 {
+    n= @1
+    se non maggiore $n 1
+        falso
+        se uguale $n 2
+            vero
+            {
+                i= 2
+                risultato= vero
+                mentre non maggiore moltiplica $i $i $n {
+                    se divisibile $n $i
+                        risultato= falso
+                        passa
+                    i= somma $i 1
+                }
+                $risultato
+            }
+}
+
+stampa primo 2
+stampa primo 17
+stampa primo 20
