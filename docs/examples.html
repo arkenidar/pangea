@@ -86,6 +86,25 @@ print add get "x" get "y"</code></pre>
         </ul>
       </div>
 
+      <div class="example-box">
+        <h3>Variable Syntax Sugar ($name and name=)</h3>
+        <pre><code>x= 10
+print $x
+y= add $x 5
+print $y</code></pre>
+
+        <h4>Output:</h4>
+        <pre><code>10
+15</code></pre>
+
+        <h4>How it works:</h4>
+        <ul>
+          <li><code>x= 10</code> - Shorthand for <code>set "x" 10</code></li>
+          <li><code>$x</code> - Shorthand for <code>get "x"</code></li>
+          <li>Works identically in Italian (<code>metti</code>/<code>prendi</code>)</li>
+        </ul>
+      </div>
+
       <h2>4. Conditional Logic (if)</h2>
 
       <div class="example-box">

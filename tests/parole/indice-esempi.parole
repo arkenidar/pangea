@@ -9,3 +9,6 @@ stampa " Fizz-Buzz gioco matematico "
 
 stampa " test conversione input "
 ! "input-conversion.parole"
+
+stampa " test zucchero (sugar) "
+! "zucchero.parole"

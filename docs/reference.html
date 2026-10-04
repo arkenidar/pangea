@@ -401,6 +401,32 @@ print get "x"       → 42</code></pre>
       </div>
 
       <div class="word-entry">
+        <h3>sugar: $name / name=</h3>
+        <span class="category">Variables</span>
+        <span class="arity-badge">Sugar</span>
+
+        <div class="signature">$name → get "name" · name= value → set "name" value</div>
+
+        <p>
+          <strong>Description:</strong> <code>$name</code> is shorthand for
+          <code>get "name"</code>, and <code>name= value</code> is shorthand for
+          <code>set "name" value</code>.
+        </p>
+
+        <h4>Example:</h4>
+        <pre><code>x= 10
+print $x        → 10
+y= add $x 5
+print $y        → 15</code></pre>
+
+        <p>
+          <strong>Note:</strong> Language-agnostic (works with
+          <code>prendi</code>/<code>metti</code> in Italian). Quoted strings are
+          unaffected: <code>print "$x"</code> prints the literal <code>$x</code>.
+        </p>
+      </div>
+
+      <div class="word-entry">
         <h3>increment / incrementa</h3>
         <span class="category">Variables</span>
         <span class="arity-badge">Arity: 1</span>

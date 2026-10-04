@@ -349,9 +349,24 @@ function program_words(pn_program)
 
     local function flush_token()
         if #token > 0 then
-            table.insert(words, table.concat(token))
-            table.insert(string_literals, false)
+            local word = table.concat(token)
             token = {}
+            if word:sub(1, 1) == "$" and #word > 1 then
+                -- $name -> get "name"
+                table.insert(words, tr("get"))
+                table.insert(string_literals, false)
+                table.insert(words, word:sub(2))
+                table.insert(string_literals, true)
+            elseif word:sub(-1) == "=" and #word > 1 then
+                -- name= -> set "name"
+                table.insert(words, tr("set"))
+                table.insert(string_literals, false)
+                table.insert(words, word:sub(1, -2))
+                table.insert(string_literals, true)
+            else
+                table.insert(words, word)
+                table.insert(string_literals, false)
+            end
         end
     end
 

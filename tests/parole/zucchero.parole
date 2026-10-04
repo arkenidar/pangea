@@ -1,0 +1,13 @@
+#!/usr/bin/env pangea
+
+x= 10
+stampa $x
+
+y= somma $x 5
+stampa $y
+
+definisci_parola "doppio" 1
+    moltiplica 2 argomento 1
+
+z= doppio $y
+stampa $z

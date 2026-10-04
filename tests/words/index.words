@@ -11,4 +11,7 @@ print " Factorial TEST "
 print " Input conversion TEST "
 ! "input-conversion.words"
 
+print " Sugar TEST "
+! "sugar.words"
+
 print " END of TESTs "

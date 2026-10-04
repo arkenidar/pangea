@@ -103,6 +103,7 @@ Current versions use quoted string literals as the canonical and only literal fo
 - Removed: legacy `string`/`stringa` keyword behavior.
 - Use quoted names for variable and function-name data, e.g. `set "x" 10`, `get "x"`, `define_word "square" 1 ...`.
 - File includes now use quoted paths, e.g. `! "factorial.words"`.
+- Variable syntax sugar: `$name` reads (`get "name"`) and `name= value` writes (`set "name" value`); works in both English and Italian.
 - Supported escapes in quoted strings: `\"`, `\\`, `\n`, `\t`.
 
 ## Maintenance
