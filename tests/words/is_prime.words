@@ -1,8 +1,8 @@
 define_word "is_divisible" 2
-    equal 0 modulus argument 1 argument 2
+    equal 0 modulus @1 @2
 
 define_word "is_prime" 1 do
-    n= argument 1
+    n= @1
     if not greater $n 1
         false
         if equal $n 2

@@ -357,6 +357,12 @@ function program_words(pn_program)
                 table.insert(string_literals, false)
                 table.insert(words, word:sub(2))
                 table.insert(string_literals, true)
+            elseif word:sub(1, 1) == "@" and #word > 1 then
+                -- @index -> argument index
+                table.insert(words, tr("argument"))
+                table.insert(string_literals, false)
+                table.insert(words, word:sub(2))
+                table.insert(string_literals, false)
             elseif word:sub(-1) == "=" and #word > 1 then
                 -- name= -> set "name"
                 table.insert(words, tr("set"))

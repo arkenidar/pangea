@@ -7,7 +7,7 @@ y= add $x 5
 print $y
 
 define_word "double" 1
-    multiply 2 argument 1
+    multiply 2 @1
 
 z= double $y
 print $z
