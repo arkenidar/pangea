@@ -610,12 +610,31 @@ print "quote: \"ok\""</code></pre>
 
         <p>
           <strong>Description:</strong> Consumes one argument but does nothing.
-          Used to comment out code or create no-op placeholders.
+          Used to comment out code or create no-op placeholders. For a simpler
+          no-op, use <code>pass</code> (see below).
         </p>
 
         <h4>Example:</h4>
         <pre><code>dont print " This won't be executed "
 print " But this will "</code></pre>
+      </div>
+
+      <div class="word-entry">
+        <h3>pass / passa</h3>
+        <span class="category">Special</span>
+        <span class="arity-badge">Arity: 0</span>
+
+        <div class="signature">pass</div>
+
+        <p>
+          <strong>Description:</strong> No-op word that does nothing. A cleaner
+          alternative to <code>dont nothing</code> for empty branches.
+        </p>
+
+        <h4>Example:</h4>
+        <pre><code>if true
+    pass
+    print " not executed "</code></pre>
       </div>
 
       <div class="word-entry">

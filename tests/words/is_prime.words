@@ -13,7 +13,7 @@ define_word "is_prime" 1 {
                 while not greater multiply $i $i $n {
                     if is_divisible $n $i
                         prime= false
-                        dont nothing
+                        pass
                     i= add $i 1
                 }
                 $prime

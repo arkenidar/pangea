@@ -34,6 +34,7 @@ local translate_italian = {
     ["true"] = "vero",
     ["false"] = "falso",
     ["dont"] = "non_fare",
+    ["pass"] = "passa",
     ["word:"] = "parola:",
     [" definition not found"] = " definizione non trovata",
     ["command_prompt"] = "richiesta_comandi",
@@ -514,6 +515,13 @@ word_definitions["!"] = {1, execute_words_file_function}
 -- dont <skip this>
 word_definitions[tr("dont")] = {
     1,
+    function()
+    end
+}
+
+-- pass (no-op)
+word_definitions[tr("pass")] = {
+    0,
     function()
     end
 }
