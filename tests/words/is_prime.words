@@ -2,21 +2,21 @@ define_word "is_divisible" 2
     equal 0 modulus argument 1 argument 2
 
 define_word "is_prime" 1 do
-    set "n" argument 1
-    if not greater get "n" 1
+    n= argument 1
+    if not greater $n 1
         false
-        if equal get "n" 2
+        if equal $n 2
             true
             do
-                set "i" 2
-                set "prime" true
-                while not greater multiply get "i" get "i" get "n" do
-                    if is_divisible get "n" get "i"
-                        set "prime" false
+                i= 2
+                prime= true
+                while not greater multiply $i $i $n do
+                    if is_divisible $n $i
+                        prime= false
                         dont nothing
-                    set "i" add get "i" 1
+                    i= add $i 1
                 end
-                get "prime"
+                $prime
             end
 end
 
