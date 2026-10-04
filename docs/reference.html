@@ -401,17 +401,18 @@ print get "x"       → 42</code></pre>
       </div>
 
       <div class="word-entry">
-        <h3>sugar: $name / name= / @index</h3>
+        <h3>sugar: $name / name= / @index / { }</h3>
         <span class="category">Variables</span>
         <span class="arity-badge">Sugar</span>
 
-        <div class="signature">$name → get "name" · name= value → set "name" value · @index → argument index</div>
+        <div class="signature">$name → get "name" · name= value → set "name" value · @index → argument index · { → do · } → end</div>
 
         <p>
           <strong>Description:</strong> <code>$name</code> is shorthand for
           <code>get "name"</code>, <code>name= value</code> is shorthand for
-          <code>set "name" value</code>, and <code>@index</code> is shorthand for
-          <code>argument index</code>.
+          <code>set "name" value</code>, <code>@index</code> is shorthand for
+          <code>argument index</code>, and <code>{</code> / <code>}</code> are
+          shorthand for <code>do</code> / <code>end</code>.
         </p>
 
         <h4>Example:</h4>

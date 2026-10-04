@@ -11,3 +11,9 @@ define_word "double" 1
 
 z= double $y
 print $z
+
+i= 0
+while not greater $i 2 {
+    print $i
+    i= add $i 1
+}

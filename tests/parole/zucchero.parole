@@ -11,3 +11,9 @@ definisci_parola "doppio" 1
 
 z= doppio $y
 stampa $z
+
+i= 0
+mentre non maggiore $i 2 {
+    stampa $i
+    i= somma $i 1
+}

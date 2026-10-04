@@ -369,6 +369,14 @@ function program_words(pn_program)
                 table.insert(string_literals, false)
                 table.insert(words, word:sub(1, -2))
                 table.insert(string_literals, true)
+            elseif word == "{" then
+                -- { -> do
+                table.insert(words, tr("do"))
+                table.insert(string_literals, false)
+            elseif word == "}" then
+                -- } -> end
+                table.insert(words, tr("end"))
+                table.insert(string_literals, false)
             else
                 table.insert(words, word)
                 table.insert(string_literals, false)
