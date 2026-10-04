@@ -261,6 +261,16 @@ greater 5 5       → false</code></pre>
       </div>
 
       <div class="word-entry">
+        <h3>nil / nullo</h3>
+        <span class="category">Logic</span>
+        <span class="arity-badge">Arity: 0</span>
+
+        <div class="signature">nil</div>
+
+        <p><strong>Description:</strong> Returns the value nil (no value).</p>
+      </div>
+
+      <div class="word-entry">
         <h3>not / non</h3>
         <span class="category">Logic</span>
         <span class="arity-badge">Arity: 1</span>
@@ -356,6 +366,73 @@ while not greater $i 5 {
     multiply get "temp" get "temp"
 end
 print get "result"    → 25</code></pre>
+      </div>
+
+      <div class="word-entry">
+        <h3>return / ritorna</h3>
+        <span class="category">Control Flow</span>
+        <span class="arity-badge">Arity: 1</span>
+
+        <div class="signature">return &lt;value&gt;</div>
+
+        <p>
+          <strong>Description:</strong> Returns a value from the enclosing
+          function definition. Use <code>return nil</code> for no value.
+        </p>
+
+        <h4>Example:</h4>
+        <pre><code>define_word "square" 1 {
+    return multiply @1 @1
+}
+print square 5      → 25</code></pre>
+      </div>
+
+      <div class="word-entry">
+        <h3>break / interrompi</h3>
+        <span class="category">Control Flow</span>
+        <span class="arity-badge">Arity: 1</span>
+
+        <div class="signature">break &lt;value&gt;</div>
+
+        <p>
+          <strong>Description:</strong> Exits the innermost loop and returns
+          <code>&lt;value&gt;</code> from it. Use <code>break nil</code> for no
+          value. Only valid inside a loop in the same function.
+        </p>
+
+        <h4>Example:</h4>
+        <pre><code>i= 1
+while not greater $i 20 {
+    if equal 0 modulus $i 3 {
+        break $i
+    }
+    i= add $i 1
+}
+print $i            → 3</code></pre>
+      </div>
+
+      <div class="word-entry">
+        <h3>continue / continua</h3>
+        <span class="category">Control Flow</span>
+        <span class="arity-badge">Arity: 0</span>
+
+        <div class="signature">continue</div>
+
+        <p>
+          <strong>Description:</strong> Skips the rest of the current loop
+          iteration and continues with the next one. Only valid inside a loop
+          in the same function.
+        </p>
+
+        <h4>Example:</h4>
+        <pre><code>i= 0
+while not greater $i 5 {
+    i= add $i 1
+    if equal 0 modulus $i 2 {
+        continue
+    }
+    print $i
+}</code></pre>
       </div>
 
       <h2>📦 Variables</h2>

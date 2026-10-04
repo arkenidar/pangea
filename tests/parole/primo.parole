@@ -13,9 +13,12 @@ definisci_parola "primo" 1 {
                 i= 2
                 risultato= vero
                 mentre non maggiore moltiplica $i $i $n {
-                    se divisibile $n $i
+                    se divisibile $n $i {
                         risultato= falso
+                        interrompi nullo
+                    } {
                         passa
+                    }
                     i= somma $i 1
                 }
                 $risultato

@@ -35,6 +35,10 @@ local translate_italian = {
     ["false"] = "falso",
     ["dont"] = "non_fare",
     ["pass"] = "passa",
+    ["nil"] = "nullo",
+    ["return"] = "ritorna",
+    ["break"] = "interrompi",
+    ["continue"] = "continua",
     ["word:"] = "parola:",
     [" definition not found"] = " definizione non trovata",
     ["command_prompt"] = "richiesta_comandi",
@@ -95,6 +99,15 @@ end
 
 local word_definitions = {}
 
+-- control-flow signals for return/break/continue (non-local jumps)
+local function signal(kind, value)
+    return { signal = kind, value = value }
+end
+
+local function is_signal(value, kind)
+    return type(value) == "table" and value.signal == kind
+end
+
 -- print <printable>
 function print_function(arguments)
     local value = evaluate_word(arguments[1])
@@ -136,6 +149,11 @@ function false_function()
     return false
 end
 
+function nil_function()
+    return nil
+end
+word_definitions[tr("nil")] = {0, nil_function}
+
 -- if <condition> <if true> <if false>
 function if_function(arguments)
     if evaluate_word(arguments[1]) then
@@ -145,12 +163,18 @@ function if_function(arguments)
     end
 end
 
--- while <condition> <do while true>
+-- while <condition> <body>
 function while_function(arguments)
     while evaluate_word(arguments[1]) do
-        local result = evaluate_word(arguments[2])
-        if result == "break" then
-            break
+        local ok, result = pcall(evaluate_word, arguments[2])
+        if not ok then
+            if is_signal(result, "break") then
+                return result.value
+            elseif is_signal(result, "continue") then
+                -- skip to next iteration
+            else
+                error(result)
+            end
         end
     end
 end
@@ -164,10 +188,39 @@ function repeat_function(arguments)
 
     local result
     for _ = 1, total do
-        result = evaluate_word(arguments[2])
+        local ok, inner = pcall(evaluate_word, arguments[2])
+        if not ok then
+            if is_signal(inner, "break") then
+                return inner.value
+            elseif is_signal(inner, "continue") then
+                -- skip to next iteration
+            else
+                error(inner)
+            end
+        else
+            result = inner
+        end
     end
     return result
 end
+
+-- return <value>
+function return_function(arguments)
+    error(signal("return", evaluate_word(arguments[1])))
+end
+word_definitions[tr("return")] = {1, return_function}
+
+-- break <value>
+function break_function(arguments)
+    error(signal("break", evaluate_word(arguments[1])))
+end
+word_definitions[tr("break")] = {1, break_function}
+
+-- continue
+function continue_function()
+    error(signal("continue"))
+end
+word_definitions[tr("continue")] = {0, continue_function}
 
 -- not <boolean>
 function not_function(arguments)
@@ -451,7 +504,18 @@ function execute_program(pn_program)
         return
     end
 
-    evaluate_word(1 + words_to_add)
+    local ok, result = pcall(evaluate_word, 1 + words_to_add)
+    if not ok then
+        if is_signal(result, "return") then
+            return
+        elseif is_signal(result, "break") then
+            error("break outside loop")
+        elseif is_signal(result, "continue") then
+            error("continue outside loop")
+        else
+            error(result)
+        end
+    end
 end
 
 -- ignore hashbang if present
@@ -538,8 +602,21 @@ function define_word_function(arguments)
 
         local returned
         table.insert(call_stack, value_arguments)
-        returned = evaluate_word(arguments[3])
+        local ok, result = pcall(evaluate_word, arguments[3])
         table.remove(call_stack)
+        if not ok then
+            if is_signal(result, "return") then
+                returned = result.value
+            elseif is_signal(result, "break") then
+                error("break outside loop")
+            elseif is_signal(result, "continue") then
+                error("continue outside loop")
+            else
+                error(result)
+            end
+        else
+            returned = result
+        end
         return returned
     end
     word_definitions[evaluate_word(arguments[1])] = {arity, word_function}
