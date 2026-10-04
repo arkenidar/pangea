@@ -1,24 +1,24 @@
 define_word "is_divisible" 2
     equal 0 modulus @1 @2
 
-define_word "is_prime" 1 do
+define_word "is_prime" 1 {
     n= @1
     if not greater $n 1
         false
         if equal $n 2
             true
-            do
+            {
                 i= 2
                 prime= true
-                while not greater multiply $i $i $n do
+                while not greater multiply $i $i $n {
                     if is_divisible $n $i
                         prime= false
                         dont nothing
                     i= add $i 1
-                end
+                }
                 $prime
-            end
-end
+            }
+}
 
 print is_prime 2
 print is_prime 17
