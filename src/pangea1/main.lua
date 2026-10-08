@@ -400,6 +400,7 @@ function program_words(pn_program)
     local quoted = {}
     local in_string = false
     local escaping = false
+    local in_comment = false
 
     local function flush_token()
         if #token > 0 then
@@ -460,7 +461,11 @@ function program_words(pn_program)
 
     for i = 1, #pn_program do
         local char = pn_program:sub(i, i)
-        if in_string then
+        if in_comment then
+            if char == "\n" then
+                in_comment = false
+            end
+        elseif in_string then
             if escaping then
                 append_escape(char)
                 escaping = false
@@ -472,6 +477,9 @@ function program_words(pn_program)
             else
                 table.insert(quoted, char)
             end
+        elseif char == "#" then
+            flush_token()
+            in_comment = true
         elseif string.match(char, "%s") then
             flush_token()
         elseif char == '"' then

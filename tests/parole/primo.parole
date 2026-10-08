@@ -1,25 +1,27 @@
 #!/usr/bin/env pangea-italian
 
+# verifica numero primo (con ritorno anticipato)
+
 definisci_parola "divisibile" 2
     uguale 0 modulo @1 @2
 
 definisci_parola "primo" 1 {
     n= @1
     se non maggiore $n 1 {
-        ritorna falso
+        ritorna falso  # n <= 1 non e primo
     } {
         passa
     }
     i= 2
-    mentre non maggiore moltiplica $i $i $n {
+    mentre non maggiore moltiplica $i $i $n {  # divisione fino a sqrt(n)
         se divisibile $n $i {
-            ritorna falso
+            ritorna falso  # trovato un divisore
         } {
             passa
         }
         i= somma $i 1
     }
-    ritorna vero
+    ritorna vero  # nessun divisore trovato
 }
 
 stampa primo 2

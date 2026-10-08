@@ -1,23 +1,25 @@
+# prime number check (early-return style)
+
 define_word "is_divisible" 2
     equal 0 modulus @1 @2
 
 define_word "is_prime" 1 {
     n= @1
     if not greater $n 1 {
-        return false
+        return false  # n <= 1 is not prime
     } {
         pass
     }
     i= 2
-    while not greater multiply $i $i $n {
+    while not greater multiply $i $i $n {  # trial division up to sqrt(n)
         if is_divisible $n $i {
-            return false
+            return false  # found a divisor -> not prime
         } {
             pass
         }
         i= add $i 1
     }
-    return true
+    return true  # no divisor found -> prime
 }
 
 print is_prime 2
