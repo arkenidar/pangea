@@ -1,0 +1,18 @@
+#!/usr/bin/env pangea
+
+# cond: multi-way conditional (if-elseif-else without nesting)
+
+define_word "grade" 1 {
+    cond {
+        not greater @1 59 "F"
+        not greater @1 69 "D"
+        not greater @1 79 "C"
+        not greater @1 89 "B"
+        else "A"
+    }
+}
+
+print grade 95
+print grade 72
+print grade 55
+print grade 80

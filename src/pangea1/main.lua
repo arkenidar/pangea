@@ -39,6 +39,7 @@ local translate_italian = {
     ["return"] = "ritorna",
     ["break"] = "interrompi",
     ["continue"] = "continua",
+    ["else"] = "altrimenti",
     ["word:"] = "parola:",
     [" definition not found"] = " definizione non trovata",
     ["command_prompt"] = "richiesta_comandi",
@@ -162,6 +163,31 @@ function if_function(arguments)
         return evaluate_word(arguments[3])
     end
 end
+
+-- else -> true (default clause for cond)
+function else_function()
+    return true
+end
+word_definitions[tr("else")] = {0, else_function}
+
+-- cond { condition1 result1 condition2 result2 ... }
+-- Returns the result whose condition is first truthy; nil if none.
+function cond_function(arguments)
+    local i = arguments[1] + 1
+    while words[i] ~= tr("end") and words[i] ~= nil do
+        local test_len = phrase_length(i)
+        local result_index = i + test_len
+        if words[result_index] == tr("end") or words[result_index] == nil then
+            break
+        end
+        if evaluate_word(i) then
+            return evaluate_word(result_index)
+        end
+        i = result_index + phrase_length(result_index)
+    end
+    return nil
+end
+word_definitions["cond"] = {1, cond_function}
 
 -- while <condition> <body>
 function while_function(arguments)

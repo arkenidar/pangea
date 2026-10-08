@@ -322,6 +322,41 @@ not greater 5 10      → true</code></pre>
       </div>
 
       <div class="word-entry">
+        <h3>cond</h3>
+        <span class="category">Control Flow</span>
+        <span class="arity-badge">Arity: 1</span>
+
+        <div class="signature">cond { &lt;condition&gt; &lt;result&gt; ... }</div>
+
+        <p>
+          <strong>Description:</strong> Multi-way conditional. Takes a block of
+          <code>condition result</code> pairs and returns the result of the first
+          truthy condition. Use <code>else</code> (or <code>true</code>) as the
+          final condition for a default.
+        </p>
+
+        <h4>Example:</h4>
+        <pre><code>cond {
+    not greater @1 59 "F"
+    not greater @1 79 "C"
+    else "A"
+}</code></pre>
+      </div>
+
+      <div class="word-entry">
+        <h3>else / altrimenti</h3>
+        <span class="category">Control Flow</span>
+        <span class="arity-badge">Arity: 0</span>
+
+        <div class="signature">else</div>
+
+        <p>
+          <strong>Description:</strong> Returns true. Used as the default clause
+          in <code>cond</code>.
+        </p>
+      </div>
+
+      <div class="word-entry">
         <h3>while / mentre</h3>
         <span class="category">Control Flow</span>
         <span class="arity-badge">Arity: 2</span>

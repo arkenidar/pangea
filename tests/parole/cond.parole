@@ -1,0 +1,18 @@
+#!/usr/bin/env pangea-italian
+
+# cond: condizionale a piu vie senza annidamento
+
+definisci_parola "voto" 1 {
+    cond {
+        non maggiore @1 59 "F"
+        non maggiore @1 69 "D"
+        non maggiore @1 79 "C"
+        non maggiore @1 89 "B"
+        altrimenti "A"
+    }
+}
+
+stampa voto 95
+stampa voto 72
+stampa voto 55
+stampa voto 80
