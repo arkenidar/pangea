@@ -3,24 +3,21 @@ define_word "is_divisible" 2
 
 define_word "is_prime" 1 {
     n= @1
-    if not greater $n 1
-        false
-        if equal $n 2
-            true
-            {
-                i= 2
-                prime= true
-                while not greater multiply $i $i $n {
-                    if is_divisible $n $i {
-                        prime= false
-                        break nil
-                    } {
-                        pass
-                    }
-                    i= add $i 1
-                }
-                $prime
-            }
+    if not greater $n 1 {
+        return false
+    } {
+        pass
+    }
+    i= 2
+    while not greater multiply $i $i $n {
+        if is_divisible $n $i {
+            return false
+        } {
+            pass
+        }
+        i= add $i 1
+    }
+    return true
 }
 
 print is_prime 2

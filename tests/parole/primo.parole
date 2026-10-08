@@ -5,24 +5,21 @@ definisci_parola "divisibile" 2
 
 definisci_parola "primo" 1 {
     n= @1
-    se non maggiore $n 1
-        falso
-        se uguale $n 2
-            vero
-            {
-                i= 2
-                risultato= vero
-                mentre non maggiore moltiplica $i $i $n {
-                    se divisibile $n $i {
-                        risultato= falso
-                        interrompi nullo
-                    } {
-                        passa
-                    }
-                    i= somma $i 1
-                }
-                $risultato
-            }
+    se non maggiore $n 1 {
+        ritorna falso
+    } {
+        passa
+    }
+    i= 2
+    mentre non maggiore moltiplica $i $i $n {
+        se divisibile $n $i {
+            ritorna falso
+        } {
+            passa
+        }
+        i= somma $i 1
+    }
+    ritorna vero
 }
 
 stampa primo 2
